@@ -1,4 +1,5 @@
 
+
 /*
  * File: GButton.java
  * ------------------
@@ -31,6 +32,7 @@ public class GButton extends GCompound {
 	}
 
 	public GButton(String label, double x, double y, double width, double height, Color col) {
+		super();
 		setLocation(x, y);
 		rect = new GRoundRect(0, 0, width, height);
 		rect.setFilled(true);

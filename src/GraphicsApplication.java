@@ -1,15 +1,4 @@
-/*
- * File: GraphicsApplication
- * -------------------------
- * File for subclassing off of to generate the entire
- * GraphicsApplication.  GraphicsApplication is different
- * than GraphicsPane because the Application is responsible
- * for switching between different panes.
- * 
- * In subclassing GraphicsApplication, think of this as the starting
- * point for your entire application.  This is what
- * you can think of as being your initial graphicsprogram.
- */
+
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

@@ -1,4 +1,5 @@
 
+
 /*
  * Typical usage of the AudioPlayer.java
  * ----------------------------------
@@ -21,7 +22,7 @@ public final class AudioPlayer {
 	private final Map<String, MediaPlayer> players;
 
 	private static class AudioPlayerInit {
-		public static final AudioPlayer instance = new AudioPlayer();
+		public static final AudioPlayer INSTANCE = new AudioPlayer();
 	}
 
 	private AudioPlayer() {
@@ -36,7 +37,7 @@ public final class AudioPlayer {
 	 * @return instance of the AudioPlayer
 	 */
 	public static AudioPlayer getInstance() {
-		return AudioPlayerInit.instance;
+		return AudioPlayerInit.INSTANCE;
 	}
 
 	/**

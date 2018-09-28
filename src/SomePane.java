@@ -36,5 +36,4 @@ public class SomePane extends GraphicsPane {
 			program.switchToMenu();
 		}
 	}
-
 }

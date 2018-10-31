@@ -1,7 +1,11 @@
 package starter;
+
+import acm.graphics.*;
+
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
+	public static int GROUND = 400;
 	public static final String MUSIC_FOLDER = "sounds";
 	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
@@ -18,6 +22,7 @@ public class MainApplication extends GraphicsApplication {
 		somePane = new SomePane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
+		GRect rec= new GRect(300,300,100,GROUND);
 	}
 
 	public void switchToMenu() {

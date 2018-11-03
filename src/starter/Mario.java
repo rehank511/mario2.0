@@ -1,4 +1,4 @@
-//Jeffrey
+//JeffreyWu
 package starter;
 
 import acm.graphics.*;

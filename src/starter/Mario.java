@@ -172,7 +172,7 @@ public class Mario extends GraphicsProgram {
 				moveMario(p[i].F.getX() + p[i].F.getWidth() - Mario.getX(), 0);
 			} else
 				collideR = false;
-		}
+		}//
 	}
 
 	@Override

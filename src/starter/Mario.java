@@ -107,10 +107,7 @@ public class Mario extends GraphicsProgram {
 		for (int i = 0; i < P.length; i++) {
 			P[i].InitilizePlatform(i*1000, 800, 800, 200, 3);
 		}
-		///////
-		//for (int i = 0; i < P.length; i++) {
-		//	Pipe[i].InitilizePipe(300,500, 200, 200, 3);
-		//}
+		
 		for (int a = 0; a < Pipe.length; a++) {
 			for (int i = 0; i < Pipe[0].length; i++) {
 				Pipe[a][i].InitilizePlatform(700,700, 50, 100, 3);

@@ -36,6 +36,8 @@ public class Platform extends GraphicsProgram{
 	
 	
 		
+		
+		
 	}
 	
 	public void InitilizePipe(int x, int y, int w, int h, int q){

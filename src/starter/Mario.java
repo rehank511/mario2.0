@@ -283,9 +283,6 @@ public class Mario extends GraphicsProgram {
 			}
 			}
 			
-		
-		
-			
 	}
 	
 	//

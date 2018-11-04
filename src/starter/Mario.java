@@ -257,6 +257,8 @@ public class Mario extends GraphicsProgram {
 	
 	
 	
+	
+	
 	public void collisionPipe(Platform[] pipe) {
 		for (int i = 0; i < pipe.length; i++) {
 			if ((b.getBounds()).intersects(pipe[i].t.getBounds())) {
@@ -285,10 +287,7 @@ public class Mario extends GraphicsProgram {
 			
 	}
 	
-	
-	
-	
-	
+	//
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {

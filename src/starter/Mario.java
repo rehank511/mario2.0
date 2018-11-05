@@ -14,15 +14,15 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 public class Mario extends GraphicsProgram {
-	Platform[][] p;
-	Platform[] P;
+	Platform[][] platform;
+	Platform[] Ground;
 	Platform[][] Pipe;
 	
+	private static final double Vert_MAX_Velocity = 5, Horiz_MAX_Velocity = 15, walkSpeed = 1, Friction = .1, jumpSpeed = 25, Gravity = 1;
+	private static final int XAXIS = 100, YAXIS = 600, WIDTH = 50, HEIGHT = 50, THICKNESS = 3;
+	private double qq = 5;
+	private int vertVelocity = 0, horizVelocity = 0;
 	
-	public double qq = 5;
-	private int x = 100, y = 600, w = 50, h = 50, q = 3;
-	private int dh = 0, dw = 0;
-	public double maxdw = 5, maxdh = 15, walkSpeed = 1, slowsd = .1, jumpSpeed = 25, fallsd = 1;
 	boolean onground = false;
 	private int PROGRAM_WIDTH = 850;
 	private int PROGRAM_HEIGHT = 650;
@@ -34,7 +34,7 @@ public class Mario extends GraphicsProgram {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
 
-	private GRect Mariotop, Mariobottom, Marioleft, Marioright, Ground;
+	private GRect Mariotop, Mariobottom, Marioleft, Marioright;
 
 	public Mario() {
 		Mario = new GRect(0, 0, 0, 0);
@@ -71,7 +71,7 @@ public class Mario extends GraphicsProgram {
 		
 		
 		
-		InitilizeMario(x, y, w, h, q);
+		InitilizeMario(XAXIS, YAXIS, WIDTH, HEIGHT, THICKNESS);
 		add(Mario);
 		add(Mariotop);
 		add(Mariobottom);
@@ -82,16 +82,16 @@ public class Mario extends GraphicsProgram {
 	
 		
 		
-		p = new Platform[50][5];
-		for (int a = 0; a < p.length; a++)
-			for (int i = 0; i < p[0].length; i++) {
-				p[a][i] = new Platform();
+		platform = new Platform[50][5];
+		for (int a = 0; a < platform.length; a++)
+			for (int i = 0; i < platform[0].length; i++) {
+				platform[a][i] = new Platform();
 			}
 		
 		
-		P = new Platform[10];
-		for (int i = 0; i < P.length; i++) {
-			P[i] = new Platform();
+		Ground = new Platform[10];
+		for (int i = 0; i < Ground.length; i++) {
+			Ground[i] = new Platform();
 		}
 		
 	/////
@@ -104,14 +104,14 @@ public class Mario extends GraphicsProgram {
 		
 	
 		
-		for (int a = 0; a < p.length; a++) {
-			for (int i = 0; i < p[0].length; i++) {
-				p[a][i].InitilizePlatform(a*200 + 400 + i * 50, 400 - a%3 * 200, 50, 50, 3);
+		for (int a = 0; a < platform.length; a++) {
+			for (int i = 0; i < platform[0].length; i++) {
+				platform[a][i].InitilizePlatform(a*200 + 400 + i * 50, 400 - a%3 * 200, 50, 50, 3);
 			}
 		}
 
-		for (int i = 0; i < P.length; i++) {
-			P[i].InitilizePlatform(i*1000, 600, 800, 200, 3);
+		for (int i = 0; i < Ground.length; i++) {
+			Ground[i].InitilizePlatform(i*1000, 600, 800, 200, 3);
 		}
 		
 		for (int a = 0; a < Pipe.length; a++) {
@@ -121,25 +121,25 @@ public class Mario extends GraphicsProgram {
 		}
 		
 
-		for (int a = 0; a < p.length; a++) {
-			for (int i = 0; i < p[0].length; i++) {
-				p[a][i].getGround().setColor(new Color(212, 212, 212));
-				add(p[a][i].getGround());
-				add(p[a][i].getBottom());
-				add(p[a][i].getTop());
-				add(p[a][i].getRight());
-				add(p[a][i].getLeft());
+		for (int a = 0; a < platform.length; a++) {
+			for (int i = 0; i < platform[0].length; i++) {
+				platform[a][i].getGround().setColor(new Color(212, 212, 212));
+				add(platform[a][i].getGround());
+				add(platform[a][i].getBottom());
+				add(platform[a][i].getTop());
+				add(platform[a][i].getRight());
+				add(platform[a][i].getLeft());
 			
 			}
 		}
 
-		for (int i = 0; i < P.length; i++) {
-			P[i].getGround().setColor(new Color(212, 212, 212));
-			add(P[i].getGround());
-			add(P[i].getBottom());
-			add(P[i].getTop());
-			add(P[i].getRight());
-			add(P[i].getLeft());
+		for (int i = 0; i < Ground.length; i++) {
+			Ground[i].getGround().setColor(new Color(212, 212, 212));
+			add(Ground[i].getGround());
+			add(Ground[i].getBottom());
+			add(Ground[i].getTop());
+			add(Ground[i].getRight());
+			add(Ground[i].getLeft());
 		
 		}
 		
@@ -165,10 +165,10 @@ public class Mario extends GraphicsProgram {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		for (int a = 0; a < p.length; a++) {
-			collision(p[a]);
+		for (int a = 0; a < platform.length; a++) {
+			collision(platform[a]);
 		}
-		collision(P);
+		collision(Ground);
 		////
 		for (int a = 0; a < Pipe.length; a++) {
 			collision(Pipe[a]);
@@ -176,42 +176,42 @@ public class Mario extends GraphicsProgram {
 		
 		if (Mario.getX() < 0 || Mario.getX() > 600) {
 			if (Mario.getX() < 0) {
-				dw = 0;
+				horizVelocity = 0;
 				moveMario(.1, 0);
 			} else if (Mario.getX() > 600) {
-				if (dw > 0) {
-					for (int a = 0; a < p.length; a++) {
-						for (int i = 0; i < p[0].length; i++) {
-							p[a][i].movePlatform(-dw, 0);
+				if (horizVelocity > 0) {
+					for (int a = 0; a < platform.length; a++) {
+						for (int i = 0; i < platform[0].length; i++) {
+							platform[a][i].movePlatform(-horizVelocity, 0);
 						}
 					}
-					for (int i = 0; i < P.length; i++) {
-						P[i].movePlatform(-dw, 0);
+					for (int i = 0; i < Ground.length; i++) {
+						Ground[i].movePlatform(-horizVelocity, 0);
 					}
 					////
 					
 					//for (int i = 0; i < P.length; i++) {
-						//Pipe[i].movePlatform(-dw, 0);
+						//Pipe[i].movePlatform(-horizVelocity, 0);
 					}
 					for (int a = 0; a < Pipe.length; a++) {
 						for (int i = 0; i < Pipe[0].length; i++) {
-							Pipe[a][i].movePlatform(-dw, 0);
+							Pipe[a][i].movePlatform(-horizVelocity, 0);
 						}
 						
 					}
 			
 					
-					moveMario(0, dh);
+					moveMario(0, vertVelocity);
 				} else
-					moveMario(dw, dh);
+					moveMario(horizVelocity, vertVelocity);
 			}
 		 else {
-			 moveMario(dw, dh);
+			 moveMario(horizVelocity, vertVelocity);
 		 }
-		if (dh < maxdh) {
-			dh += fallsd;
+		if (vertVelocity < Horiz_MAX_Velocity) {
+			vertVelocity += Gravity;
 		}
-		System.out.print(dh);
+		System.out.print(vertVelocity);
 	}
 
 	
@@ -221,23 +221,23 @@ public class Mario extends GraphicsProgram {
 			if ((Mariobottom.getBounds()).intersects(p[i].getTop().getBounds())) {
 				onground = true;
 				collideTop = true;
-				if (dh > 0)
-					dh = 0;
+				if (vertVelocity > 0)
+					vertVelocity = 0;
 			
-				moveMario(0, p[i].getGround().getY() - Mario.getY() - h);
+				moveMario(0, p[i].getGround().getY() - Mario.getY() - HEIGHT);
 			} else
 				collideTop = false;
 			if ((Mariotop.getBounds()).intersects(p[i].getBottom().getBounds())) {
 				collideBottom = true;
-				if (dh < 0)
-					dh = 0;
+				if (vertVelocity < 0)
+					vertVelocity = 0;
 				moveMario(0, p[i].getTop().getY() - Mario.getY() + p[i].getGround().getHeight());
 			} else
 				collideBottom = false;
 			if ((Marioright.getBounds()).intersects(p[i].getLeft().getBounds())) {
 				collideLeft = true;
-				if (dw > 0)
-					dw = 0;
+				if (horizVelocity > 0)
+					horizVelocity = 0;
 			
 		
 				moveMario(p[i].getGround().getX() - Mario.getX() - Mario.getWidth(), 0);
@@ -245,7 +245,7 @@ public class Mario extends GraphicsProgram {
 				collideLeft = false;
 			if ((Marioleft.getBounds()).intersects(p[i].getRight().getBounds())) {
 				collideRight = true;
-				if (dw < 0)
+				if (horizVelocity < 0)
 				moveMario(p[i].getGround().getX() + p[i].getGround().getWidth() - Mario.getX(), 0);
 			} else
 				collideRight = false;
@@ -262,23 +262,23 @@ public class Mario extends GraphicsProgram {
 			if ((Mariobottom.getBounds()).intersects(pipe[i].getTop().getBounds())) {
 				onground = true;
 				collideTop = true;
-				if (dh > 0)
-					dh = 0;
+				if (vertVelocity > 0)
+					vertVelocity = 0;
 			
 			} else
 				collideTop = false;
 			if ((Mariotop.getBounds()).intersects(pipe[i].getBottom().getBounds())) {
 				collideBottom = true;
-				if (dh < 0)
-					dh = 0;
+				if (vertVelocity < 0)
+					vertVelocity = 0;
 			
 			} else
 				collideBottom = false;
 			
 			if ((Marioright.getBounds()).intersects(pipe[i].getLeft().getBounds())) {
 				onground = true;
-				if (dw > 0)
-					dw = 0;
+				if (horizVelocity > 0)
+					horizVelocity = 0;
 		
 			}
 			}
@@ -289,23 +289,23 @@ public class Mario extends GraphicsProgram {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (dw < maxdw)
-				dw += walkSpeed;
-			if (dw <= 0)
-				dw += walkSpeed * 2;
+			if (horizVelocity < Vert_MAX_Velocity)
+				horizVelocity += walkSpeed;
+			if (horizVelocity <= 0)
+				horizVelocity += walkSpeed * 2;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if (dw > -maxdw)
-				dw -= walkSpeed;
-			if (dw >= 0)
-				dw -= walkSpeed * 2;
+			if (horizVelocity > -Vert_MAX_Velocity)
+				horizVelocity -= walkSpeed;
+			if (horizVelocity >= 0)
+				horizVelocity -= walkSpeed * 2;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			if (dw > 0)
-				dw -= walkSpeed;
-			if (dw < 0)
-				dw += walkSpeed;
+			if (horizVelocity > 0)
+				horizVelocity -= walkSpeed;
+			if (horizVelocity < 0)
+				horizVelocity += walkSpeed;
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
-			if (dh == 1 && onground) {
-				dh -= jumpSpeed;
+			if (vertVelocity == 1 && onground) {
+				vertVelocity -= jumpSpeed;
 				onground = false;
 			}
 		}

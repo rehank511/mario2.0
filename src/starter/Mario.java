@@ -19,7 +19,6 @@ public class Mario extends GraphicsProgram {
 	Platform[][] Pipe;
 	
 	
-	
 	public double qq = 5;
 	private int x = 100, y = 600, w = 50, h = 50, q = 3;
 	private int dh = 0, dw = 0;
@@ -35,38 +34,38 @@ public class Mario extends GraphicsProgram {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
 
-	private GRect t, b, l, r,pipe;
+	private GRect Mariotop, Mariobottom, Marioleft, Marioright, Ground;
 
 	public Mario() {
 		Mario = new GRect(0, 0, 0, 0);
-		t = new GRect(0, 0, 0, 0);
-		b = new GRect(0, 0, 0, 0);
-		l = new GRect(0, 0, 0, 0);
-		r = new GRect(0, 0, 0, 0);
+		Mariotop = new GRect(0, 0, 0, 0);
+		Mariobottom = new GRect(0, 0, 0, 0);
+		Marioleft = new GRect(0, 0, 0, 0);
+		Marioright = new GRect(0, 0, 0, 0);
 	
 	}
 //jumps
 	public void InitilizeMario(int x, int y, int w, int h, int q) {
 		Mario.setBounds(x, y, w, h);
 		
-		t.setBounds(x + q, y, w - 2 * q, q);
-		b.setBounds(x + q, y + h - q, w - 2 * q, q);
-		l.setBounds(x, y + q, q, h - 2 * q);
-		r.setBounds(x + w - q, y + q, q, h - 2 * q);
+		Mariotop.setBounds(x + q, y, w - 2 * q, q);
+		Mariobottom.setBounds(x + q, y + h - q, w - 2 * q, q);
+		Marioleft.setBounds(x, y + q, q, h - 2 * q);
+		Marioright.setBounds(x + w - q, y + q, q, h - 2 * q);
 		
 	
 	}
 
 	public void moveMario(double x, double y) {
 		Mario.move(x, y);
-		t.move(x, y);
-		b.move(x, y);
-		r.move(x, y);
-		l.move(x, y);
+		Mariotop.move(x, y);
+		Mariobottom.move(x, y);
+		Marioright.move(x, y);
+		Marioleft.move(x, y);
 	}
 
-	public boolean collideR, collideL, collideT, collideB;
-	public boolean collision, R, L, T, B;
+	public boolean collideRight, collideLeft, collideTop, collideBottom;
+	public boolean collision, Right, Left, Top, Bottom;
 
 	public void run() {
 		
@@ -74,10 +73,10 @@ public class Mario extends GraphicsProgram {
 		
 		InitilizeMario(x, y, w, h, q);
 		add(Mario);
-		add(t);
-		add(b);
-		add(r);
-		add(l);
+		add(Mariotop);
+		add(Mariobottom);
+		add(Marioright);
+		add(Marioleft);
 	
 		
 	
@@ -124,44 +123,34 @@ public class Mario extends GraphicsProgram {
 
 		for (int a = 0; a < p.length; a++) {
 			for (int i = 0; i < p[0].length; i++) {
-				p[a][i].F.setColor(new Color(212, 212, 212));
-				add(p[a][i].F);
-				add(p[a][i].b);
-				add(p[a][i].t);
-				add(p[a][i].r);
-				add(p[a][i].l);
+				p[a][i].getGround().setColor(new Color(212, 212, 212));
+				add(p[a][i].getGround());
+				add(p[a][i].getBottom());
+				add(p[a][i].getTop());
+				add(p[a][i].getRight());
+				add(p[a][i].getLeft());
 			
 			}
 		}
 
 		for (int i = 0; i < P.length; i++) {
-			P[i].F.setColor(new Color(212, 212, 212));
-			add(P[i].F);
-			add(P[i].b);
-			add(P[i].t);
-			add(P[i].r);
-			add(P[i].l);
+			P[i].getGround().setColor(new Color(212, 212, 212));
+			add(P[i].getGround());
+			add(P[i].getBottom());
+			add(P[i].getTop());
+			add(P[i].getRight());
+			add(P[i].getLeft());
 		
 		}
-		//////
-		/*
-		for (int i = 0; i < Pipe.length; i++) {
-			Pipe[i].F.setColor(new Color(212, 212, 212));
-			//add(Pipe[i].F);
-			add(Pipe[i].b);
-			add(Pipe[i].t);
-			add(Pipe[i].l);
-			add(Pipe[i].r);
-		}
-		*/
+		
 		for (int a = 0; a < Pipe.length; a++) {
 			for (int i = 0; i < Pipe[0].length; i++) {
-				Pipe[a][i].F.setColor(new Color(212, 212, 212));
-				add(Pipe[a][i].F);
-				add(Pipe[a][i].b);
-				add(Pipe[a][i].t);
-				add(Pipe[a][i].r);
-				add(Pipe[a][i].l);
+				Pipe[a][i].getGround().setColor(new Color(212, 212, 212));
+				add(Pipe[a][i].getGround());
+				add(Pipe[a][i].getBottom());
+				add(Pipe[a][i].getTop());
+				add(Pipe[a][i].getRight());
+				add(Pipe[a][i].getLeft());
 			
 			}
 		}
@@ -229,37 +218,37 @@ public class Mario extends GraphicsProgram {
 
 	public void collision(Platform[] p) {
 		for (int i = 0; i < p.length; i++) {
-			if ((b.getBounds()).intersects(p[i].t.getBounds())) {
+			if ((Mariobottom.getBounds()).intersects(p[i].getTop().getBounds())) {
 				onground = true;
-				collideT = true;
+				collideTop = true;
 				if (dh > 0)
 					dh = 0;
 			
-				moveMario(0, p[i].F.getY() - Mario.getY() - h);
+				moveMario(0, p[i].getGround().getY() - Mario.getY() - h);
 			} else
-				collideT = false;
-			if ((t.getBounds()).intersects(p[i].b.getBounds())) {
-				collideB = true;
+				collideTop = false;
+			if ((Mariotop.getBounds()).intersects(p[i].getBottom().getBounds())) {
+				collideBottom = true;
 				if (dh < 0)
 					dh = 0;
-				moveMario(0, p[i].t.getY() - Mario.getY() + p[i].F.getHeight());
+				moveMario(0, p[i].getTop().getY() - Mario.getY() + p[i].getGround().getHeight());
 			} else
-				collideB = false;
-			if ((r.getBounds()).intersects(p[i].l.getBounds())) {
-				collideL = true;
+				collideBottom = false;
+			if ((Marioright.getBounds()).intersects(p[i].getLeft().getBounds())) {
+				collideLeft = true;
 				if (dw > 0)
 					dw = 0;
 			
 		
-				moveMario(p[i].F.getX() - Mario.getX() - Mario.getWidth(), 0);
+				moveMario(p[i].getGround().getX() - Mario.getX() - Mario.getWidth(), 0);
 			} else
-				collideL = false;
-			if ((l.getBounds()).intersects(p[i].r.getBounds())) {
-				collideR = true;
+				collideLeft = false;
+			if ((Marioleft.getBounds()).intersects(p[i].getRight().getBounds())) {
+				collideRight = true;
 				if (dw < 0)
-				moveMario(p[i].F.getX() + p[i].F.getWidth() - Mario.getX(), 0);
+				moveMario(p[i].getGround().getX() + p[i].getGround().getWidth() - Mario.getX(), 0);
 			} else
-				collideR = false;
+				collideRight = false;
 		}
 	}
 		
@@ -270,23 +259,23 @@ public class Mario extends GraphicsProgram {
 	
 	public void collisionPipe(Platform[] pipe) {
 		for (int i = 0; i < pipe.length; i++) {
-			if ((b.getBounds()).intersects(pipe[i].t.getBounds())) {
+			if ((Mariobottom.getBounds()).intersects(pipe[i].getTop().getBounds())) {
 				onground = true;
-				collideT = true;
+				collideTop = true;
 				if (dh > 0)
 					dh = 0;
 			
 			} else
-				collideT = false;
-			if ((t.getBounds()).intersects(pipe[i].b.getBounds())) {
-				collideB = true;
+				collideTop = false;
+			if ((Mariotop.getBounds()).intersects(pipe[i].getBottom().getBounds())) {
+				collideBottom = true;
 				if (dh < 0)
 					dh = 0;
 			
 			} else
-				collideB = false;
+				collideBottom = false;
 			
-			if ((r.getBounds()).intersects(pipe[i].l.getBounds())) {
+			if ((Marioright.getBounds()).intersects(pipe[i].getLeft().getBounds())) {
 				onground = true;
 				if (dw > 0)
 					dw = 0;

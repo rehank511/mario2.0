@@ -21,11 +21,11 @@ public class Mario extends GraphicsProgram {
 	
 	
 	public double qq = 5;
-	public int x = 100, y = 600, w = 50, h = 50, q = 3;
-	public int dh = 0, dw = 0;
+	private int x = 100, y = 600, w = 50, h = 50, q = 3;
+	private int dh = 0, dw = 0;
 	public double maxdw = 5, maxdh = 15, walkSpeed = 1, slowsd = .1, jumpSpeed = 25, fallsd = 1;
 	boolean onground = false;
-	private int PROGRAM_WIDTH = 800;
+	private int PROGRAM_WIDTH = 750;
 	private int PROGRAM_HEIGHT = 750;
 
 	public GRect Mario;
@@ -36,7 +36,7 @@ public class Mario extends GraphicsProgram {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
 //=======
-	public GRect t, b, l, r,pipe;
+	private GRect t, b, l, r,pipe;
 //>>>>>>> branch 'master' of https://github.com/comp55-fall18/group-project-cloud9.git
 
 	public Mario() {
@@ -119,7 +119,7 @@ public class Mario extends GraphicsProgram {
 		
 		for (int a = 0; a < Pipe.length; a++) {
 			for (int i = 0; i < Pipe[0].length; i++) {
-				Pipe[a][i].InitilizePlatform(200,500, 50, 100, 3);
+				Pipe[a][i].InitilizePlatform(200,500, 120, 100, 3);
 			}
 		}
 		
@@ -210,18 +210,20 @@ public class Mario extends GraphicsProgram {
 						for (int i = 0; i < Pipe[0].length; i++) {
 							Pipe[a][i].movePlatform(-dw, 0);
 						}
+						
 					}
 			
 					
-					moveMario(0, dh);
+					moveMario(dw, dh);
 				} else
 					moveMario(dw, dh);
 			}
-		 else
-		
-			moveMario(dw, dh);
-		if (dh < maxdh)
+		 else {
+			 moveMario(dw, dh);
+		 }
+		if (dh < maxdh) {
 			dh += fallsd;
+		}
 		System.out.print(dh);
 	}
 

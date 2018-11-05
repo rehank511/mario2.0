@@ -14,16 +14,16 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 public class Mario extends GraphicsProgram {
-	Platform[][] p;
-	Platform[] P;
+	Platform[][] p; //platform
+	Platform[] P; //the ground
 	Platform[][] Pipe;
 	
 	
 	
-	public double qq = 5;
-	private int x = 100, y = 600, w = 50, h = 50, q = 3;
-	private int dh = 0, dw = 0;
-	public double maxdw = 5, maxdh = 15, walkSpeed = 1, slowsd = .1, jumpSpeed = 25, fallsd = 1;
+	public double thicknessthickness = 5;
+	private static final int x = 100, y = 600, w = 50, h = 50, thickness = 3;
+	private int vertVelocity = 0, horizVelocity = 0;
+	public static final double maxhorizVelocity = 5, maxvertVelocity = 15, walkSpeed = 1, friction = .1, jumpSpeed = 25, gravity = 1;
 	boolean onground = false;
 	private int PROGRAM_WIDTH = 850;
 	private int PROGRAM_HEIGHT = 650;
@@ -46,13 +46,13 @@ public class Mario extends GraphicsProgram {
 	
 	}
 //jumps
-	public void InitilizeMario(int x, int y, int w, int h, int q) {
+	public void InitilizeMario(int x, int y, int w, int h, int thickness) {
 		Mario.setBounds(x, y, w, h);
 		
-		t.setBounds(x + q, y, w - 2 * q, q);
-		b.setBounds(x + q, y + h - q, w - 2 * q, q);
-		l.setBounds(x, y + q, q, h - 2 * q);
-		r.setBounds(x + w - q, y + q, q, h - 2 * q);
+		t.setBounds(x + thickness, y, w - 2 * thickness, thickness);
+		b.setBounds(x + thickness, y + h - thickness, w - 2 * thickness, thickness);
+		l.setBounds(x, y + thickness, thickness, h - 2 * thickness);
+		r.setBounds(x + w - thickness, y + thickness, thickness, h - 2 * thickness);
 		
 	
 	}
@@ -72,7 +72,7 @@ public class Mario extends GraphicsProgram {
 		
 		
 		
-		InitilizeMario(x, y, w, h, q);
+		InitilizeMario(x, y, w, h, thickness);
 		add(Mario);
 		add(t);
 		add(b);
@@ -187,42 +187,42 @@ public class Mario extends GraphicsProgram {
 		
 		if (Mario.getX() < 0 || Mario.getX() > 600) {
 			if (Mario.getX() < 0) {
-				dw = 0;
+				horizVelocity = 0;
 				moveMario(.1, 0);
 			} else if (Mario.getX() > 600) {
-				if (dw > 0) {
+				if (horizVelocity > 0) {
 					for (int a = 0; a < p.length; a++) {
 						for (int i = 0; i < p[0].length; i++) {
-							p[a][i].movePlatform(-dw, 0);
+							p[a][i].movePlatform(-horizVelocity, 0);
 						}
 					}
 					for (int i = 0; i < P.length; i++) {
-						P[i].movePlatform(-dw, 0);
+						P[i].movePlatform(-horizVelocity, 0);
 					}
 					////
 					
 					//for (int i = 0; i < P.length; i++) {
-						//Pipe[i].movePlatform(-dw, 0);
+						//Pipe[i].movePlatform(-horizVelocity, 0);
 					}
 					for (int a = 0; a < Pipe.length; a++) {
 						for (int i = 0; i < Pipe[0].length; i++) {
-							Pipe[a][i].movePlatform(-dw, 0);
+							Pipe[a][i].movePlatform(-horizVelocity, 0);
 						}
 						
 					}
 			
 					
-					moveMario(0, dh);
+					moveMario(0, vertVelocity);
 				} else
-					moveMario(dw, dh);
+					moveMario(horizVelocity, vertVelocity);
 			}
 		 else {
-			 moveMario(dw, dh);
+			 moveMario(horizVelocity, vertVelocity);
 		 }
-		if (dh < maxdh) {
-			dh += fallsd;
+		if (vertVelocity < maxvertVelocity) {
+			vertVelocity += gravity;
 		}
-		System.out.print(dh);
+		System.out.print(vertVelocity);
 	}
 
 	
@@ -232,23 +232,23 @@ public class Mario extends GraphicsProgram {
 			if ((b.getBounds()).intersects(p[i].t.getBounds())) {
 				onground = true;
 				collideT = true;
-				if (dh > 0)
-					dh = 0;
+				if (vertVelocity > 0)
+					vertVelocity = 0;
 			
 				moveMario(0, p[i].F.getY() - Mario.getY() - h);
 			} else
 				collideT = false;
 			if ((t.getBounds()).intersects(p[i].b.getBounds())) {
 				collideB = true;
-				if (dh < 0)
-					dh = 0;
+				if (vertVelocity < 0)
+					vertVelocity = 0;
 				moveMario(0, p[i].t.getY() - Mario.getY() + p[i].F.getHeight());
 			} else
 				collideB = false;
 			if ((r.getBounds()).intersects(p[i].l.getBounds())) {
 				collideL = true;
-				if (dw > 0)
-					dw = 0;
+				if (horizVelocity > 0)
+					horizVelocity = 0;
 			
 		
 				moveMario(p[i].F.getX() - Mario.getX() - Mario.getWidth(), 0);
@@ -256,7 +256,7 @@ public class Mario extends GraphicsProgram {
 				collideL = false;
 			if ((l.getBounds()).intersects(p[i].r.getBounds())) {
 				collideR = true;
-				if (dw < 0)
+				if (horizVelocity < 0)
 				moveMario(p[i].F.getX() + p[i].F.getWidth() - Mario.getX(), 0);
 			} else
 				collideR = false;
@@ -273,50 +273,51 @@ public class Mario extends GraphicsProgram {
 			if ((b.getBounds()).intersects(pipe[i].t.getBounds())) {
 				onground = true;
 				collideT = true;
-				if (dh > 0)
-					dh = 0;
+				if (vertVelocity > 0)
+					vertVelocity = 0;
 			
 			} else
 				collideT = false;
 			if ((t.getBounds()).intersects(pipe[i].b.getBounds())) {
 				collideB = true;
-				if (dh < 0)
-					dh = 0;
+				if (vertVelocity < 0)
+					vertVelocity = 0;
 			
 			} else
 				collideB = false;
 			
 			if ((r.getBounds()).intersects(pipe[i].l.getBounds())) {
 				onground = true;
-				if (dw > 0)
-					dw = 0;
+				if (horizVelocity > 0)
+					horizVelocity = 0;
 		
 			}
 			}
 			
 	}
 	
+	
 	//
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (dw < maxdw)
-				dw += walkSpeed;
-			if (dw <= 0)
-				dw += walkSpeed * 2;
+			if (horizVelocity < maxhorizVelocity)
+				horizVelocity += walkSpeed;
+			if (horizVelocity <= 0)
+				horizVelocity += walkSpeed * 2;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if (dw > -maxdw)
-				dw -= walkSpeed;
-			if (dw >= 0)
-				dw -= walkSpeed * 2;
+			if (horizVelocity > -maxhorizVelocity)
+				horizVelocity -= walkSpeed;
+			if (horizVelocity >= 0)
+				horizVelocity -= walkSpeed * 2;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			if (dw > 0)
-				dw -= walkSpeed;
-			if (dw < 0)
-				dw += walkSpeed;
+			if (horizVelocity > 0)
+				horizVelocity -= walkSpeed;
+			if (horizVelocity < 0)
+				horizVelocity += walkSpeed;
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
-			if (dh == 1 && onground) {
-				dh -= jumpSpeed;
+			if (vertVelocity == 1 && onground) {
+				vertVelocity -= jumpSpeed;
 				onground = false;
 			}
 		}

@@ -23,12 +23,12 @@ public class Platform extends GraphicsProgram{
 		
 	}
 	
-	public void InitilizePlatform(int x, int y, int w, int h, int q){
+	public void InitilizePlatform(int x, int y, int w, int h, int thickness){
 		F.setBounds(x, y, w, h);
-		t.setBounds(x+q, y, w-2*q, h/2);
-		b.setBounds(x+q, y+h/2, w-2*q, h/2);
-		l.setBounds(x, y+q, q, h-2*q);
-		r.setBounds(x+w-q, y+q, q, h-2*q);
+		t.setBounds(x+thickness, y, w-2*thickness, h/2);
+		b.setBounds(x+thickness, y+h/2, w-2*thickness, h/2);
+		l.setBounds(x, y+thickness, thickness, h-2*thickness);
+		r.setBounds(x+w-thickness, y+thickness, thickness, h-2*thickness);
 	
 	
 		
@@ -36,7 +36,7 @@ public class Platform extends GraphicsProgram{
 		
 	}
 	
-	public void InitilizePipe(int x, int y, int w, int h, int q){
+	public void InitilizePipe(int x, int y, int w, int h, int thickness){
 		F.setBounds(x, y, w, h);
 	
 		b.setBounds(700,700,50,50);

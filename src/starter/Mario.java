@@ -20,11 +20,17 @@ public class Mario extends GraphicsProgram {
 	public double qq = 5;
 	public int x = 100, y = 750, w = 50, h = 50, q = 3;
 	public int dh = 0, dw = 0;
-	public double maxdw = 5, maxdh = 15, walksd = 1, slowsd = .1, jumpsd = 22, fallsd = 1;
+	public double maxdw = 5, maxdh = 15, walkSpeed = 1, slowsd = .1, jumpSpeed = 25, fallsd = 1;
 	boolean onground = false;
+	private int PROGRAM_WIDTH = 900;
+	private int PROGRAM_HEIGHT = 900;
 
 	public GRect Mario;
 	public GRect t, b, l, r;
+	
+	public void init() {
+		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
+	}
 
 	public Mario() {
 		Mario = new GRect(0, 0, 0, 0);
@@ -178,22 +184,22 @@ public class Mario extends GraphicsProgram {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			if (dw < maxdw)
-				dw += walksd;
+				dw += walkSpeed;
 			if (dw <= 0)
-				dw += walksd * 2;
+				dw += walkSpeed * 2;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			if (dw > -maxdw)
-				dw -= walksd;
+				dw -= walkSpeed;
 			if (dw >= 0)
-				dw -= walksd * 2;
+				dw -= walkSpeed * 2;
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			if (dw > 0)
-				dw -= walksd;
+				dw -= walkSpeed;
 			if (dw < 0)
-				dw += walksd;
+				dw += walkSpeed;
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
 			if (dh == 1 && onground) {
-				dh -= jumpsd;
+				dh -= jumpSpeed;
 				onground = false;
 			}
 		}

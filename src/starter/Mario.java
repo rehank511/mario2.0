@@ -25,8 +25,8 @@ public class Mario extends GraphicsProgram {
 	private int dh = 0, dw = 0;
 	public double maxdw = 5, maxdh = 15, walkSpeed = 1, slowsd = .1, jumpSpeed = 25, fallsd = 1;
 	boolean onground = false;
-	private int PROGRAM_WIDTH = 750;
-	private int PROGRAM_HEIGHT = 750;
+	private int PROGRAM_WIDTH = 850;
+	private int PROGRAM_HEIGHT = 650;
 
 	public GRect Mario;
 //<<<<<<< HEAD
@@ -214,7 +214,7 @@ public class Mario extends GraphicsProgram {
 					}
 			
 					
-					moveMario(dw, dh);
+					moveMario(0, dh);
 				} else
 					moveMario(dw, dh);
 			}

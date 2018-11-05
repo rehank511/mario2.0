@@ -16,6 +16,7 @@ import javax.swing.Timer;
 public class Mario extends GraphicsProgram {
 	Platform[][] platform;
 	Platform[] Ground;
+	
 	Platform[][] Pipe;
 	
 	private static final double Vert_MAX_Velocity = 5, Horiz_MAX_Velocity = 15, walkSpeed = 1, Friction = .1, jumpSpeed = 25, Gravity = 1;
@@ -29,7 +30,7 @@ public class Mario extends GraphicsProgram {
 
 	public GRect Mario;
 
-	
+
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
@@ -43,17 +44,15 @@ public class Mario extends GraphicsProgram {
 		Marioleft = new GRect(0, 0, 0, 0);
 		Marioright = new GRect(0, 0, 0, 0);
 	
+
 	}
-//jumps
+	//jumps
 	public void InitilizeMario(int x, int y, int w, int h, int q) {
 		Mario.setBounds(x, y, w, h);
-		
 		Mariotop.setBounds(x + q, y, w - 2 * q, q);
 		Mariobottom.setBounds(x + q, y + h - q, w - 2 * q, q);
 		Marioleft.setBounds(x, y + q, q, h - 2 * q);
 		Marioright.setBounds(x + w - q, y + q, q, h - 2 * q);
-		
-	
 	}
 
 	public void moveMario(double x, double y) {
@@ -67,10 +66,7 @@ public class Mario extends GraphicsProgram {
 	public boolean collideRight, collideLeft, collideTop, collideBottom;
 	public boolean collision, Right, Left, Top, Bottom;
 
-	public void run() {
-		
-		
-		
+	public void run() {	
 		InitilizeMario(XAXIS, YAXIS, WIDTH, HEIGHT, THICKNESS);
 		add(Mario);
 		add(Mariotop);
@@ -87,39 +83,38 @@ public class Mario extends GraphicsProgram {
 			for (int i = 0; i < platform[0].length; i++) {
 				platform[a][i] = new Platform();
 			}
-		
-		
+
 		Ground = new Platform[10];
 		for (int i = 0; i < Ground.length; i++) {
 			Ground[i] = new Platform();
+
 		}
-		
-	/////
+
+		/////
 		Pipe = new Platform[50][5];
 		for (int a = 0; a < Pipe.length; a++)
 			for (int i = 0; i < Pipe[0].length; i++) {
 				Pipe[a][i] = new Platform();
 			}
-		
-		
-	
+
 		
 		for (int a = 0; a < platform.length; a++) {
 			for (int i = 0; i < platform[0].length; i++) {
 				platform[a][i].InitilizePlatform(a*200 + 400 + i * 50, 400 - a%3 * 200, 50, 50, 3);
+
 			}
 		}
 
 		for (int i = 0; i < Ground.length; i++) {
 			Ground[i].InitilizePlatform(i*1000, 600, 800, 200, 3);
 		}
-		
+
 		for (int a = 0; a < Pipe.length; a++) {
 			for (int i = 0; i < Pipe[0].length; i++) {
 				Pipe[a][i].InitilizePlatform(200,500, 120, 100, 3);
 			}
 		}
-		
+
 
 		for (int a = 0; a < platform.length; a++) {
 			for (int i = 0; i < platform[0].length; i++) {
@@ -128,8 +123,7 @@ public class Mario extends GraphicsProgram {
 				add(platform[a][i].getBottom());
 				add(platform[a][i].getTop());
 				add(platform[a][i].getRight());
-				add(platform[a][i].getLeft());
-			
+				add(platform[a][i].getLeft());			
 			}
 		}
 
@@ -140,22 +134,23 @@ public class Mario extends GraphicsProgram {
 			add(Ground[i].getTop());
 			add(Ground[i].getRight());
 			add(Ground[i].getLeft());
-		
 		}
-		
+
+
 		for (int a = 0; a < Pipe.length; a++) {
 			for (int i = 0; i < Pipe[0].length; i++) {
+
 				Pipe[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(Pipe[a][i].getGround());
 				add(Pipe[a][i].getBottom());
 				add(Pipe[a][i].getTop());
 				add(Pipe[a][i].getRight());
 				add(Pipe[a][i].getLeft());
-			
+
 			}
 		}
-	
-		
+
+
 		Timer t = new Timer(1, this);
 		t.start();
 
@@ -164,47 +159,53 @@ public class Mario extends GraphicsProgram {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		for (int a = 0; a < platform.length; a++) {
 			collision(platform[a]);
+
 		}
 		collision(Ground);
 		////
-		for (int a = 0; a < Pipe.length; a++) {
+		for (int a = 0; a < Pipe.length; a++) 
+		{
 			collision(Pipe[a]);
 		}
-		
+
 		if (Mario.getX() < 0 || Mario.getX() > 600) {
 			if (Mario.getX() < 0) {
+
 				horizVelocity = 0;
 				moveMario(.1, 0);
+
 			} else if (Mario.getX() > 600) {
 				if (horizVelocity > 0) {
 					for (int a = 0; a < platform.length; a++) {
 						for (int i = 0; i < platform[0].length; i++) {
 							platform[a][i].movePlatform(-horizVelocity, 0);
+
 						}
 					}
+
 					for (int i = 0; i < Ground.length; i++) {
 						Ground[i].movePlatform(-horizVelocity, 0);
+
 					}
-					////
-					
-					//for (int i = 0; i < P.length; i++) {
-						//Pipe[i].movePlatform(-horizVelocity, 0);
-					}
+
 					for (int a = 0; a < Pipe.length; a++) {
 						for (int i = 0; i < Pipe[0].length; i++) {
 							Pipe[a][i].movePlatform(-horizVelocity, 0);
 						}
 						
 					}
-			
+					}
+					
 					
 					moveMario(0, vertVelocity);
 				} else
 					moveMario(horizVelocity, vertVelocity);
+
 			}
+
 		 else {
 			 moveMario(horizVelocity, vertVelocity);
 		 }
@@ -214,25 +215,30 @@ public class Mario extends GraphicsProgram {
 		System.out.print(vertVelocity);
 	}
 
-	
+
 
 	public void collision(Platform[] p) {
 		for (int i = 0; i < p.length; i++) {
 			if ((Mariobottom.getBounds()).intersects(p[i].getTop().getBounds())) {
 				onground = true;
+
 				collideTop = true;
 				if (vertVelocity > 0)
 					vertVelocity = 0;
 			
 				moveMario(0, p[i].getGround().getY() - Mario.getY() - HEIGHT);
+
 			} else
+
 				collideTop = false;
 			if ((Mariotop.getBounds()).intersects(p[i].getBottom().getBounds())) {
 				collideBottom = true;
 				if (vertVelocity < 0)
 					vertVelocity = 0;
 				moveMario(0, p[i].getTop().getY() - Mario.getY() + p[i].getGround().getHeight());
+
 			} else
+
 				collideBottom = false;
 			if ((Marioright.getBounds()).intersects(p[i].getLeft().getBounds())) {
 				collideLeft = true;
@@ -241,22 +247,21 @@ public class Mario extends GraphicsProgram {
 			
 		
 				moveMario(p[i].getGround().getX() - Mario.getX() - Mario.getWidth(), 0);
+
 			} else
+
 				collideLeft = false;
 			if ((Marioleft.getBounds()).intersects(p[i].getRight().getBounds())) {
 				collideRight = true;
 				if (horizVelocity < 0)
 				moveMario(p[i].getGround().getX() + p[i].getGround().getWidth() - Mario.getX(), 0);
+
 			} else
 				collideRight = false;
 		}
 	}
-		
-	
-	
-	
-	
-	
+
+
 	public void collisionPipe(Platform[] pipe) {
 		for (int i = 0; i < pipe.length; i++) {
 			if ((Mariobottom.getBounds()).intersects(pipe[i].getTop().getBounds())) {
@@ -264,7 +269,7 @@ public class Mario extends GraphicsProgram {
 				collideTop = true;
 				if (vertVelocity > 0)
 					vertVelocity = 0;
-			
+
 			} else
 				collideTop = false;
 			if ((Mariotop.getBounds()).intersects(pipe[i].getBottom().getBounds())) {
@@ -272,29 +277,37 @@ public class Mario extends GraphicsProgram {
 				if (vertVelocity < 0)
 					vertVelocity = 0;
 			
+
 			} else
+
 				collideBottom = false;
 			
 			if ((Marioright.getBounds()).intersects(pipe[i].getLeft().getBounds())) {
+
 				onground = true;
 				if (horizVelocity > 0)
 					horizVelocity = 0;
-		
+
 			}
-			}
-			
+		}
+
 	}
-	
+
+
 	//
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+
 			if (horizVelocity < Vert_MAX_Velocity)
+
 				horizVelocity += walkSpeed;
 			if (horizVelocity <= 0)
 				horizVelocity += walkSpeed * 2;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+
 			if (horizVelocity > -Vert_MAX_Velocity)
+
 				horizVelocity -= walkSpeed;
 			if (horizVelocity >= 0)
 				horizVelocity -= walkSpeed * 2;

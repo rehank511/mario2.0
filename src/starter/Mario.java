@@ -184,7 +184,7 @@ public class Mario extends GraphicsProgram {
 		for (int a = 0; a < Pipe.length; a++) {
 			collision(Pipe[a]);
 		}
-		
+//		collision(P);
 		if (Mario.getX() < 0 || Mario.getX() > 600) {
 			if (Mario.getX() < 0) {
 				horizVelocity = 0;

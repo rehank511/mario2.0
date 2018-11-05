@@ -29,15 +29,13 @@ public class Mario extends GraphicsProgram {
 	private int PROGRAM_HEIGHT = 650;
 
 	public GRect Mario;
-//<<<<<<< HEAD
-//	public GRect t, b, l, r;
+
 	
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
-//=======
+
 	private GRect t, b, l, r,pipe;
-//>>>>>>> branch 'master' of https://github.com/comp55-fall18/group-project-cloud9.git
 
 	public Mario() {
 		Mario = new GRect(0, 0, 0, 0);
@@ -47,7 +45,7 @@ public class Mario extends GraphicsProgram {
 		r = new GRect(0, 0, 0, 0);
 	
 	}
-
+//jumps
 	public void InitilizeMario(int x, int y, int w, int h, int q) {
 		Mario.setBounds(x, y, w, h);
 		

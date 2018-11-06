@@ -21,12 +21,11 @@ public class Mario extends GraphicsProgram {
 
 	private static final double Vert_MAX_Velocity = 5, Horiz_MAX_Velocity = 15, walkSpeed = 1, Friction = .1, jumpSpeed = 25, Gravity = 1;
 	private static final int XAXIS = 100, YAXIS = 600, WIDTH = 50, HEIGHT = 50, THICKNESS = 3;
-	private double qq = 5;
 	private int vertVelocity = 0, horizVelocity = 0;
 
 	boolean onground = false;
-	private int PROGRAM_WIDTH = 850;
-	private int PROGRAM_HEIGHT = 650;
+	private static final int PROGRAM_WIDTH = 850;
+	private static final int PROGRAM_HEIGHT = 650;
 
 	public GRect Mario;
 
@@ -94,7 +93,6 @@ public class Mario extends GraphicsProgram {
 				Pipe[a][i] = new Platform();
 			}
 
-
 		for (int a = 0; a < platform.length; a++) {
 			for (int i = 0; i < platform[0].length; i++) {
 				platform[a][i].InitilizePlatform(a*200 + 400 + i * 50, 400 - a%3 * 200, 50, 50, 3);
@@ -103,7 +101,7 @@ public class Mario extends GraphicsProgram {
 		}
 
 		for (int i = 0; i < Ground.length; i++) {
-			Ground[i].InitilizePlatform(i*1000, 600, 800, 200, 3);
+			Ground[i].InitilizePlatform(i*200, 600, 800, 200, 3);
 		}
 
 		for (int a = 0; a < Pipe.length; a++) {
@@ -149,7 +147,8 @@ public class Mario extends GraphicsProgram {
 		t.start();
 		addKeyListeners();
 	}
-
+	 
+	// is called after every milisecond and moves the mario and the platform 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -163,15 +162,18 @@ public class Mario extends GraphicsProgram {
 		{
 			collision(Pipe[a]);
 		}
-
-		if (Mario.getX() < 0 || Mario.getX() > 600) {
+		
+		if (Mario.getX() < 0 || Mario.getX() >300) {
+			// If Mario is on left corner of the screen
 			if (Mario.getX() < 0) {
 
 				horizVelocity = 0;
 				moveMario(.1, 0);
-
+				
+				// if Mario is on the right corner on the screen
 			} else if (Mario.getX() > 600) {
 				if (horizVelocity > 0) {
+					// moves the platform ground and pipe to left as Mario moves to the right
 					for (int a = 0; a < platform.length; a++) {
 						for (int i = 0; i < platform[0].length; i++) {
 							platform[a][i].movePlatform(-horizVelocity, 0);
@@ -179,7 +181,7 @@ public class Mario extends GraphicsProgram {
 						}
 					}
 					for (int i = 0; i < Ground.length; i++) {
-						Ground[i].movePlatform(-horizVelocity, 0);
+						Ground[i].movePlatform(-horizVelocity*1.5, 0);
 					}
 					for (int a = 0; a < Pipe.length; a++) {
 						for (int i = 0; i < Pipe[0].length; i++) {
@@ -188,7 +190,8 @@ public class Mario extends GraphicsProgram {
 					}
 				}
 				moveMario(horizVelocity, vertVelocity);
-			} else
+			} 
+			else
 				moveMario(horizVelocity, vertVelocity);
 		}
 		else {
@@ -200,7 +203,7 @@ public class Mario extends GraphicsProgram {
 		System.out.print(vertVelocity);
 	}
 
-
+	// Makes the Mario to not be able to move when it touches a platform
 	public void collision(Platform[] p) {
 		for (int i = 0; i < p.length; i++) {
 			if ((Mariobottom.getBounds()).intersects(p[i].getTop().getBounds())) {
@@ -240,7 +243,7 @@ public class Mario extends GraphicsProgram {
 		}
 	}
 
-
+	// Makes the Mario to not be able to move when it touches a pipe
 	public void collisionPipe(Platform[] pipe) {
 		for (int i = 0; i < pipe.length; i++) {
 			if ((Mariobottom.getBounds()).intersects(pipe[i].getTop().getBounds())) {
@@ -265,6 +268,7 @@ public class Mario extends GraphicsProgram {
 
 	}
 	
+	// activates when the mentioned key are pressed and moves the mario
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -289,6 +293,7 @@ public class Mario extends GraphicsProgram {
 			}
 		}
 	}
+	// activates when any key is released
 	@Override
 	public void keyReleased(KeyEvent e)
 	{

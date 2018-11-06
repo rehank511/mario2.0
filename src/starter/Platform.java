@@ -48,13 +48,7 @@ public class Platform extends GraphicsProgram{
 		Top.setBounds(x+q, y, w-2*q, h/2);
 		Bottom.setBounds(x+q, y+h/2, w-2*q, h/2);
 		Left.setBounds(x, y+q, q, h-2*q);
-		Right.setBounds(x+w-q, y+q, q, h-2*q);
-
-	
-	
-		
-		
-		
+		Right.setBounds(x+w-q, y+q, q, h-2*q);	
 	}
 	
 

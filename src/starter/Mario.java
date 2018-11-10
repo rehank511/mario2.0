@@ -1,8 +1,7 @@
 
-//Jeffrey
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------
 package starter;
 
+//commit
 import acm.graphics.*;
 import acm.program.*;
 import acm.util.*;
@@ -17,237 +16,303 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 public class Mario extends GraphicsProgram {
-	Platform[][] p;
-	Platform[] P;
+	Platform[][] platform;
+	Platform[] Ground;
 
-	public int x = 100, y = 750, w = 50, h = 50, s = 3; // Mario parameters
-	public int dh = 0, dw = 0;
-	public double maxdw = 5, maxdh = 15, walksd = 1, slowsd = 1, jumpsd = 15, fallsd = 1; // Mario movement speed
+	Platform[][] Pipe;
+
+	private static final double Vert_MAX_Velocity = 15, Horiz_MAX_Velocity = 5, walkSpeed = 1, Friction = 1,
+			jumpSpeed = 15, Gravity = 1;
+	private static final int XAXIS = 100, YAXIS = 600, WIDTH = 50, HEIGHT = 50, THICKNESS = 3;
+	private int vertVelocity = 0, horizVelocity = 0;
+
+	int TimerCount = 0, onground = 0;
+	boolean Moving = false, movingLeft = false, movingRight = false;
+	private static final int PROGRAM_WIDTH = 850;
+	private static final int PROGRAM_HEIGHT = 650;
 
 	public GRect Mario;
-	public GRect t, b, l, r; // t = top, b = bottom, l = left, r = right
+
+	public void init() {
+		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
+	}
+
+	private GRect Mariotop, Mariobottom, Marioleft, Marioright;
 
 	public Mario() {
 		Mario = new GRect(0, 0, 0, 0);
-		t = new GRect(0, 0, 0, 0);
-		b = new GRect(0, 0, 0, 0);
-		l = new GRect(0, 0, 0, 0);
-		r = new GRect(0, 0, 0, 0);
-		Mario.setColor(new Color(200, 0, 0));
+		Mariotop = new GRect(0, 0, 0, 0);
+		Mariobottom = new GRect(0, 0, 0, 0);
+		Marioleft = new GRect(0, 0, 0, 0);
+		Marioright = new GRect(0, 0, 0, 0);
+
 	}
 
+	// jumps
 	public void InitilizeMario(int x, int y, int w, int h, int q) {
 		Mario.setBounds(x, y, w, h);
-		t.setBounds(x + q, y, w - 2 * q, q);
-		b.setBounds(x + q, y + h - q, w - 2 * q, q);
-		l.setBounds(x, y + q, q, h - 2 * q);
-		r.setBounds(x + w - q, y + q, q, h - 2 * q);
+		Mariotop.setBounds(x + q, y, w - 2 * q, q);
+		Mariobottom.setBounds(x + q, y + h - q, w - 2 * q, q);
+		Marioleft.setBounds(x, y + q, q, h - 2 * q);
+		Marioright.setBounds(x + w - q, y + q, q, h - 2 * q);
 	}
 
 	public void moveMario(double x, double y) {
 		Mario.move(x, y);
-		t.move(x, y);
-		b.move(x, y);
-		r.move(x, y);
-		l.move(x, y);
+		Mariotop.move(x, y);
+		Mariobottom.move(x, y);
+		Marioright.move(x, y);
+		Marioleft.move(x, y);
 	}
 
-	public boolean collideR, collideL, collideT, collideB;
-	public boolean collision, R, L, T, B;
+	public boolean collideRight, collideLeft, collideTop, collideBottom;
+	public boolean collision, Right, Left, Top, Bottom;
 
 	public void run() {
-		InitilizeMario(x, y, w, h, s);
+		InitilizeMario(XAXIS, YAXIS, WIDTH, HEIGHT, THICKNESS);
 		add(Mario);
-		add(t);
-		add(b);
-		add(r);
-		add(l);
+		add(Mariotop);
+		add(Mariobottom);
+		add(Marioright);
+		add(Marioleft);
 
-		p = new Platform[50][5];
-		for (int a = 0; a < p.length; a++)
-			for (int i = 0; i < p[0].length; i++) {
-				p[a][i] = new Platform();
+		platform = new Platform[50][5];
+		for (int a = 0; a < platform.length; a++)
+			for (int i = 0; i < platform[0].length; i++) {
+				platform[a][i] = new Platform();
 			}
 
-		P = new Platform[10];
-		for (int i = 0; i < P.length; i++) {
-			P[i] = new Platform();
+		Ground = new Platform[10];
+		for (int i = 0; i < Ground.length; i++) {
+			Ground[i] = new Platform();
+
 		}
 
-		for (int a = 0; a < p.length; a++) {
-			for (int i = 0; i < p[0].length; i++) {
-				p[a][i].InitilizePlatform(a * 400 + 400 + i * 50, 600 - a % 3 * 200, 50, 50, 3);
+		Pipe = new Platform[50][5];
+		for (int a = 0; a < Pipe.length; a++)
+			for (int i = 0; i < Pipe[0].length; i++) {
+				Pipe[a][i] = new Platform();
 			}
-		}
 
-		for (int i = 0; i < P.length; i++) {
-			P[i].InitilizePlatform(i * 1000, 800, 800, 200, 3);
-		}
+		for (int a = 0; a < platform.length; a++) {
+			for (int i = 0; i < platform[0].length; i++) {
+				platform[a][i].InitilizePlatform(a * 200 + 400 + i * 50, 400 - a % 3 * 200, 50, 50, 3);
 
-		for (int a = 0; a < p.length; a++) {
-			for (int i = 0; i < p[0].length; i++) {
-				p[a][i].F.setColor(new Color(212, 212, 212));
-				add(p[a][i].F);
-				add(p[a][i].b);
-				add(p[a][i].t);
-				add(p[a][i].r);
-				add(p[a][i].l);
 			}
 		}
 
-		for (int i = 0; i < P.length; i++) {
-			P[i].F.setColor(new Color(212, 212, 212));
-			add(P[i].F);
-			add(P[i].b);
-			add(P[i].t);
-			add(P[i].r);
-			add(P[i].l);
+		for (int i = 0; i < Ground.length; i++) {
+			Ground[i].InitilizePlatform(i * 200, 600, 800, 200, 3);
 		}
 
+		for (int a = 0; a < Pipe.length; a++) {
+			for (int i = 0; i < Pipe[0].length; i++) {
+				Pipe[a][i].InitilizePlatform(200, 500, 120, 100, 3);
+			}
+		}
+
+		for (int a = 0; a < platform.length; a++) {
+			for (int i = 0; i < platform[0].length; i++) {
+				platform[a][i].getGround().setColor(new Color(212, 212, 212));
+				add(platform[a][i].getGround());
+				add(platform[a][i].getBottom());
+				add(platform[a][i].getTop());
+				add(platform[a][i].getRight());
+				add(platform[a][i].getLeft());
+			}
+		}
+
+		for (int i = 0; i < Ground.length; i++) {
+			Ground[i].getGround().setColor(new Color(212, 212, 212));
+			add(Ground[i].getGround());
+			add(Ground[i].getBottom());
+			add(Ground[i].getTop());
+			add(Ground[i].getRight());
+			add(Ground[i].getLeft());
+		}
+
+		for (int a = 0; a < Pipe.length; a++) {
+			for (int i = 0; i < Pipe[0].length; i++) {
+
+				Pipe[a][i].getGround().setColor(new Color(212, 212, 212));
+				add(Pipe[a][i].getGround());
+				add(Pipe[a][i].getBottom());
+				add(Pipe[a][i].getTop());
+				add(Pipe[a][i].getRight());
+				add(Pipe[a][i].getLeft());
+
+			}
+		}
 		Timer t = new Timer(10, this);
 		t.start();
-
 		addKeyListeners();
 	}
 
-	int i = 0;
-	int onground = 0;
-
+	// is called after every milisecond and moves the mario and the platform
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for (int a = 0; a < p.length; a++) {
-			collision(p[a]);
+
+		for (int a = 0; a < platform.length; a++) {
+			collision(platform[a]);
+
 		}
-		collision(P);
+		collision(Ground);
+		////
+		for (int a = 0; a < Pipe.length; a++) {
+			collision(Pipe[a]);
+		}
 
-		System.out.print(onground);
 		if (onground > 0)
-			collideT = true;
+			collideTop = true;
 
-		if (Mario.getX() < 0 || Mario.getX() > 600) {
+		if (Mario.getX() < 0 || Mario.getX() > 500) {
+			// If Mario is on left corner of the screen
 			if (Mario.getX() < 0) {
-				dw = 0;
+
+				horizVelocity = 0;
 				moveMario(.1, 0);
-			} else if (Mario.getX() > 600) {
-				if (dw > 0) {
-					for (int a = 0; a < p.length; a++) {
-						for (int i = 0; i < p[0].length; i++) {
-							p[a][i].movePlatform(-dw, 0);
+
+				// if Mario is on the right corner on the screen
+			} else if (Mario.getX() > 500) {
+				if (horizVelocity > 0) {
+					// moves the platform ground and pipe to left as Mario moves to the right
+					for (int a = 0; a < platform.length; a++) {
+						for (int i = 0; i < platform[0].length; i++) {
+							platform[a][i].movePlatform(-horizVelocity, 0);
+
 						}
 					}
-					for (int i = 0; i < P.length; i++) {
-						P[i].movePlatform(-dw, 0);
+					for (int i = 0; i < Ground.length; i++) {
+						Ground[i].movePlatform(-horizVelocity, 0);
 					}
-					moveMario(0, dh);
+					for (int a = 0; a < Pipe.length; a++) {
+						for (int i = 0; i < Pipe[0].length; i++) {
+							Pipe[a][i].movePlatform(-horizVelocity, 0);
+						}
+					}
+					moveMario(0, vertVelocity);
 				} else
-					moveMario(dw, dh);
+					moveMario(horizVelocity, vertVelocity);
 			}
-		} else 
-			moveMario(dw, dh);
+		} else
+			moveMario(horizVelocity, vertVelocity);
 
-		if (i % 10 == 0)
+		TimerCount++;
+		if (TimerCount % 10 == 0) {
 			if (Moving == false) {
-				if (dw > 0)
-					dw -= slowsd;
-				if (dw < 0)
-					dw += slowsd;
+				if (horizVelocity > 0)
+					horizVelocity -= Friction;
+				if (horizVelocity < 0)
+					horizVelocity += Friction;
 			}
-		if (i % 10 == 0)
-		if (MovingLeft == true) {
-			if (dw > -maxdw)
-				dw -= walksd;
-			if (dw >= 0)
-				dw -= walksd;
-		}
-		if (i % 10 == 0)
-		if (MovingRight == true) {
-			if (dw < maxdw)
-				dw += walksd;
-			if (dw <= 0)
-				dw += walksd;
+			if (movingLeft == true) {
+				if (horizVelocity > -Horiz_MAX_Velocity)
+					horizVelocity -= walkSpeed;
+				if (horizVelocity >= 0)
+					horizVelocity -= walkSpeed;
+			}
+			if (movingRight == true) {
+				if (horizVelocity < Horiz_MAX_Velocity)
+					horizVelocity += walkSpeed;
+				if (horizVelocity <= 0)
+					horizVelocity += walkSpeed;
+			}
 		}
 
-		i++;
-		if (i % 2 == 0)
-			if (i % 1 == 0)
-				if (dh <= maxdh)
-					dh += fallsd;
-
-		onground = 0;
+		if (TimerCount % 2 == 0)
+			if (vertVelocity < Vert_MAX_Velocity) {
+				vertVelocity += Gravity;
+			}
+		System.out.print(vertVelocity);
 	}
 
+	// Makes the Mario to not be able to move when it touches a platform
 	public void collision(Platform[] p) {
-		collideT = false;
-		collideB = false;
-		collideL = false;
-		collideR = false;
 		for (int i = 0; i < p.length; i++) {
-			if ((b.getBounds()).intersects(p[i].t.getBounds())) {
-				collideT = true;
+			collideTop = false;
+			collideBottom = false;
+			collideLeft = false;
+			collideRight = false;
+			if ((Mariobottom.getBounds()).intersects(p[i].getTop().getBounds())) {
 				onground++;
-				if (dh > 0)
-					dh = 0;
-				moveMario(0, p[i].F.getY() - Mario.getY() - h);
-			}
 
-			if ((t.getBounds()).intersects(p[i].b.getBounds())) {
-				collideB = true;
-				if (dh < 0)
-					dh = 0;
-				moveMario(0, p[i].t.getY() - Mario.getY() + p[i].F.getHeight());
+				collideTop = true;
+				if (vertVelocity > 0)
+					vertVelocity = 0;
+				moveMario(0, p[i].getGround().getY() - Mario.getY() - HEIGHT);
 			}
-			if ((r.getBounds()).intersects(p[i].l.getBounds())) {
-				collideL = true;
-				if (dw > 0)
-					dw = 0;
-				moveMario(p[i].F.getX() - Mario.getX() - Mario.getWidth(), 0);
+			if ((Mariotop.getBounds()).intersects(p[i].getBottom().getBounds())) {
+				collideBottom = true;
+				if (vertVelocity < 0)
+					vertVelocity = 0;
+				moveMario(0, p[i].getTop().getY() - Mario.getY() + p[i].getGround().getHeight());
+
 			}
-			if ((l.getBounds()).intersects(p[i].r.getBounds())) {
-				collideR = true;
-				if (dw < 0)
-					dw = 0;
-				moveMario(p[i].F.getX() + p[i].F.getWidth() - Mario.getX(), 0);
+			if ((Marioright.getBounds()).intersects(p[i].getLeft().getBounds())) {
+				collideLeft = true;
+				if (horizVelocity > 0)
+					horizVelocity = 0;
+				moveMario(p[i].getGround().getX() - Mario.getX() - Mario.getWidth(), 0);
+			}
+			if ((Marioleft.getBounds()).intersects(p[i].getRight().getBounds())) {
+				collideRight = true;
+				if (horizVelocity < 0)
+					moveMario(p[i].getGround().getX() + p[i].getGround().getWidth() - Mario.getX(), 0);
 			}
 		}
 	}
 
-	boolean Moving = false;
-	boolean MovingRight = false;
-	boolean MovingLeft = false;
+	// Makes the Mario to not be able to move when it touches a pipe
+	public void collisionPipe(Platform[] pipe) {
+		for (int i = 0; i < pipe.length; i++) {
+			if ((Mariobottom.getBounds()).intersects(pipe[i].getTop().getBounds())) {
+				onground++;
+				collideTop = true;
+				if (vertVelocity > 0)
+					vertVelocity = 0;
+			} else
+				collideTop = false;
+			if ((Marioleft.getBounds()).intersects(pipe[i].getRight().getBounds())) {
+				collideBottom = true;
+				if (vertVelocity < 0)
+					vertVelocity = 0;
+			} else
+				collideBottom = false;
+			if ((Marioright.getBounds()).intersects(pipe[i].getLeft().getBounds())) {
+				if (horizVelocity > 0)
+					horizVelocity = 0;
+			}
+		}
 
+	}
+
+	// activates when the mentioned key are pressed and moves the mario
 	@Override
 	public void keyPressed(KeyEvent e) {
 		Moving = true;
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			MovingRight = true;
-			if (dw < maxdw)
-				dw += walksd;
-			if (dw <= 0)
-				dw += walksd;
+			movingRight = true;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			MovingLeft = true;
-			if (dw > -maxdw)
-				dw -= walksd;
-			if (dw >= 0)
-				dw -= walksd;
+			movingLeft = true;
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
-			if (collideT) {
-				dh -= jumpsd;
+			if (collideTop) {
+				vertVelocity -= jumpSpeed;
 			}
 		}
 	}
 
+	// activates when any key is released
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			Moving = false;
-			MovingRight = false;
+			movingRight = false;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			Moving = false;
-			MovingLeft = false;
+			movingLeft = false;
+
 		}
+
 	}
 }
-//Jeffrey
-//---------------------------------------------------------------------------------------------------------------------------------------------------------------

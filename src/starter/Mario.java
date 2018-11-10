@@ -1,7 +1,7 @@
 
 package starter;
 
-//commit
+//Fixed Movement
 import acm.graphics.*;
 import acm.program.*;
 import acm.util.*;

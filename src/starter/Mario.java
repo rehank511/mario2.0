@@ -77,7 +77,7 @@ public class Mario extends GraphicsProgram {
 		add(Marioleft);
 
 		platform = new Platform[50][5];
-		
+
 		for (int a = 0; a < platform.length; a++)
 			for (int i = 0; i < platform[0].length; i++) {
 				platform[a][i] = new Platform();
@@ -297,7 +297,10 @@ public class Mario extends GraphicsProgram {
 			movingLeft = true;
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
 			if (collideTop) {
-				vertVelocity -= jumpSpeed;
+				if(onground > 0)
+				{
+					vertVelocity -= jumpSpeed;
+				}
 			}
 		}
 	}
@@ -312,7 +315,10 @@ public class Mario extends GraphicsProgram {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			Moving = false;
 			movingLeft = false;
-
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_SPACE) 
+		{
+			onground = 0;
 		}
 
 	}

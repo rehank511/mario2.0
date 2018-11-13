@@ -75,7 +75,6 @@ public class Mario extends GraphicsProgram {
 		add(Mariobottom);
 		add(Marioright);
 		add(Marioleft);
-
 		platform = new Platform[50][5];
 
 		for (int a = 0; a < platform.length; a++)

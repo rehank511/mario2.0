@@ -32,8 +32,9 @@ public class Mario extends GraphicsProgram {
 	private static final int PROGRAM_HEIGHT = 650;
 
 	private GRect Mario;
-	private GImage Marioimg;
-	
+
+	private GImage MarioImgRight, MarioImgLeft; 
+
 
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -61,7 +62,8 @@ public class Mario extends GraphicsProgram {
 
 	public void moveMario(double x, double y) {
 		Mario.move(x, y);
-		Marioimg.move(x, y);
+		MarioImgRight.move(x, y);
+		MarioImgLeft.move(x, y);
 		Mariotop.move(x, y);
 		Mariobottom.move(x, y);
 		Marioright.move(x, y);
@@ -78,10 +80,15 @@ public class Mario extends GraphicsProgram {
 		add(background);
 		GImage ground = new GImage("ground.png", 0, 600);
 		ground.setSize(850, 100);
+
+
 		add(ground);
-		Marioimg = new GImage("Mario.png", Mario.getX(), Mario.getY() - 1);
-		Marioimg.setSize(50, 57);
-		add(Marioimg);
+		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
+		MarioImgRight.setSize(50, 57);
+		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
+		MarioImgLeft.setSize(50, 57);
+		add(MarioImgRight);
+
 		platform = new Platform[50][5];
 
 		for (int a = 0; a < platform.length; a++)
@@ -288,10 +295,15 @@ public class Mario extends GraphicsProgram {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		Moving = true;
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			movingRight = true;
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			remove(MarioImgRight);
+			add(MarioImgLeft);
 			movingLeft = true;
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			remove(MarioImgLeft);
+			add(MarioImgRight);
+			movingRight = true;
+			
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
 			if (collideTop) {
 				if(onground > 0)
@@ -305,13 +317,17 @@ public class Mario extends GraphicsProgram {
 	// activates when any key is released
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			Moving = false;
-			movingRight = false;
-		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			Moving = false;
 			movingLeft = false;
+			remove(MarioImgRight);
+			add(MarioImgLeft);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			Moving = false;
+			movingRight = false;
+			remove(MarioImgLeft);
+			add(MarioImgRight);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_SPACE) 
 		{

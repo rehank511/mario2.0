@@ -30,8 +30,7 @@ public class Mario extends GraphicsProgram {
 	private static final int PROGRAM_WIDTH = 850;
 	private static final int PROGRAM_HEIGHT = 650;
 
-	private GRect Mario;
-	private GImage Marioimg; 
+	public GRect Mario;
 
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -59,7 +58,6 @@ public class Mario extends GraphicsProgram {
 
 	public void moveMario(double x, double y) {
 		Mario.move(x, y);
-		Marioimg.move(x, y);
 		Mariotop.move(x, y);
 		Mariobottom.move(x, y);
 		Marioright.move(x, y);
@@ -77,9 +75,7 @@ public class Mario extends GraphicsProgram {
 		GImage ground = new GImage("ground.png", 0, 600);
 		ground.setSize(850, 100);
 		add(ground);
-		Marioimg = new GImage("Mario.png", Mario.getX(), Mario.getY() - 1);
-		Marioimg.setSize(50, 57);
-		add(Marioimg);
+		add(Mario);
 		platform = new Platform[50][5];
 
 		for (int a = 0; a < platform.length; a++)
@@ -120,20 +116,14 @@ public class Mario extends GraphicsProgram {
 			for (int i = 0; i < platform[0].length; i++) {
 				platform[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(platform[a][i].getGround());
-//				add(platform[a][i].getBottom());
-//				add(platform[a][i].getTop());
-//				add(platform[a][i].getRight());
-//				add(platform[a][i].getLeft());
+
 			}
 		}
 
 		for (int i = 0; i < Ground.length; i++) {
 			Ground[i].getGround().setColor(new Color(212, 212, 212));
 			add(Ground[i].getGround());
-//			add(Ground[i].getBottom());
-//			add(Ground[i].getTop());
-//			add(Ground[i].getRight());
-//			add(Ground[i].getLeft());
+
 		}
 
 		for (int a = 0; a < Pipe.length; a++) {
@@ -141,10 +131,7 @@ public class Mario extends GraphicsProgram {
 
 				Pipe[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(Pipe[a][i].getGround());
-//				add(Pipe[a][i].getBottom());
-//				add(Pipe[a][i].getTop());
-//				add(Pipe[a][i].getRight());
-//				add(Pipe[a][i].getLeft());
+
 
 			}
 		}
@@ -156,7 +143,7 @@ public class Mario extends GraphicsProgram {
 	// is called after every milisecond and moves the mario and the platform
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		for (int a = 0; a < platform.length; a++) {
 			collision(platform[a]);
 

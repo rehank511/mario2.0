@@ -1,4 +1,3 @@
-
 package starter;
 
 //Fixed Movement
@@ -322,3 +321,5 @@ public class Mario extends GraphicsProgram {
 
 	}
 }
+
+

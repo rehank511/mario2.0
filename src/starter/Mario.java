@@ -1,6 +1,7 @@
 package starter;
 
 //Fixed Movement
+// Added mario image
 import acm.graphics.*;
 import acm.program.*;
 import acm.util.*;

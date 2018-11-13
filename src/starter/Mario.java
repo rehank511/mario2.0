@@ -76,10 +76,6 @@ public class Mario extends GraphicsProgram {
 		ground.setSize(850, 100);
 		add(ground);
 		add(Mario);
-		add(Mariotop);
-		add(Mariobottom);
-		add(Marioright);
-		add(Marioleft);
 		platform = new Platform[50][5];
 
 		for (int a = 0; a < platform.length; a++)
@@ -120,20 +116,20 @@ public class Mario extends GraphicsProgram {
 			for (int i = 0; i < platform[0].length; i++) {
 				platform[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(platform[a][i].getGround());
-				add(platform[a][i].getBottom());
-				add(platform[a][i].getTop());
-				add(platform[a][i].getRight());
-				add(platform[a][i].getLeft());
+//				add(platform[a][i].getBottom());
+//				add(platform[a][i].getTop());
+//				add(platform[a][i].getRight());
+//				add(platform[a][i].getLeft());
 			}
 		}
 
 		for (int i = 0; i < Ground.length; i++) {
 			Ground[i].getGround().setColor(new Color(212, 212, 212));
 			add(Ground[i].getGround());
-			add(Ground[i].getBottom());
-			add(Ground[i].getTop());
-			add(Ground[i].getRight());
-			add(Ground[i].getLeft());
+//			add(Ground[i].getBottom());
+//			add(Ground[i].getTop());
+//			add(Ground[i].getRight());
+//			add(Ground[i].getLeft());
 		}
 
 		for (int a = 0; a < Pipe.length; a++) {
@@ -141,10 +137,10 @@ public class Mario extends GraphicsProgram {
 
 				Pipe[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(Pipe[a][i].getGround());
-				add(Pipe[a][i].getBottom());
-				add(Pipe[a][i].getTop());
-				add(Pipe[a][i].getRight());
-				add(Pipe[a][i].getLeft());
+//				add(Pipe[a][i].getBottom());
+//				add(Pipe[a][i].getTop());
+//				add(Pipe[a][i].getRight());
+//				add(Pipe[a][i].getLeft());
 
 			}
 		}

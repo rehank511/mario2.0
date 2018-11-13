@@ -30,7 +30,8 @@ public class Mario extends GraphicsProgram {
 	private static final int PROGRAM_WIDTH = 850;
 	private static final int PROGRAM_HEIGHT = 650;
 
-	public GRect Mario;
+	private GRect Mario;
+	private GImage Marioimg; 
 
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -58,6 +59,7 @@ public class Mario extends GraphicsProgram {
 
 	public void moveMario(double x, double y) {
 		Mario.move(x, y);
+		Marioimg.move(x, y);
 		Mariotop.move(x, y);
 		Mariobottom.move(x, y);
 		Marioright.move(x, y);
@@ -75,11 +77,9 @@ public class Mario extends GraphicsProgram {
 		GImage ground = new GImage("ground.png", 0, 600);
 		ground.setSize(850, 100);
 		add(ground);
-		add(Mario);
-		add(Mariotop);
-		add(Mariobottom);
-		add(Marioright);
-		add(Marioleft);
+		Marioimg = new GImage("Mario.png", Mario.getX(), Mario.getY() - 1);
+		Marioimg.setSize(50, 57);
+		add(Marioimg);
 		platform = new Platform[50][5];
 
 		for (int a = 0; a < platform.length; a++)
@@ -156,7 +156,7 @@ public class Mario extends GraphicsProgram {
 	// is called after every milisecond and moves the mario and the platform
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 		for (int a = 0; a < platform.length; a++) {
 			collision(platform[a]);
 

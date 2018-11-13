@@ -65,15 +65,11 @@ public class Platform extends GraphicsProgram{
 
 	public void InitilizePipe(int x, int y, int w, int h, int q){
 		Ground.setBounds(x, y, w, h);
-
+		Top.setBounds(x+q, y, w-2*q, h/2);
+		Bottom.setBounds(x+q, y+h/2, w-2*q, h/2);
+		Left.setBounds(x, y+q, q, h-2*q);
+		Right.setBounds(x+w-q, y+q, q, h-2*q);
 	
-		Bottom.setBounds(700,700,50,50);
-		Top.setBounds(700,750, 50,50);
-		
-		Left.setBounds(750, 700, 3, 100);
-		Right.setBounds(750, 700, 3, 100);
-	
-
 	}
 	
 	

@@ -69,6 +69,12 @@ public class Mario extends GraphicsProgram {
 
 	public void run() {
 		InitilizeMario(XAXIS, YAXIS, WIDTH, HEIGHT, THICKNESS);
+		GImage background = new GImage("bg.png", 0, 0);
+		background.setSize(850, 600);
+		add(background);
+		GImage ground = new GImage("ground.png", 0, 600);
+		ground.setSize(850, 100);
+		add(ground);
 		add(Mario);
 		add(Mariotop);
 		add(Mariobottom);

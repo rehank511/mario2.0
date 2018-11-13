@@ -1,4 +1,3 @@
-
 package starter;
 
 import acm.graphics.*;
@@ -11,6 +10,7 @@ import java.awt.event.KeyListener;
 public class Platform extends GraphicsProgram{
 	private GRect Ground;
 	private GRect Top, Bottom, Left, Right;
+	private GRect Platform;
 	
 	public GRect getGround() {
 		return Ground;
@@ -30,6 +30,11 @@ public class Platform extends GraphicsProgram{
 
 	public GRect getRight() {
 		return Right;
+	}
+	
+	public void run()
+	{
+		
 	}
 
 	public Platform() {

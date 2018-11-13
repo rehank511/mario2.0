@@ -226,6 +226,7 @@ platform[0][0].InitilizePlatform(400,400,50,50,3);
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
+		
 	}
 
 	// is called after every milisecond and moves the mario and the platform

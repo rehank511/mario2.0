@@ -34,7 +34,6 @@ public class Mario extends GraphicsProgram {
 	private GRect Mario;
 	private GImage MarioImgRight, MarioImgLeft; 
 
-
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
 	}
@@ -79,16 +78,14 @@ public class Mario extends GraphicsProgram {
 		add(background);
 		GImage ground = new GImage("ground.png", 0, 600);
 		ground.setSize(850, 100);
-
-
 		add(ground);
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgRight.setSize(50, 57);
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgLeft.setSize(50, 57);
 		add(MarioImgRight);
-
 		platform = new Platform[50][10];
+
 		for (int a = 0; a < platform.length; a++)
 			for (int i = 0; i < platform[0].length; i++) {
 				platform[a][i] = new Platform();
@@ -106,13 +103,8 @@ public class Mario extends GraphicsProgram {
 				Pipe[a][i] = new Platform();
 			}
 		
-//		for (int a = 0; a < platform.length; a++) {
-//			for (int i = 0; i < platform[0].length; i++) {
-////				platform[a][i].InitilizePlatform(a * 200 + 400 + i * 50, 400 - a % 3 * 200, 50, 50, 3);
-//
-//			}
-//		}
-platform[0][0].InitilizePlatform(400,400,50,50,3);
+		
+	platform[0][0].InitilizePlatform(400,400,50,50,3);
 		
 		platform[0][1].InitilizePlatform(600,400,50,50,3);
 		platform[0][2].InitilizePlatform(650,400,50,50,3);
@@ -173,23 +165,25 @@ platform[0][0].InitilizePlatform(400,400,50,50,3);
 		platform[7][6].InitilizePlatform(8300,250,50,50,3);
 		platform[7][7].InitilizePlatform(8350,250,50,50,3);
 		
-
-
-
-//		for (int i = 0; i < Ground.length; i++) {
-////			Ground[i].InitilizePlatform(i * 200, 600, 800, 200, 3);
-//		}
+	
 		
-		Ground[0].InitilizePlatform(0, 600,2800, 200, 3);
-		Ground[1].InitilizePlatform(3000, 600,800, 200, 3);
-		Ground[2].InitilizePlatform(4000, 600,7000, 200, 3);
-
-//		for (int a = 0; a < Pipe.length; a++) {
-//			for (int i = 0; i < Pipe[0].length; i++) {
-////				Pipe[a][i].InitilizePlatform(200, 500, 120, 100, 3);
-//			}
-//		}
+	
 		
+
+		for (int i = 0; i < Ground.length; i++) {
+		//	Ground[i].InitilizePlatform(i*200, 600,1800, 200, 3);
+		}
+		
+		Ground[0].InitilizePlatform(0, 600, 8000, 200, 3);
+//		Ground[1].InitilizePlatform(3000, 600,800, 200, 3);
+//		Ground[2].InitilizePlatform(4000, 600,7000, 200, 3);
+		
+		for (int a = 0; a < Pipe.length; a++) {
+			for (int i = 0; i < Pipe[0].length; i++) {
+				
+				//Pipe[a][i].InitilizePlatform(a*1000, 500, 120, 100, 3);
+			}
+		}
 		
 		
 		Pipe[0][0].InitilizePlatform(1000, 540, 60, 60, 3);
@@ -202,16 +196,40 @@ platform[0][0].InitilizePlatform(400,400,50,50,3);
 
 		for (int a = 0; a < platform.length; a++) {
 			for (int i = 0; i < platform[0].length; i++) {
+//				platform[a][i].InitilizePlatform(a * 200 + 400 + i * 50, 400 - a % 3 * 200, 50, 50, 3);
+
+			}
+		}
+		
+
+//		for (int i = 0; i < Ground.length; i++) {
+//			Ground[i].InitilizePlatform(i * 200, 600, 800, 200, 3);
+//		}
+//
+//		for (int a = 0; a < Pipe.length; a++) {
+//			for (int i = 0; i < Pipe[0].length; i++) {
+//				Pipe[a][i].InitilizePlatform(200, 500, 120, 100, 3);
+//			}
+//		}
+
+		for (int a = 0; a < platform.length; a++) {
+			for (int i = 0; i < platform[0].length; i++) {
 				platform[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(platform[a][i].getGround());
-
+//				add(platform[a][i].getBottom());
+//				add(platform[a][i].getTop());
+//				add(platform[a][i].getRight());
+//				add(platform[a][i].getLeft());
 			}
 		}
 
 		for (int i = 0; i < Ground.length; i++) {
 			Ground[i].getGround().setColor(new Color(212, 212, 212));
 			add(Ground[i].getGround());
-
+//			add(Ground[i].getBottom());
+//			add(Ground[i].getTop());
+//			add(Ground[i].getRight());
+//			add(Ground[i].getLeft());
 		}
 
 		for (int a = 0; a < Pipe.length; a++) {
@@ -219,20 +237,22 @@ platform[0][0].InitilizePlatform(400,400,50,50,3);
 
 				Pipe[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(Pipe[a][i].getGround());
-
+//				add(Pipe[a][i].getBottom());
+//				add(Pipe[a][i].getTop());
+//				add(Pipe[a][i].getRight());
+//				add(Pipe[a][i].getLeft());
 
 			}
 		}
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
-		
 	}
 
 	// is called after every milisecond and moves the mario and the platform
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 		for (int a = 0; a < platform.length; a++) {
 			collision(platform[a]);
 
@@ -412,5 +432,4 @@ platform[0][0].InitilizePlatform(400,400,50,50,3);
 
 	}
 }
-
 

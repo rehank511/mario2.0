@@ -14,10 +14,10 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 public class Level extends GraphicsProgram{
-	Platform[][] platform;
-	Platform[] Ground;
-
-	Platform[][] Pipe;
+	private Platform[][] platform;
+	private Platform[] Ground;
+	
+	private Platform[][] Pipe;
 
 	
 	public void level1()

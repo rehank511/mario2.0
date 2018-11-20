@@ -18,11 +18,11 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void run() {
-		System.out.println("Hello, world!");
+//		Mario.run();
 		somePane = new SomePane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
-		GRect rec= new GRect(300,300,100,GROUND);
+		
 	}
 
 	public void switchToMenu() {

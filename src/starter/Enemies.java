@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.Timer;
+
 public class Enemies extends GraphicsProgram {
 	private GRect Top, Bottom, Left, Right;
 	private GImage GoombaImg;
@@ -14,6 +16,7 @@ public class Enemies extends GraphicsProgram {
 	private int goombaCollideSide = 0, goombaCollideBottom = 0;
 	private int Moving = 0;
 	private int goombaDirection = 0;
+	private Enemies[] Goomba;
 
 	public int getGoombaDirection() {
 		return goombaDirection;
@@ -147,5 +150,18 @@ public class Enemies extends GraphicsProgram {
 				}
 			}
 		}
+	}
+	public void gumbaSpot()
+	{
+		Goomba = new Enemies[30];
+		for (int i = 0; i < Goomba.length; i++) {
+			Goomba[i] = new Enemies();
+		}
+
+		for (int i = 0; i < Goomba.length; i++) {
+			Goomba[i].InitilizeGoomba(i * 400, 0, 50, 50, 3);
+			add(Goomba[i].getGoombaImg());
+		}
+
 	}
 }

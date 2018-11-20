@@ -39,7 +39,7 @@ public class Level extends GraphicsProgram{
 				Pipe[a][i] = new Platform();
 			}
 		platform[0][0].InitilizePlatform(400,400,50,50,3);
-		platform[0][1].InitilizePlatform(600,400,50,50,3);
+			platform[0][1].InitilizePlatform(600,400,50,50,3);
 		platform[0][2].InitilizePlatform(650,400,50,50,3);
 		platform[0][3].InitilizePlatform(700,400,50,50,3);
 		platform[0][4].InitilizePlatform(750,400,50,50,3);

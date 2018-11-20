@@ -22,7 +22,12 @@ public class Mario extends GraphicsProgram {
 
 	Platform[][] Pipe;
 	Enemies[] Goomba;
-
+	Platform flag;
+	
+	GImage flagImage;
+	GImage castleImage;
+	
+	
 	private static final double Vert_MAX_Velocity = 15, Horiz_MAX_Velocity = 5, walkSpeed = 1, Friction = 1,
 			jumpSpeed = 15, Gravity = 1;
 	private static final int XAXIS = 100, YAXIS = 600, WIDTH = 50, HEIGHT = 50, THICKNESS = 3;
@@ -164,12 +169,27 @@ public class Mario extends GraphicsProgram {
 		platform[7][5].InitilizePlatform(8250, 300, 50, 50, 3);
 		platform[7][6].InitilizePlatform(8300, 250, 50, 50, 3);
 		platform[7][7].InitilizePlatform(8350, 250, 50, 50, 3);
-
+		
+		platform[8][0].InitilizePlatform(8550, 590,5, 5, 3);
+		
+		flagImage = new GImage("flag.png",0,0);
+		flagImage.setImage("flag.png");
+		flagImage.setSize(25,80);
+		flagImage.setBounds(8570, 100, 50, 500);
+		add(flagImage);
+		
+		castleImage = new GImage("castle.png",0,0);
+		castleImage.setImage("castle.png");
+		castleImage.setSize(30,30);
+		castleImage.setBounds(8725, 350, 250, 250);
+		add(castleImage);
+		
+	
 		for (int i = 0; i < Ground.length; i++) {
 			// Ground[i].InitilizePlatform(i*200, 600,1800, 200, 3);
 		}
 
-		Ground[0].InitilizePlatform(0, 600, 8000, 200, 3);
+		Ground[0].InitilizePlatform(0, 600,12000, 200, 3);
 //		Ground[1].InitilizePlatform(3000, 600,800, 200, 3);
 //		Ground[2].InitilizePlatform(4000, 600,7000, 200, 3);
 
@@ -263,7 +283,23 @@ public class Mario extends GraphicsProgram {
 
 		collision(Goomba);
 		collision(Ground);
-		////
+		
+		//test code
+		//System.out.println("------"+Mario.getX());
+		//System.out.println("******"+platform[8][0].getTop().getX());
+		
+		//Touching flag
+		if(Mario.getX()>=platform[8][0].getTop().getX())  {
+			
+			
+			moveMario(0,1);
+			if(Mario.getY()==551 && Mario.getX()<= platform[8][0].getTop().getX()+250) {
+				moveMario(2,0);
+			//	System.out.println("$$$$$$$$$$$$$$$$");
+			}
+			
+			return;
+		}
 		for (int a = 0; a < Pipe.length; a++) {
 			collision(Pipe[a]);
 		}
@@ -277,7 +313,7 @@ public class Mario extends GraphicsProgram {
 
 				if (horizVelocity < 0)
 					horizVelocity = 0;
-				moveMario(1, 0);
+					moveMario(1, 0);
 
 				// if Mario is on the right corner on the screen
 			} else if (Mario.getX() > 500) {
@@ -300,6 +336,8 @@ public class Mario extends GraphicsProgram {
 					for (int i = 0; i < Goomba.length; i++) {
 						Goomba[i].moveGoomba(-horizVelocity, 0);
 					}
+					flagImage.move(-horizVelocity, 0);
+					castleImage.move(-horizVelocity, 0);
 					moveMario(0, vertVelocity);
 				} else
 					moveMario(horizVelocity, vertVelocity);
@@ -489,6 +527,7 @@ public class Mario extends GraphicsProgram {
 				}
 			}
 		}
+
 	}
 
 	// activates when any key is released
@@ -509,6 +548,8 @@ public class Mario extends GraphicsProgram {
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_SPACE) {
 			onground = 0;
 		}
+		
 
 	}
+	
 }

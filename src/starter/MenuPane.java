@@ -1,37 +1,38 @@
 package starter;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import acm.graphics.GImage;
 import acm.graphics.GObject;
 
 public class MenuPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
-	private GButton rect;
+	private GImage menu;
 
 	public MenuPane(MainApplication app) {
 		super();
 		program = app;
-		rect = new GButton("Next", 200, 200, 200, 200);
-		rect.setFillColor(Color.RED);
+		menu = new GImage("menu.png", 0, 0);
+		menu.setSize(850, 600);
 	}
 
 	@Override
 	public void showContents() {
-		program.add(rect);
+		program.add(menu);
 	}
 
 	@Override
 	public void hideContents() {
-		program.remove(rect);
+		program.remove(menu);
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		GObject obj = program.getElementAt(e.getX(), e.getY());
-		if (obj == rect) {
-			program.switchToSome();
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			program.switchToMenu();
 		}
 	}
 }

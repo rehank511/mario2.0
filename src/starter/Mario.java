@@ -24,6 +24,8 @@ public class Mario extends GraphicsProgram {
 	private Level level = new Level();
 //	private Platform[][] Pipe;
 	private Enemies[] Goomba;
+	public GImage plat;
+	
 	
 	public static int  WIDTH = 50, HEIGHT = 50;
 
@@ -101,7 +103,8 @@ public class Mario extends GraphicsProgram {
 		levelSpawn();
 		
 		gumbaSpawn();
-
+		
+		levelPicSpawn();
 //		add(level.flagImage);
 //		add(level.castleImage);
 		Timer t = new Timer(10, this);
@@ -109,7 +112,60 @@ public class Mario extends GraphicsProgram {
 		addKeyListeners();
 	}
 	
-	
+	public void levelPicSpawn()
+	{
+		for(int i = 0; i < 8; i++)
+		{
+			
+			plat = new GImage("Plat1 .png", level.levelPlatform[0][i].getGround().getX(), level.levelPlatform[0][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+		}
+		for(int i = 0; i < 8; i++)
+		{
+			
+			plat = new GImage("Plat1 .png", level.levelPlatform[1][i].getGround().getX(), level.levelPlatform[1][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+		}
+		for(int i = 0; i < 6; i++)
+		{
+			plat = new GImage("Plat1 .png", level.levelPlatform[2][i].getGround().getX(), level.levelPlatform[2][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+		}
+		for(int i = 0; i < 2; i++)
+		{
+			plat = new GImage("Plat1 .png", level.levelPlatform[3][i].getGround().getX(), level.levelPlatform[3][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+		}
+		for(int i = 0; i < 3; i++)
+		{
+			plat = new GImage("Plat1 .png", level.levelPlatform[4][i].getGround().getX(), level.levelPlatform[4][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+		}
+		for(int i = 0; i < 10; i++)
+		{
+			plat = new GImage("Plat1 .png", level.levelPlatform[5][i].getGround().getX(), level.levelPlatform[5][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+		}
+		for(int i = 0; i < 4; i++)
+		{
+			plat = new GImage("Plat1 .png", level.levelPlatform[6][i].getGround().getX(), level.levelPlatform[6][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+		}
+		for(int i = 0; i < 8; i++)
+		{
+			
+			plat = new GImage("Plat1 .png", level.levelPlatform[7][i].getGround().getX(), level.levelPlatform[7][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+		}
+	}
 
 	// is called after every milisecond and moves the mario and the platform
 	@Override

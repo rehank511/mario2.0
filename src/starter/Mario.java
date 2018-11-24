@@ -21,7 +21,7 @@ import javax.swing.Timer;
 public class Mario extends GraphicsProgram {
 //	private Platform[][] platform;
 //	private Platform[] Ground;
-	private Level level = new Level();;
+	private Level level = new Level();
 //	private Platform[][] Pipe;
 	private Enemies[] Goomba;
 	
@@ -102,8 +102,8 @@ public class Mario extends GraphicsProgram {
 		
 		gumbaSpawn();
 
-		add(level.flagImage);
-		add(level.castleImage);
+//		add(level.flagImage);
+//		add(level.castleImage);
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
@@ -179,8 +179,8 @@ public class Mario extends GraphicsProgram {
 						Goomba[i].moveGoomba(-global.horizVelocity, 0);
 					}
 
-					level.flagImage.move(-(global.horizVelocity), 0);
-					level.castleImage.move(-(global.horizVelocity), 0);
+//					level.flagImage.move(-(global.horizVelocity), 0);
+//					level.castleImage.move(-(global.horizVelocity), 0);
 					
 
 					moveMario(0, global.vertVelocity);
@@ -427,6 +427,7 @@ public class Mario extends GraphicsProgram {
 			for (int i = 0; i < level.levelPlatform[0].length; i++) {
 				level.levelPlatform[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(level.levelPlatform[a][i].getGround());
+				add(level.plat);
 
 			}
 		}

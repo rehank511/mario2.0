@@ -79,12 +79,10 @@ public class Mario extends GraphicsProgram {
 
 
 	public void marioGraphics(){
-		GImage background = new GImage("bg.png", 0, 0);
-		background.setSize(850, 600);
-		add(background);
-		GImage ground = new GImage("ground.png", 0, 600);
-		ground.setSize(850, 100);
-		add(ground);
+
+		add(level.background);
+		add(level.ground[0]);
+		
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgRight.setSize(50, 57);
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
@@ -92,10 +90,18 @@ public class Mario extends GraphicsProgram {
 		add(MarioImgRight);
 		add(level.flagImage);
 		add(level.castleImage);
-		for(int i =0;i<49;i++) {
+		
+		for(int i =0;i<76;i++) {
 		add(level.platarr[i]);
 		}
+		
+		for(int i =0;i<6;i++) {
+			add(level.pipearr[i]);
+			}
+	
+		
 	}
+		
 	public void run() {
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
 		
@@ -193,7 +199,7 @@ public class Mario extends GraphicsProgram {
 
 
 		collision(level.Ground);
-		////
+		//Collision of flag pole and castle
 		if(Mario.getX()>=level.levelPlatform[8][0].getTop().getX())  {
 			
 			
@@ -252,10 +258,14 @@ public class Mario extends GraphicsProgram {
 					
 					level.flagImage.move(-(global.horizVelocity), 0);
 					level.castleImage.move(-(global.horizVelocity), 0);
-					for(int i =0;i<49;i++) {
+					
+					for(int i =0;i<76;i++) {
 					level.platarr[i].move(-(global.horizVelocity), 0);
 					}
 					
+					for(int i =0;i<6;i++) {
+						level.pipearr[i].move(-(global.horizVelocity), 0);
+						}
 
 					
 					

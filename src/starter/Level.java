@@ -17,20 +17,18 @@ public class Level extends GraphicsProgram{
 	public Platform[][] levelPlatform;
 	public Platform[] Ground;
 	public Platform[][] Pipe;
-	public GImage plat;
+	//public GImage plat;
 	public GImage[] platarr;
-
+	public GImage[] pipearr;
+	
+	
+	GImage background;
+	GImage[] ground;
 	GImage flagImage;
 	GImage castleImage;
 	public void level1()
 	{
-		GImage background = new GImage("bg.png", 0, 0);
-		background.setSize(850, 600);
-		add(background);
-
-		GImage ground = new GImage("ground.png", 0, 600);
-		ground.setSize(850, 100);
-		add(ground);
+	
 
 				flagImage = new GImage("flag.png",0,0);
 				flagImage.setImage("flag.png");
@@ -120,7 +118,7 @@ public class Level extends GraphicsProgram{
 		levelPlatform[7][6].InitilizePlatform(8300,250,50,50,3);
 		levelPlatform[7][7].InitilizePlatform(8350,250,50,50,3);
 		
-		platarr = new GImage[50];
+		platarr = new GImage[100];
 		
 		platarr[0]= new GImage("Plat1 .png",400,400);	
 		platarr[1]= new GImage("Plat1 .png",600,400);	
@@ -179,16 +177,79 @@ public class Level extends GraphicsProgram{
 		platarr[47]= new GImage("Plat1 .png",8300,250);	
 		platarr[48]= new GImage("Plat1 .png",8350,250);	
 		
-
-	
+		platarr[49]= new GImage("Plat1 .png",8050,550);	
+		platarr[50]= new GImage("Plat1 .png",8100,550);	
+		platarr[51]= new GImage("Plat1 .png",8150,550);	
+		platarr[52]= new GImage("Plat1 .png",8200,550);	
+		platarr[53]= new GImage("Plat1 .png",8250,550);	
+		platarr[54]= new GImage("Plat1 .png",8300,550);	
+		platarr[55]= new GImage("Plat1 .png",8350,550);	
 		
+		platarr[56]= new GImage("Plat1 .png",8100,500);	
+		platarr[57]= new GImage("Plat1 .png",8150,500);	
+		platarr[58]= new GImage("Plat1 .png",8200,500);	
+		platarr[59]= new GImage("Plat1 .png",8250,500);	
+		platarr[60]= new GImage("Plat1 .png",8300,500);	
+		platarr[61]= new GImage("Plat1 .png",8350,500);	
 		
+		platarr[62]= new GImage("Plat1 .png",8150,450);	
+		platarr[63]= new GImage("Plat1 .png",8200,450);	
+		platarr[64]= new GImage("Plat1 .png",8250,450);	
+		platarr[65]= new GImage("Plat1 .png",8300,450);	
+		platarr[66]= new GImage("Plat1 .png",8350,450);	
 		
-		for(int i =0;i<49;i++) {
+		platarr[67]= new GImage("Plat1 .png",8200,400);	
+		platarr[68]= new GImage("Plat1 .png",8250,400);	
+		platarr[69]= new GImage("Plat1 .png",8300,400);	
+		platarr[70]= new GImage("Plat1 .png",8350,400);	
+		
+		platarr[71]= new GImage("Plat1 .png",8250,350);	
+		platarr[72]= new GImage("Plat1 .png",8300,350);	
+		platarr[73]= new GImage("Plat1 .png",8350,350);	
+		
+		platarr[74]= new GImage("Plat1 .png",8300,300);	
+		platarr[75]= new GImage("Plat1 .png",8350,300);	
+		
+		for(int i =0;i<76;i++) {
 		platarr[i].setSize(50,50);
 		}
 		
-	
+		
+		pipearr = new GImage[6];
+		
+		pipearr[0]= new GImage("pipe.png",1000, 540);	
+		pipearr[1]= new GImage("pipe.png",1400, 520);	
+		pipearr[2]= new GImage("pipe.png",1800, 500);	
+		pipearr[3]= new GImage("pipe.png",2200, 480);	
+		pipearr[4]= new GImage("pipe.png",7100, 540);	
+		pipearr[5]= new GImage("pipe.png",7900, 540);	
+		
+		pipearr[0].setSize(60,60);
+		pipearr[1].setSize(60,80);
+		pipearr[2].setSize(60,100);
+		pipearr[3].setSize(60,120);
+		pipearr[4].setSize(60,60);
+		pipearr[5].setSize(60,60);
+		
+		
+		
+		//background = new GImage("bg.png", 0, 0);
+		//background.setSize(850, 600);
+		
+		background = new GImage("bg.png",0,0);
+		background.setImage("bg.png");
+		background.setSize(850, 600);
+		background.setBounds(0,0 ,850, 600);
+		
+		//ground = new GImage("ground.png", 0, 600);
+		//ground.setSize(850, 100);
+		
+		ground = new GImage[3];
+		ground[0] = new GImage("ground.png",0,0);
+		//ground[0].setImage("ground.png");
+		//ground[0].setSize(850, 1000);
+		ground[0].setBounds(0,600 ,850, 100);
+		
 		
 
 		//for(int i = 0; i < 8; i++)

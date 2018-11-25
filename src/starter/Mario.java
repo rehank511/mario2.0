@@ -75,6 +75,11 @@ public class Mario extends GraphicsProgram {
 		Marioright.move(x, y);
 		Marioleft.move(x, y);
 	}
+	
+	public void marioDie()
+	{
+		
+	}
 
 
 
@@ -105,8 +110,10 @@ public class Mario extends GraphicsProgram {
 		gumbaSpawn();
 		
 		levelPicSpawn();
+		
 //		add(level.flagImage);
 //		add(level.castleImage);
+		
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();

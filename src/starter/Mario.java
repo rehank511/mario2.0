@@ -90,23 +90,25 @@ public class Mario extends GraphicsProgram {
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgLeft.setSize(50, 57);
 		add(MarioImgRight);
-
+		add(level.flagImage);
+		add(level.castleImage);
+		for(int i =0;i<49;i++) {
+		add(level.platarr[i]);
+		}
 	}
 	public void run() {
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
 		
-		marioGraphics();
-		
-		
 		level.level1();
+		marioGraphics();
 		
 		levelSpawn();
 		
 		gumbaSpawn();
 		
-		levelPicSpawn();
-//		add(level.flagImage);
-//		add(level.castleImage);
+	//	levelPicSpawn();
+		
+
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
@@ -120,6 +122,7 @@ public class Mario extends GraphicsProgram {
 			plat = new GImage("Plat1 .png", level.levelPlatform[0][i].getGround().getX(), level.levelPlatform[0][i].getGround().getY());
 			plat.setSize(50, 50);
 			add(plat);
+			plat.move(-(global.horizVelocity), 0);
 		}
 		for(int i = 0; i < 8; i++)
 		{
@@ -127,36 +130,42 @@ public class Mario extends GraphicsProgram {
 			plat = new GImage("Plat1 .png", level.levelPlatform[1][i].getGround().getX(), level.levelPlatform[1][i].getGround().getY());
 			plat.setSize(50, 50);
 			add(plat);
+			plat.move(-(global.horizVelocity), 0);
 		}
 		for(int i = 0; i < 6; i++)
 		{
 			plat = new GImage("Plat1 .png", level.levelPlatform[2][i].getGround().getX(), level.levelPlatform[2][i].getGround().getY());
 			plat.setSize(50, 50);
 			add(plat);
+			plat.move(-(global.horizVelocity), 0);
 		}
 		for(int i = 0; i < 2; i++)
 		{
 			plat = new GImage("Plat1 .png", level.levelPlatform[3][i].getGround().getX(), level.levelPlatform[3][i].getGround().getY());
 			plat.setSize(50, 50);
 			add(plat);
+			plat.move(-(global.horizVelocity), 0);
 		}
 		for(int i = 0; i < 3; i++)
 		{
 			plat = new GImage("Plat1 .png", level.levelPlatform[4][i].getGround().getX(), level.levelPlatform[4][i].getGround().getY());
 			plat.setSize(50, 50);
 			add(plat);
+			plat.move(-(global.horizVelocity), 0);
 		}
 		for(int i = 0; i < 10; i++)
 		{
 			plat = new GImage("Plat1 .png", level.levelPlatform[5][i].getGround().getX(), level.levelPlatform[5][i].getGround().getY());
 			plat.setSize(50, 50);
 			add(plat);
+			plat.move(-(global.horizVelocity), 0);
 		}
 		for(int i = 0; i < 4; i++)
 		{
 			plat = new GImage("Plat1 .png", level.levelPlatform[6][i].getGround().getX(), level.levelPlatform[6][i].getGround().getY());
 			plat.setSize(50, 50);
 			add(plat);
+			plat.move(-(global.horizVelocity), 0);
 		}
 		for(int i = 0; i < 8; i++)
 		{
@@ -164,6 +173,7 @@ public class Mario extends GraphicsProgram {
 			plat = new GImage("Plat1 .png", level.levelPlatform[7][i].getGround().getX(), level.levelPlatform[7][i].getGround().getY());
 			plat.setSize(50, 50);
 			add(plat);
+			plat.move(-(global.horizVelocity), 0);
 		}
 	}
 
@@ -235,10 +245,20 @@ public class Mario extends GraphicsProgram {
 						Goomba[i].moveGoomba(-global.horizVelocity, 0);
 					}
 
-//					level.flagImage.move(-(global.horizVelocity), 0);
-//					level.castleImage.move(-(global.horizVelocity), 0);
+					
+					
+					
+					//stable Flag and castle
+					
+					level.flagImage.move(-(global.horizVelocity), 0);
+					level.castleImage.move(-(global.horizVelocity), 0);
+					for(int i =0;i<49;i++) {
+					level.platarr[i].move(-(global.horizVelocity), 0);
+					}
 					
 
+					
+					
 					moveMario(0, global.vertVelocity);
 
 				} else
@@ -483,7 +503,7 @@ public class Mario extends GraphicsProgram {
 			for (int i = 0; i < level.levelPlatform[0].length; i++) {
 				level.levelPlatform[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(level.levelPlatform[a][i].getGround());
-				add(level.plat);
+				//add(level.plat);
 
 			}
 		}

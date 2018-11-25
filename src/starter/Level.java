@@ -18,6 +18,7 @@ public class Level extends GraphicsProgram{
 	public Platform[] Ground;
 	public Platform[][] Pipe;
 	public GImage plat;
+	public GImage[] platarr;
 
 	GImage flagImage;
 	GImage castleImage;
@@ -31,14 +32,14 @@ public class Level extends GraphicsProgram{
 		ground.setSize(850, 100);
 		add(ground);
 
-		//		flagImage = new GImage("flag.png",0,0);
-		//		flagImage.setImage("flag.png");
-		//		flagImage.setSize(25,80);
-		//		flagImage.setBounds(8570, 100, 50, 500);
-		//		castleImage = new GImage("castle.png",0,0);
-		//	
-		//		castleImage.setSize(30,30);
-		//		castleImage.setBounds(8725, 350, 250, 250);
+				flagImage = new GImage("flag.png",0,0);
+				flagImage.setImage("flag.png");
+				flagImage.setSize(25,80);
+				flagImage.setBounds(8570, 100, 50, 500);
+				castleImage = new GImage("castle.png",0,0);
+			
+				castleImage.setSize(30,30);
+				castleImage.setBounds(8725, 350, 250, 250);
 
 
 
@@ -69,6 +70,7 @@ public class Level extends GraphicsProgram{
 		levelPlatform[0][6].InitilizePlatform(850,400,50,50,3);
 		levelPlatform[0][7].InitilizePlatform(700,200,50,50,3);
 
+		
 		levelPlatform[1][0].InitilizePlatform(3400,400,50,50,3);
 		levelPlatform[1][1].InitilizePlatform(3500,200,50,50,3);
 		levelPlatform[1][2].InitilizePlatform(3550,200,50,50,3);
@@ -105,9 +107,9 @@ public class Level extends GraphicsProgram{
 		levelPlatform[5][9].InitilizePlatform(6700,400,50,50,3);
 
 		levelPlatform[6][0].InitilizePlatform(6700,400,50,50,3);
-		levelPlatform[6][1].InitilizePlatform(6700,400,50,50,3);
-		levelPlatform[6][2].InitilizePlatform(7300,400,50,50,3);
-		levelPlatform[6][3].InitilizePlatform(7350,400,50,50,3);
+	
+		levelPlatform[6][1].InitilizePlatform(7300,400,50,50,3);
+		levelPlatform[6][2].InitilizePlatform(7350,400,50,50,3);
 
 		levelPlatform[7][0].InitilizePlatform(8000,550,50,50,3);
 		levelPlatform[7][1].InitilizePlatform(8050,500,50,50,3);
@@ -117,58 +119,129 @@ public class Level extends GraphicsProgram{
 		levelPlatform[7][5].InitilizePlatform(8250,300,50,50,3);
 		levelPlatform[7][6].InitilizePlatform(8300,250,50,50,3);
 		levelPlatform[7][7].InitilizePlatform(8350,250,50,50,3);
+		
+		platarr = new GImage[50];
+		
+		platarr[0]= new GImage("Plat1 .png",400,400);	
+		platarr[1]= new GImage("Plat1 .png",600,400);	
+		platarr[2]= new GImage("Plat1 .png",650,400);	
+		platarr[3]= new GImage("Plat1 .png",700,400);	
+		platarr[4]= new GImage("Plat1 .png",750,400);	
+		platarr[5]= new GImage("Plat1 .png",800,400);	
+		platarr[6]= new GImage("Plat1 .png",850,400);	
+		platarr[7]= new GImage("Plat1 .png",700,200);	
+		
+		platarr[8]= new GImage("Plat1 .png",3400,400);	
+		platarr[9]= new GImage("Plat1 .png",3500,200);	
+		platarr[10]= new GImage("Plat1 .png",3550,200);	
+		platarr[11]= new GImage("Plat1 .png",3600,200);	
+		platarr[12]= new GImage("Plat1 .png",3650,200);	
+		platarr[13]= new GImage("Plat1 .png",3700,200);	
+		platarr[14]= new GImage("Plat1 .png",3750,200);	
+		platarr[15]= new GImage("Plat1 .png",3800,200);	
+		
+		platarr[16]= new GImage("Plat1 .png",4000,200);	
+		platarr[17]= new GImage("Plat1 .png",4100,200);	
+		platarr[18]= new GImage("Plat1 .png",4150,200);	
+		platarr[19]= new GImage("Plat1 .png",4200,200);	
+		platarr[20]= new GImage("Plat1 .png",4250,200);	
+		platarr[21]= new GImage("Plat1 .png",4250,400);	
+		
+		platarr[22]= new GImage("Plat1 .png",4800,400);	
+		platarr[23]= new GImage("Plat1 .png",4850,400);	
+		
+		platarr[24]= new GImage("Plat1 .png",5400,400);	
+		platarr[25]= new GImage("Plat1 .png",5600,400);	
+		platarr[26]= new GImage("Plat1 .png",5800,400);	
+		
+		platarr[27]= new GImage("Plat1 .png",6200,200);	
+		platarr[28]= new GImage("Plat1 .png",6250,200);	
+		platarr[29]= new GImage("Plat1 .png",6300,200);	
+		platarr[30]= new GImage("Plat1 .png",6350,200);	
+		platarr[31]= new GImage("Plat1 .png",6600,200);	
+		platarr[32]= new GImage("Plat1 .png",6650,200);	
+		platarr[33]= new GImage("Plat1 .png",6700,200);	
+		platarr[34]= new GImage("Plat1 .png",6750,200);	
+		platarr[35]= new GImage("Plat1 .png",6650,400);	
+		platarr[36]= new GImage("Plat1 .png",6700,400);	
+		
+		platarr[37]= new GImage("Plat1 .png",6700,400);	
+		platarr[38]= new GImage("Plat1 .png",6700,400);	
+		platarr[39]= new GImage("Plat1 .png",7300,400);	
+		platarr[40]= new GImage("Plat1 .png",7350,400);	
+		
+		platarr[41]= new GImage("Plat1 .png",8000,550);	
+		platarr[42]= new GImage("Plat1 .png",8050,500);	
+		platarr[43]= new GImage("Plat1 .png",8100,450);	
+		platarr[44]= new GImage("Plat1 .png",8150,400);	
+		platarr[45]= new GImage("Plat1 .png",8200,350);	
+		platarr[46]= new GImage("Plat1 .png",8250,300);	
+		platarr[47]= new GImage("Plat1 .png",8300,250);	
+		platarr[48]= new GImage("Plat1 .png",8350,250);	
+		
 
-		for(int i = 0; i < 8; i++)
-		{
+	
+		
+		
+		
+		for(int i =0;i<49;i++) {
+		platarr[i].setSize(50,50);
+		}
+		
+	
+		
+
+		//for(int i = 0; i < 8; i++)
+		//{
 			
-			plat = new GImage("Plat1 .png", levelPlatform[0][i].getGround().getX(), levelPlatform[0][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 8; i++)
-		{
+		//	plat = new GImage("Plat1 .png", levelPlatform[0][i].getGround().getX(), levelPlatform[0][i].getGround().getY());
+		//	plat.setSize(50, 50);
+		//	add(plat);
+		//}
+		//for(int i = 0; i < 8; i++)
+		//{
 			
-			plat = new GImage("Plat1 .png", levelPlatform[1][i].getGround().getX(), levelPlatform[1][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 6; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[2][i].getGround().getX(), levelPlatform[2][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 2; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[3][i].getGround().getX(), levelPlatform[3][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 3; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[4][i].getGround().getX(), levelPlatform[4][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 10; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[5][i].getGround().getX(), levelPlatform[5][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 4; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[6][i].getGround().getX(), levelPlatform[6][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 8; i++)
-		{
+		//	plat = new GImage("Plat1 .png", levelPlatform[1][i].getGround().getX(), levelPlatform[1][i].getGround().getY());
+		//	plat.setSize(50, 50);
+		//	add(plat);
+		//}
+		//for(int i = 0; i < 6; i++)
+		//{
+		//	plat = new GImage("Plat1 .png", levelPlatform[2][i].getGround().getX(), levelPlatform[2][i].getGround().getY());
+		//	plat.setSize(50, 50);
+		//	add(plat);
+		//}
+		//for(int i = 0; i < 2; i++)
+		//{
+		//	plat = new GImage("Plat1 .png", levelPlatform[3][i].getGround().getX(), levelPlatform[3][i].getGround().getY());
+		//	plat.setSize(50, 50);
+		//	add(plat);
+		//}
+		//for(int i = 0; i < 3; i++)
+		//{
+		//	plat = new GImage("Plat1 .png", levelPlatform[4][i].getGround().getX(), levelPlatform[4][i].getGround().getY());
+		//	plat.setSize(50, 50);
+		//	add(plat);
+		//}
+		//for(int i = 0; i < 10; i++)
+		//{
+		//	plat = new GImage("Plat1 .png", levelPlatform[5][i].getGround().getX(), levelPlatform[5][i].getGround().getY());
+		//	plat.setSize(50, 50);
+		//	add(plat);
+		//}
+		//for(int i = 0; i < 4; i++)
+		//{
+		//	plat = new GImage("Plat1 .png", levelPlatform[6][i].getGround().getX(), levelPlatform[6][i].getGround().getY());
+		//	plat.setSize(50, 50);
+		//	add(plat);
+		//}
+		//for(int i = 0; i < 8; i++)
+		//{
 			
-			plat = new GImage("Plat1 .png", levelPlatform[7][i].getGround().getX(), levelPlatform[7][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
+		//	plat = new GImage("Plat1 .png", levelPlatform[7][i].getGround().getX(), levelPlatform[7][i].getGround().getY());
+		//	plat.setSize(50, 50);
+		//	add(plat);
+		//}
 		
 		Ground[0].InitilizePlatform(0, 600,2800, 200, 3);
 		Ground[1].InitilizePlatform(3000, 600,800, 200, 3);
@@ -182,6 +255,8 @@ public class Level extends GraphicsProgram{
 		Pipe[0][5].InitilizePlatform(7900, 540, 60, 60, 3);
 
 		levelPlatform[8][0].InitilizePlatform(8550, 590,5, 5, 3);
+		//add(flagImage);
+		//add(castleImage);
 	}
 
 

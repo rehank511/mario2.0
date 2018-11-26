@@ -115,8 +115,8 @@ public class Mario extends GraphicsProgram {
 		gumbaSpawn();
 		add(gap);
 
-				add(level.flagImage);
-				add(level.castleImage);
+		//		add(level.flagImage);
+		//		add(level.castleImage);
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
@@ -191,8 +191,8 @@ public class Mario extends GraphicsProgram {
 						Goomba[i].moveGoomba(-global.horizVelocity, 0);
 					}
 
-										level.flagImage.move(-(global.horizVelocity), 0);
-										level.castleImage.move(-(global.horizVelocity), 0);
+					//					level.flagImage.move(-(global.horizVelocity), 0);
+					//					level.castleImage.move(-(global.horizVelocity), 0);
 
 
 					moveMario(0, global.vertVelocity);

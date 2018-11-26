@@ -166,10 +166,10 @@ public class Mario extends GraphicsProgram {
 		if(Mario.getX()>=level.levelPlatform[0][49].getTop().getX())  {
 
 			moveMario(0,1);
-			if(Mario.getY()==551 && Mario.getX()<= level.levelPlatform[8][0].getTop().getX()+250) {
-				moveMario(2,0);
-
-			}
+//			if(Mario.getY()==551 && Mario.getX()<= level.levelPlatform[8][0].getTop().getX()+250) {
+//				moveMario(2,0);
+//
+//			}
 
 			return;
 		}

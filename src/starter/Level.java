@@ -31,15 +31,15 @@ public class Level extends GraphicsProgram{
 	public void level1()
 	{
 	
-//
-//				flagImage = new GImage("flag.png",0,0);
-//				flagImage.setImage("flag.png");
-//				flagImage.setSize(25,80);
-//				flagImage.setBounds(8570, 100, 50, 500);
-//				castleImage = new GImage("castle.png",0,0);
-//			
-//				castleImage.setSize(30,30);
-//				castleImage.setBounds(8725, 350, 250, 250);
+
+				flagImage = new GImage("flag.png",0,0);
+				flagImage.setImage("flag.png");
+				flagImage.setSize(25,80);
+				flagImage.setBounds(8570, 100, 50, 500);
+				castleImage = new GImage("castle.png",0,0);
+			
+				castleImage.setSize(30,30);
+				castleImage.setBounds(8725, 350, 250, 250);
 
 
 

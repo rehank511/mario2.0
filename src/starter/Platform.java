@@ -11,6 +11,10 @@ public class Platform extends GraphicsProgram{
 	private GRect Ground;
 	private GRect Top, Bottom, Left, Right;
 	private GRect Platform;
+	private Level level = new Level();
+	private Mario levelPic = new Mario();
+
+	
 	
 	public GRect getGround() {
 		return Ground;
@@ -32,10 +36,6 @@ public class Platform extends GraphicsProgram{
 		return Right;
 	}
 	
-	public void run()
-	{
-		
-	}
 
 	public Platform() {
 		Ground = new GRect(0, 0, 0, 0);
@@ -43,9 +43,7 @@ public class Platform extends GraphicsProgram{
 		Bottom = new GRect(0, 0, 0, 0);
 		Left = new GRect(0, 0, 0, 0);
 		Right = new GRect(0, 0, 0, 0);
-		Ground.setColor(new Color(212, 212, 212));
-		
-		
+		Ground.setColor(new Color(212, 212, 212));	
 	}
 	
 	public void InitilizePlatform(int x, int y, int w, int h, int q){
@@ -53,13 +51,7 @@ public class Platform extends GraphicsProgram{
 		Top.setBounds(x+q, y, w-2*q, h/2);
 		Bottom.setBounds(x+q, y+h/2, w-2*q, h/2);
 		Left.setBounds(x, y+q, q, h-2*q);
-		Right.setBounds(x+w-q, y+q, q, h-2*q);
-
-	
-	
-		
-		
-		
+		Right.setBounds(x+w-q, y+q, q, h-2*q);	
 	}
 	
 
@@ -69,7 +61,6 @@ public class Platform extends GraphicsProgram{
 		Bottom.setBounds(x+q, y+h/2, w-2*q, h/2);
 		Left.setBounds(x, y+q, q, h-2*q);
 		Right.setBounds(x+w-q, y+q, q, h-2*q);
-	
 	}
 	
 	
@@ -79,7 +70,13 @@ public class Platform extends GraphicsProgram{
 		Bottom.move(x, y);
 		Right.move(x, y);
 		Left.move(x, y);
+		
+//		levelPic.plat1.move(x, y);
+		
+//		levelPic.plat1.move(x,y);
 	}
+	
+	
 	
 	
 }

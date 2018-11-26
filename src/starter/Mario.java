@@ -113,6 +113,7 @@ public class Mario extends GraphicsProgram {
 		levelSpawn();
 
 		gumbaSpawn();
+		
 		add(gap);
 
 		//		add(level.flagImage);

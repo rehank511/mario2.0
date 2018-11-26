@@ -17,10 +17,10 @@ public class Level extends GraphicsProgram{
 	public Platform[][] levelPlatform;
 	public Platform[] Ground;
 	public Platform[][] Pipe;
-	public GImage plat;
+//	private GImage plat;
 
-	GImage flagImage;
-	GImage castleImage;
+	private GImage flagImage;
+	private GImage castleImage;
 	public void level1()
 	{
 		GImage background = new GImage("bg.png", 0, 0);
@@ -42,7 +42,7 @@ public class Level extends GraphicsProgram{
 
 
 
-		levelPlatform = new Platform[50][10];
+		levelPlatform = new Platform[1][50];
 		for (int a = 0; a < levelPlatform.length; a++)
 			for (int i = 0; i < levelPlatform[0].length; i++) {
 				levelPlatform[a][i] = new Platform();
@@ -69,106 +69,55 @@ public class Level extends GraphicsProgram{
 		levelPlatform[0][6].InitilizePlatform(850,400,50,50,3);
 		levelPlatform[0][7].InitilizePlatform(700,200,50,50,3);
 
-		levelPlatform[1][0].InitilizePlatform(3400,400,50,50,3);
-		levelPlatform[1][1].InitilizePlatform(3500,200,50,50,3);
-		levelPlatform[1][2].InitilizePlatform(3550,200,50,50,3);
-		levelPlatform[1][3].InitilizePlatform(3600,200,50,50,3);
-		levelPlatform[1][4].InitilizePlatform(3650,200,50,50,3);
-		levelPlatform[1][5].InitilizePlatform(3700,200,50,50,3);
-		levelPlatform[1][6].InitilizePlatform(3750,200,50,50,3);
-		levelPlatform[1][7].InitilizePlatform(3800,200,50,50,3);
+		levelPlatform[0][8].InitilizePlatform(3400,400,50,50,3);
+		levelPlatform[0][9].InitilizePlatform(3500,200,50,50,3);
+		levelPlatform[0][10].InitilizePlatform(3550,200,50,50,3);
+		levelPlatform[0][11].InitilizePlatform(3600,200,50,50,3);
+		levelPlatform[0][12].InitilizePlatform(3650,200,50,50,3);
+		levelPlatform[0][13].InitilizePlatform(3700,200,50,50,3);
+		levelPlatform[0][14].InitilizePlatform(3750,200,50,50,3);
+		levelPlatform[0][15].InitilizePlatform(3800,200,50,50,3);
 
-		levelPlatform[2][0].InitilizePlatform(4000,200,50,50,3);
-		levelPlatform[2][1].InitilizePlatform(4100,200,50,50,3);
-		levelPlatform[2][2].InitilizePlatform(4150,200,50,50,3);
-		levelPlatform[2][3].InitilizePlatform(4200,200,50,50,3);
-		levelPlatform[2][4].InitilizePlatform(4250,200,50,50,3);
-		levelPlatform[2][5].InitilizePlatform(4250,400,50,50,3);
+		levelPlatform[0][16].InitilizePlatform(4000,200,50,50,3);
+		levelPlatform[0][17].InitilizePlatform(4100,200,50,50,3);
+		levelPlatform[0][18].InitilizePlatform(4150,200,50,50,3);
+		levelPlatform[0][19].InitilizePlatform(4200,200,50,50,3);
+		levelPlatform[0][20].InitilizePlatform(4250,200,50,50,3);
+		levelPlatform[0][21].InitilizePlatform(4250,400,50,50,3);
 
-		levelPlatform[3][0].InitilizePlatform(4800,400,50,50,3);
-		levelPlatform[3][1].InitilizePlatform(4850,400,50,50,3);
+		levelPlatform[0][22].InitilizePlatform(4800,400,50,50,3);
+		levelPlatform[0][23].InitilizePlatform(4850,400,50,50,3);
 
-		levelPlatform[4][0].InitilizePlatform(5400,400,50,50,3);
-		levelPlatform[4][1].InitilizePlatform(5600,400,50,50,3);
-		levelPlatform[4][2].InitilizePlatform(5800,400,50,50,3);
+		levelPlatform[0][24].InitilizePlatform(5400,400,50,50,3);
+		levelPlatform[0][25].InitilizePlatform(5600,400,50,50,3);
+		levelPlatform[0][26].InitilizePlatform(5800,400,50,50,3);
 
 
-		levelPlatform[5][0].InitilizePlatform(6200,200,50,50,3);
-		levelPlatform[5][1].InitilizePlatform(6250,200,50,50,3);
-		levelPlatform[5][2].InitilizePlatform(6300,200,50,50,3);
-		levelPlatform[5][3].InitilizePlatform(6350,200,50,50,3);
-		levelPlatform[5][4].InitilizePlatform(6600,200,50,50,3);
-		levelPlatform[5][5].InitilizePlatform(6650,200,50,50,3);
-		levelPlatform[5][6].InitilizePlatform(6700,200,50,50,3);
-		levelPlatform[5][7].InitilizePlatform(6750,200,50,50,3);
-		levelPlatform[5][8].InitilizePlatform(6650,400,50,50,3);
-		levelPlatform[5][9].InitilizePlatform(6700,400,50,50,3);
+		levelPlatform[0][27].InitilizePlatform(6200,200,50,50,3);
+		levelPlatform[0][28].InitilizePlatform(6250,200,50,50,3);
+		levelPlatform[0][29].InitilizePlatform(6300,200,50,50,3);
+		levelPlatform[0][30].InitilizePlatform(6350,200,50,50,3);
+		levelPlatform[0][31].InitilizePlatform(6600,200,50,50,3);
+		levelPlatform[0][32].InitilizePlatform(6650,200,50,50,3);
+		levelPlatform[0][33].InitilizePlatform(6700,200,50,50,3);
+		levelPlatform[0][34].InitilizePlatform(6750,200,50,50,3);
+		levelPlatform[0][35].InitilizePlatform(6650,400,50,50,3);
+		levelPlatform[0][36].InitilizePlatform(6700,400,50,50,3);
 
-		levelPlatform[6][0].InitilizePlatform(6700,400,50,50,3);
-		levelPlatform[6][1].InitilizePlatform(6700,400,50,50,3);
-		levelPlatform[6][2].InitilizePlatform(7300,400,50,50,3);
-		levelPlatform[6][3].InitilizePlatform(7350,400,50,50,3);
+		levelPlatform[0][37].InitilizePlatform(6700,400,50,50,3);
+		levelPlatform[0][38].InitilizePlatform(6700,400,50,50,3);
+		levelPlatform[0][39].InitilizePlatform(7300,400,50,50,3);
+		levelPlatform[0][40].InitilizePlatform(7350,400,50,50,3);
 
-		levelPlatform[7][0].InitilizePlatform(8000,550,50,50,3);
-		levelPlatform[7][1].InitilizePlatform(8050,500,50,50,3);
-		levelPlatform[7][2].InitilizePlatform(8100,450,50,50,3);
-		levelPlatform[7][3].InitilizePlatform(8150,400,50,50,3);
-		levelPlatform[7][4].InitilizePlatform(8200,350,50,50,3);
-		levelPlatform[7][5].InitilizePlatform(8250,300,50,50,3);
-		levelPlatform[7][6].InitilizePlatform(8300,250,50,50,3);
-		levelPlatform[7][7].InitilizePlatform(8350,250,50,50,3);
+		levelPlatform[0][41].InitilizePlatform(8000,550,50,50,3);
+		levelPlatform[0][42].InitilizePlatform(8050,500,50,50,3);
+		levelPlatform[0][43].InitilizePlatform(8100,450,50,50,3);
+		levelPlatform[0][44].InitilizePlatform(8150,400,50,50,3);
+		levelPlatform[0][45].InitilizePlatform(8200,350,50,50,3);
+		levelPlatform[0][46].InitilizePlatform(8250,300,50,50,3);
+		levelPlatform[0][47].InitilizePlatform(8300,250,50,50,3);
+		levelPlatform[0][48].InitilizePlatform(8350,250,50,50,3);
 
-		for(int i = 0; i < 8; i++)
-		{
-			
-			plat = new GImage("Plat1 .png", levelPlatform[0][i].getGround().getX(), levelPlatform[0][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 8; i++)
-		{
-			
-			plat = new GImage("Plat1 .png", levelPlatform[1][i].getGround().getX(), levelPlatform[1][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 6; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[2][i].getGround().getX(), levelPlatform[2][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 2; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[3][i].getGround().getX(), levelPlatform[3][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 3; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[4][i].getGround().getX(), levelPlatform[4][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 10; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[5][i].getGround().getX(), levelPlatform[5][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 4; i++)
-		{
-			plat = new GImage("Plat1 .png", levelPlatform[6][i].getGround().getX(), levelPlatform[6][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 8; i++)
-		{
-			
-			plat = new GImage("Plat1 .png", levelPlatform[7][i].getGround().getX(), levelPlatform[7][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
 		
 		Ground[0].InitilizePlatform(0, 600,2800, 200, 3);
 		Ground[1].InitilizePlatform(3000, 600,800, 200, 3);
@@ -181,22 +130,18 @@ public class Level extends GraphicsProgram{
 		Pipe[0][4].InitilizePlatform(7100, 540, 60, 60, 3);
 		Pipe[0][5].InitilizePlatform(7900, 540, 60, 60, 3);
 
-		levelPlatform[8][0].InitilizePlatform(8550, 590,5, 5, 3);
+		levelPlatform[0][49].InitilizePlatform(8550, 590,5, 5, 3);
 	}
 
 
-
-
-	public void run()
-	{
-		level1();
-
-	}
-
+	
+	 public void run()
+	 {
+		 level1();
+//		 platpic();
+	 }
 
 
 
 
 }
-
-

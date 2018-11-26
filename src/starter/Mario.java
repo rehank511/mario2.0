@@ -19,23 +19,27 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 public class Mario extends GraphicsProgram {
-//	private Platform[][] platform;
-//	private Platform[] Ground;
-	private Level level = new Level();
-//	private Platform[][] Pipe;
+	//	private Platform[][] platform;
+	//	private Platform[] Ground;
+	public Level level = new Level();
+	//	private Platform[][] Pipe;
 	private Enemies[] Goomba;
-	public GImage plat;
-	
-	
+	private GImage plat;
+	private GImage pipe;
+	private GRect gap;
+	ArrayList<GImage> Platimg = new ArrayList<GImage>();
+	ArrayList<GImage> Pipeimg = new ArrayList<GImage>();
+
+
 	public static int  WIDTH = 50, HEIGHT = 50;
 
 
 	public int TimerCount = global.TimerCount, onground = 0;
 	boolean Moving = false, movingLeft = false, movingRight = false;
-	
+
 	private static final int PROGRAM_WIDTH = 850;
 	private static final int PROGRAM_HEIGHT = 650;
-	
+
 	public boolean collideRight, collideLeft, collideTop, collideBottom;
 	public boolean collision, Right, Left, Top, Bottom;
 
@@ -75,11 +79,6 @@ public class Mario extends GraphicsProgram {
 		Marioright.move(x, y);
 		Marioleft.move(x, y);
 	}
-	
-	public void marioDie()
-	{
-		
-	}
 
 
 
@@ -90,6 +89,12 @@ public class Mario extends GraphicsProgram {
 		GImage ground = new GImage("ground.png", 0, 600);
 		ground.setSize(850, 100);
 		add(ground);
+		
+		gap = new GRect(2800, 600, 200, 200);
+		gap.setColor(Color.BLACK);
+		gap.setFilled(true);
+
+		
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgRight.setSize(50, 57);
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
@@ -99,112 +104,52 @@ public class Mario extends GraphicsProgram {
 	}
 	public void run() {
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
-		
+
 		marioGraphics();
-		
-		
+
+
 		level.level1();
-		
+
 		levelSpawn();
-		
+
 		gumbaSpawn();
-		
-		levelPicSpawn();
-		
-//		add(level.flagImage);
-//		add(level.castleImage);
-		
+		add(gap);
+
+		//		add(level.flagImage);
+		//		add(level.castleImage);
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
 	}
-	
-	public void levelPicSpawn()
-	{
-		for(int i = 0; i < 8; i++)
-		{
-			
-			plat = new GImage("Plat1 .png", level.levelPlatform[0][i].getGround().getX(), level.levelPlatform[0][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 8; i++)
-		{
-			
-			plat = new GImage("Plat1 .png", level.levelPlatform[1][i].getGround().getX(), level.levelPlatform[1][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 6; i++)
-		{
-			plat = new GImage("Plat1 .png", level.levelPlatform[2][i].getGround().getX(), level.levelPlatform[2][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 2; i++)
-		{
-			plat = new GImage("Plat1 .png", level.levelPlatform[3][i].getGround().getX(), level.levelPlatform[3][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 3; i++)
-		{
-			plat = new GImage("Plat1 .png", level.levelPlatform[4][i].getGround().getX(), level.levelPlatform[4][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 10; i++)
-		{
-			plat = new GImage("Plat1 .png", level.levelPlatform[5][i].getGround().getX(), level.levelPlatform[5][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 4; i++)
-		{
-			plat = new GImage("Plat1 .png", level.levelPlatform[6][i].getGround().getX(), level.levelPlatform[6][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-		for(int i = 0; i < 8; i++)
-		{
-			
-			plat = new GImage("Plat1 .png", level.levelPlatform[7][i].getGround().getX(), level.levelPlatform[7][i].getGround().getY());
-			plat.setSize(50, 50);
-			add(plat);
-		}
-	}
+
+
 
 	// is called after every milisecond and moves the mario and the platform
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		for (int a = 0; a < level.levelPlatform.length; a++) {
-			collision(level.levelPlatform[a]);
-
-		
-			
+			collision(level.levelPlatform[a]);	
 		}
-		
+
 
 		collision(Goomba);
 
-
 		collision(level.Ground);
 		////
-		if(Mario.getX()>=level.levelPlatform[8][0].getTop().getX())  {
-			
-			
+		if(Mario.getX()>=level.levelPlatform[0][49].getTop().getX())  {
+
+
 			moveMario(0,1);
 			if(Mario.getY()==551 && Mario.getX()<= level.levelPlatform[8][0].getTop().getX()+250) {
 				moveMario(2,0);
-		
+
 			}
-			
+
 			return;
 		}
 		for (int a = 0; a < level.Pipe.length; a++) {
 			collision(level.Pipe[a]);
-			
 
 		}
 
@@ -214,12 +159,9 @@ public class Mario extends GraphicsProgram {
 		if (Mario.getX() < 0 || Mario.getX() > 500) {
 			// If Mario is on left corner of the screen
 			if (Mario.getX() < 0) {
-
-
 				if (global.horizVelocity < 0)
 					global.horizVelocity = 0;
 				moveMario(1, 0);
-
 				// if Mario is on the right corner on the screen
 			} else if (Mario.getX() > 500) {
 				if (global.horizVelocity > 0) {
@@ -227,8 +169,11 @@ public class Mario extends GraphicsProgram {
 					for (int a = 0; a < level.levelPlatform.length; a++) {
 						for (int i = 0; i < level.levelPlatform[0].length; i++) {
 							level.levelPlatform[a][i].movePlatform(-global.horizVelocity, 0);
-
 						}
+					}
+					for(int i = 0; i < Platimg.size(); i++)
+					{
+						Platimg.get(i).move(-global.horizVelocity, 0);
 					}
 					for (int i = 0; i < level.Ground.length; i++) {
 						level.Ground[i].movePlatform(-global.horizVelocity, 0);
@@ -238,13 +183,17 @@ public class Mario extends GraphicsProgram {
 							level.Pipe[a][i].movePlatform(-global.horizVelocity, 0);
 						}
 					}
+					for(int i = 0; i < Pipeimg.size(); i++)
+					{
+						Pipeimg.get(i).move(-global.horizVelocity, 0);
+					}
 					for (int i = 0; i < Goomba.length; i++) {
 						Goomba[i].moveGoomba(-global.horizVelocity, 0);
 					}
 
-//					level.flagImage.move(-(global.horizVelocity), 0);
-//					level.castleImage.move(-(global.horizVelocity), 0);
-					
+					//					level.flagImage.move(-(global.horizVelocity), 0);
+					//					level.castleImage.move(-(global.horizVelocity), 0);
+
 
 					moveMario(0, global.vertVelocity);
 
@@ -457,7 +406,7 @@ public class Mario extends GraphicsProgram {
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_SPACE) {
 			onground = 0;
 		}
-		
+
 
 	}
 
@@ -468,7 +417,7 @@ public class Mario extends GraphicsProgram {
 	public void setMariobottom(GRect mariobottom) {
 		Mariobottom = mariobottom;
 	}
-	
+
 
 	public void gumbaSpawn()
 	{
@@ -478,38 +427,71 @@ public class Mario extends GraphicsProgram {
 		}
 
 		for (int i = 0; i < Goomba.length; i++) {
-			Goomba[i].InitilizeGoomba(i * 400, 0, 50, 50, 3);
+			Goomba[i].InitilizeGoomba(i * 400, 600, 50, 50, 3);
 			add(Goomba[i].getGoombaImg());
 		}
 
 	}
-	
+
 	public void levelSpawn()
 	{
 		for (int a = 0; a < level.levelPlatform.length; a++) {
 			for (int i = 0; i < level.levelPlatform[0].length; i++) {
 				level.levelPlatform[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(level.levelPlatform[a][i].getGround());
-				add(level.plat);
-
 			}
+		}
+
+		for(int i = 0; i < 49; i++)
+		{
+			plat = new GImage("Plat1.png", level.levelPlatform[0][i].getGround().getX(), level.levelPlatform[0][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+			Platimg.add(plat);
 		}
 
 		for (int i = 0; i < level.Ground.length; i++) {
 			level.Ground[i].getGround().setColor(new Color(212, 212, 212));
 			add(level.Ground[i].getGround());
-
 		}
-
+		
 		for (int a = 0; a < level.Pipe.length; a++) {
 			for (int i = 0; i < level.Pipe[0].length; i++) {
 
 				level.Pipe[a][i].getGround().setColor(new Color(212, 212, 212));
 				add(level.Pipe[a][i].getGround());
-
-
 			}
 		}
+		pipe = new GImage("pipe.png", level.Pipe[0][0].getGround().getX(), level.Pipe[0][0].getGround().getY());
+		pipe.setSize(60, 60);
+		add(pipe);
+		Pipeimg.add(pipe);
+		
+		pipe = new GImage("pipe.png", level.Pipe[0][1].getGround().getX(), level.Pipe[0][1].getGround().getY());
+		pipe.setSize(60, 80);
+		add(pipe);
+		Pipeimg.add(pipe);
+		
+		pipe = new GImage("pipe.png", level.Pipe[0][2].getGround().getX(), level.Pipe[0][2].getGround().getY());
+		pipe.setSize(60, 100);
+		add(pipe);
+		Pipeimg.add(pipe);
+		
+		pipe = new GImage("pipe.png", level.Pipe[0][3].getGround().getX(), level.Pipe[0][3].getGround().getY());
+		pipe.setSize(60, 120);
+		add(pipe);
+		Pipeimg.add(pipe);
+		
+		pipe = new GImage("pipe.png", level.Pipe[0][4].getGround().getX(), level.Pipe[0][4].getGround().getY());
+		pipe.setSize(60, 60);
+		add(pipe);
+		Pipeimg.add(pipe);
+		
+		pipe = new GImage("pipe.png", level.Pipe[0][5].getGround().getX(), level.Pipe[0][5].getGround().getY());
+		pipe.setSize(60, 60);
+		add(pipe);
+		Pipeimg.add(pipe);
+
 	}
 
 }

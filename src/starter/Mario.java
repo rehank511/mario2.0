@@ -129,7 +129,7 @@ public class Mario extends GraphicsProgram {
 				{
 					marioDied();
 				}
-		marioFalls();
+//		marioFalls();
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
@@ -138,7 +138,7 @@ public class Mario extends GraphicsProgram {
 	public void marioFalls()
 	{
 		
-	}
+	}  
 
 
 

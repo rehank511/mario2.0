@@ -17,10 +17,10 @@ public class Level extends GraphicsProgram{
 	public Platform[][] levelPlatform;
 	public Platform[] Ground;
 	public Platform[][] Pipe;
-//	private GImage plat;
 
 	public GImage flagImage;
 	public GImage castleImage;
+	
 	public void level1()
 	{
 

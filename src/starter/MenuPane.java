@@ -11,6 +11,7 @@ public class MenuPane extends GraphicsPane {
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
 	private GImage menu;
+	private Mario object;
 
 	public MenuPane(MainApplication app) {
 		super();
@@ -32,7 +33,7 @@ public class MenuPane extends GraphicsPane {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			program.switchToMenu();
+			object.run();
 		}
 	}
 }

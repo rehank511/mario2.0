@@ -83,6 +83,7 @@ public class Mario extends GraphicsProgram {
 
 
 	public void marioGraphics(){
+
 		GImage background = new GImage("bg.png", 0, 0);
 		background.setSize(850, 600);
 		add(background);
@@ -94,34 +95,58 @@ public class Mario extends GraphicsProgram {
 		gap.setColor(Color.BLACK);
 		gap.setFilled(true);
 
+
+
+//		add(level.background);
+//		add(level.ground[0]);
+
 		
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgRight.setSize(50, 57);
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgLeft.setSize(50, 57);
 		add(MarioImgRight);
-
+//		add(level.flagImage);
+//		add(level.castleImage);
+		
+//		for(int i =0;i<76;i++) {
+//		add(level.platarr[i]);
+//		}
+//		
+//		for(int i =0;i<6;i++) {
+//			add(level.pipearr[i]);
+//			}
+	
+		
 	}
+		
 	public void run() {
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
+
 
 		marioGraphics();
 
 
+
 		level.level1();
+
+		
 
 		levelSpawn();
 
 		gumbaSpawn();
-		add(gap);
+
 
 		//		add(level.flagImage);
 		//		add(level.castleImage);
+
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
 	}
 
+	
+	
 
 
 	// is called after every milisecond and moves the mario and the platform
@@ -136,9 +161,9 @@ public class Mario extends GraphicsProgram {
 		collision(Goomba);
 
 		collision(level.Ground);
+
 		////
 		if(Mario.getX()>=level.levelPlatform[0][49].getTop().getX())  {
-
 
 			moveMario(0,1);
 			if(Mario.getY()==551 && Mario.getX()<= level.levelPlatform[8][0].getTop().getX()+250) {
@@ -191,9 +216,31 @@ public class Mario extends GraphicsProgram {
 						Goomba[i].moveGoomba(-global.horizVelocity, 0);
 					}
 
+
 					//					level.flagImage.move(-(global.horizVelocity), 0);
 					//					level.castleImage.move(-(global.horizVelocity), 0);
 
+
+
+
+					
+					
+					
+					//stable Flag and castle
+					
+//					level.flagImage.move(-(global.horizVelocity), 0);
+//					level.castleImage.move(-(global.horizVelocity), 0);
+//					
+//					for(int i =0;i<76;i++) {
+//					level.platarr[i].move(-(global.horizVelocity), 0);
+//					}
+//					
+//					for(int i =0;i<6;i++) {
+//						level.pipearr[i].move(-(global.horizVelocity), 0);
+//						}
+
+					
+					
 
 					moveMario(0, global.vertVelocity);
 

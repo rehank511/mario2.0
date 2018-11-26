@@ -19,8 +19,8 @@ public class Level extends GraphicsProgram{
 	public Platform[][] Pipe;
 //	private GImage plat;
 
-	private GImage flagImage;
-	private GImage castleImage;
+	public GImage flagImage;
+	public GImage castleImage;
 	public void level1()
 	{
 		GImage background = new GImage("bg.png", 0, 0);
@@ -31,14 +31,14 @@ public class Level extends GraphicsProgram{
 		ground.setSize(850, 100);
 		add(ground);
 
-		//		flagImage = new GImage("flag.png",0,0);
-		//		flagImage.setImage("flag.png");
-		//		flagImage.setSize(25,80);
-		//		flagImage.setBounds(8570, 100, 50, 500);
-		//		castleImage = new GImage("castle.png",0,0);
-		//	
-		//		castleImage.setSize(30,30);
-		//		castleImage.setBounds(8725, 350, 250, 250);
+				flagImage = new GImage("flag.png",0,0);
+				flagImage.setImage("flag.png");
+				flagImage.setSize(25,80);
+				flagImage.setBounds(8570, 100, 50, 500);
+				castleImage = new GImage("castle.png",0,0);
+			
+				castleImage.setSize(30,30);
+				castleImage.setBounds(8725, 350, 250, 250);
 
 
 

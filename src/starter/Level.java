@@ -19,10 +19,11 @@ public class Level extends GraphicsProgram{
 	public Platform[][] Pipe;
 //	private GImage plat;
 
-	private GImage flagImage;
-	private GImage castleImage;
+	public GImage flagImage;
+	public GImage castleImage;
 	public void level1()
 	{
+
 		GImage background = new GImage("bg.png", 0, 0);
 		background.setSize(850, 600);
 		add(background);
@@ -31,14 +32,16 @@ public class Level extends GraphicsProgram{
 		ground.setSize(850, 100);
 		add(ground);
 
-		//		flagImage = new GImage("flag.png",0,0);
-		//		flagImage.setImage("flag.png");
-		//		flagImage.setSize(25,80);
-		//		flagImage.setBounds(8570, 100, 50, 500);
-		//		castleImage = new GImage("castle.png",0,0);
-		//	
-		//		castleImage.setSize(30,30);
-		//		castleImage.setBounds(8725, 350, 250, 250);
+	
+
+				flagImage = new GImage("flag.png",0,0);
+				flagImage.setImage("flag.png");
+				flagImage.setSize(25,80);
+				flagImage.setBounds(8570, 100, 50, 500);
+				castleImage = new GImage("castle.png",0,0);
+			
+				castleImage.setSize(30,30);
+				castleImage.setBounds(8725, 350, 250, 250);
 
 
 
@@ -118,6 +121,26 @@ public class Level extends GraphicsProgram{
 		levelPlatform[0][47].InitilizePlatform(8300,250,50,50,3);
 		levelPlatform[0][48].InitilizePlatform(8350,250,50,50,3);
 
+		
+		
+		
+		//background = new GImage("bg.png", 0, 0);
+		//background.setSize(850, 600);
+		
+//		background = new GImage("bg.png",0,0);
+//		background.setImage("bg.png");
+//		background.setSize(850, 600);
+//		background.setBounds(0,0 ,850, 600);
+		
+		//ground = new GImage("ground.png", 0, 600);
+		//ground.setSize(850, 100);
+		
+//		ground = new GImage[3];
+//		ground[0] = new GImage("ground.png",0,0);
+		//ground[0].setImage("ground.png");
+		//ground[0].setSize(850, 1000);
+//		ground[0].setBounds(0,600 ,850, 100);
+		
 		
 		Ground[0].InitilizePlatform(0, 600,2800, 200, 3);
 		Ground[1].InitilizePlatform(3000, 600,800, 200, 3);

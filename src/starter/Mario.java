@@ -79,6 +79,13 @@ public class Mario extends GraphicsProgram {
 		Marioright.move(x, y);
 		Marioleft.move(x, y);
 	}
+	
+	public void marioDied()
+	{
+		System.exit(0);
+	}
+	
+	
 
 
 
@@ -115,11 +122,22 @@ public class Mario extends GraphicsProgram {
 		gumbaSpawn();
 		add(gap);
 
-		//		add(level.flagImage);
-		//		add(level.castleImage);
+				add(level.flagImage);
+				add(level.castleImage);
+				
+				if(Mario.getY()>620)
+				{
+					marioDied();
+				}
+		marioFalls();
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
+	}
+	
+	public void marioFalls()
+	{
+		
 	}
 
 
@@ -140,11 +158,11 @@ public class Mario extends GraphicsProgram {
 		if(Mario.getX()>=level.levelPlatform[0][49].getTop().getX())  {
 
 
-			moveMario(0,1);
-			if(Mario.getY()==551 && Mario.getX()<= level.levelPlatform[8][0].getTop().getX()+250) {
-				moveMario(2,0);
-
-			}
+			moveMario(0,2);
+//			if(Mario.getY()==551 && Mario.getX()<= level.levelPlatform[8][0].getTop().getX()+250) {
+//				moveMario(2,0);
+//
+//			}
 
 			return;
 		}
@@ -191,8 +209,8 @@ public class Mario extends GraphicsProgram {
 						Goomba[i].moveGoomba(-global.horizVelocity, 0);
 					}
 
-					//					level.flagImage.move(-(global.horizVelocity), 0);
-					//					level.castleImage.move(-(global.horizVelocity), 0);
+										level.flagImage.move(-(global.horizVelocity), 0);
+										level.castleImage.move(-(global.horizVelocity), 0);
 
 
 					moveMario(0, global.vertVelocity);
@@ -330,12 +348,14 @@ public class Mario extends GraphicsProgram {
 					if (global.horizVelocity > 0)
 						global.horizVelocity = 0;
 					moveMario(p[i].getGoombaImg().getX() - Mario.getX() - Mario.getWidth(), 0);
+					marioDied();
 				}
 				if ((Marioleft.getBounds()).intersects(p[i].getRight().getBounds())) {
 					collideRight = true;
 					if (global.horizVelocity < 0)
 						global.horizVelocity = 0;
 					moveMario(p[i].getGoombaImg().getX() + p[i].getGoombaImg().getWidth() - Mario.getX(), 0);
+					marioDied();
 				}
 			}
 		}

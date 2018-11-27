@@ -26,18 +26,23 @@ public class Mario extends GraphicsProgram {
 	private Enemies[] Goomba;
 	private GImage plat;
 	private GImage pipe;
-	private GRect gap = new GRect(2800, 600, 200, 200);
-	private GRect gap1 = new GRect(3800, 600, 200, 200);
-	private GRect gap2 = new GRect(8350, 600, 600, 200);
+	private GRect gap = new GRect(2800, 599, 200, 200);
+	private GRect gap1 = new GRect(3800, 599, 200, 200);
+	private GRect gap2 = new GRect(8350, 599, 600, 200);
 	private GRect mortApple = new GRect(2000,550,100,100);
-//	String picture = "hello";
-//	private GImage imageIn = new GImage(picture,0,0);
-//	private GImage imageDel = new GImage(picture,0,0);
+	public static final String MUSIC_FOLDER = "sounds";
+	private static final String JUMP_SOUND ="jump.mp3";
+	private static final String GAME_SOUND ="mario-game.mp3";
+	private static final String IMMORTALITY_SOUND ="mario-immortality.mp3";
+	private static final String GAME_OVER_SOUND ="mario-gameover.mp3";
+	//	String picture = "hello";
+	//	private GImage imageIn = new GImage(picture,0,0);
+	//	private GImage imageDel = new GImage(picture,0,0);
 	powerUps power = new powerUps();
 	ArrayList<GImage> Platimg = new ArrayList<GImage>();
 	ArrayList<GImage> Pipeimg = new ArrayList<GImage>();
 	Timer t = new Timer(10, this);
-	
+
 	//To start immortal mode inside of the game press shift + N and to turn off press shift + F
 
 
@@ -89,12 +94,12 @@ public class Mario extends GraphicsProgram {
 		Marioright.move(x, y);
 		Marioleft.move(x, y);
 	}
-	
+
 	public void marioDied()
 	{
 		System.exit(0);
 	}
-	
+
 
 	public void marioGraphics(){
 		GImage background = new GImage("bg.png", 0, 0);
@@ -103,27 +108,33 @@ public class Mario extends GraphicsProgram {
 		GImage ground = new GImage("ground.png", 0, 600);
 		ground.setSize(850, 100);
 		add(ground);
-		
-//		gap = new GRect(2800, 600, 200, 200);
-		
-
-		
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgRight.setSize(50, 57);
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgLeft.setSize(50, 57);
 		add(MarioImgRight);
-		
-		if(power.immortal==true)
-		{
-			//Rehan put like green picture of mario, because mario is immortal here
-		}
-
 	}
+
+	private void playJumpSound() {
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, JUMP_SOUND);
+	}
+
+	private void playGameSound() {
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, GAME_SOUND);
+	}
+
+	private void playImmortalitySound() {
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, IMMORTALITY_SOUND);
+	}
+
 	public void run() {
+
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
-		
-		
+
+
 
 		marioGraphics();
 
@@ -133,15 +144,15 @@ public class Mario extends GraphicsProgram {
 		levelSpawn();
 
 		gumbaSpawn();
-		
+		playGameSound();
 		gap.setColor(Color.BLACK);
 		gap.setFillColor(Color.BLACK);
 		gap.setFilled(true);
-		
+
 		gap1.setColor(Color.BLACK);
 		gap1.setFillColor(Color.BLACK);
 		gap1.setFilled(true);
-		
+
 		gap2.setColor(Color.BLACK);
 		gap2.setFillColor(Color.BLACK);
 		gap2.setFilled(true);
@@ -149,23 +160,24 @@ public class Mario extends GraphicsProgram {
 		mortApple.setColor(Color.RED);
 		mortApple.setFillColor(Color.red);
 		mortApple.setFilled(true);
-		
-		
+
+
 
 		add(level.flagImage);
 		add(level.castleImage);
-				
+
 		add(gap);
 		add(gap1);
 		add(gap2);
-		
+
 		add(mortApple);
 		marioFalls();
-		
+
 		t.start();
 		addKeyListeners();
 	}
-	
+
+
 	public void marioFalls()
 	{
 		if(Mario.getY()>620)
@@ -173,24 +185,24 @@ public class Mario extends GraphicsProgram {
 			marioDied();
 		}
 	}  
-	
+
 	public void imageIn(GImage imageIn)
 	{
 		t.stop();
 		imageIn.setSize(850, 650);
 		add(imageIn);
 	}
-	
+
 	public void imageDel(GImage imageDel)
 	{
 		remove(imageDel);
 		t.start();
 	}
-//	
-//	public void setPic(String setPicture)
-//	{
-//		picture = setPicture;
-//	}
+	//	
+	//	public void setPic(String setPicture)
+	//	{
+	//		picture = setPicture;
+	//	}
 
 
 
@@ -264,8 +276,8 @@ public class Mario extends GraphicsProgram {
 						Goomba[i].moveGoomba(-global.horizVelocity, 0);
 					}
 
-										level.flagImage.move(-(global.horizVelocity), 0);
-										level.castleImage.move(-(global.horizVelocity), 0);
+					level.flagImage.move(-(global.horizVelocity), 0);
+					level.castleImage.move(-(global.horizVelocity), 0);
 
 
 					moveMario(0, global.vertVelocity);
@@ -470,6 +482,7 @@ public class Mario extends GraphicsProgram {
 		} else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
 			if (collideTop) {
 				if (onground > 0) {
+					playJumpSound();
 					global.vertVelocity -= global.jumpSpeed;
 				}
 			}
@@ -497,11 +510,26 @@ public class Mario extends GraphicsProgram {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_N)
 		{
+			playImmortalitySound();
 			power.mortOn();
+			remove(MarioImgRight);
+			remove(MarioImgLeft);
+			MarioImgRight = new GImage("LuigiRight.png", Mario.getX(), Mario.getY() - 1);
+			MarioImgRight.setSize(50, 57);
+			MarioImgLeft = new GImage("LuigiLeft.png", Mario.getX(), Mario.getY() - 1);
+			MarioImgLeft.setSize(50, 57);
+			add(MarioImgRight);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_F)
 		{
 			power.mortOff();
+			remove(MarioImgRight);
+			remove(MarioImgLeft);
+			MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
+			MarioImgRight.setSize(50, 57);
+			MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
+			MarioImgLeft.setSize(50, 57);
+			add(MarioImgRight);
 		}
 
 
@@ -551,7 +579,7 @@ public class Mario extends GraphicsProgram {
 			level.Ground[i].getGround().setColor(new Color(212, 212, 212));
 			add(level.Ground[i].getGround());
 		}
-		
+
 		for (int a = 0; a < level.Pipe.length; a++) {
 			for (int i = 0; i < level.Pipe[0].length; i++) {
 
@@ -563,27 +591,27 @@ public class Mario extends GraphicsProgram {
 		pipe.setSize(60, 60);
 		add(pipe);
 		Pipeimg.add(pipe);
-		
+
 		pipe = new GImage("pipe.png", level.Pipe[0][1].getGround().getX(), level.Pipe[0][1].getGround().getY());
 		pipe.setSize(60, 80);
 		add(pipe);
 		Pipeimg.add(pipe);
-		
+
 		pipe = new GImage("pipe.png", level.Pipe[0][2].getGround().getX(), level.Pipe[0][2].getGround().getY());
 		pipe.setSize(60, 100);
 		add(pipe);
 		Pipeimg.add(pipe);
-		
+
 		pipe = new GImage("pipe.png", level.Pipe[0][3].getGround().getX(), level.Pipe[0][3].getGround().getY());
 		pipe.setSize(60, 120);
 		add(pipe);
 		Pipeimg.add(pipe);
-		
+
 		pipe = new GImage("pipe.png", level.Pipe[0][4].getGround().getX(), level.Pipe[0][4].getGround().getY());
 		pipe.setSize(60, 60);
 		add(pipe);
 		Pipeimg.add(pipe);
-		
+
 		pipe = new GImage("pipe.png", level.Pipe[0][5].getGround().getX(), level.Pipe[0][5].getGround().getY());
 		pipe.setSize(60, 60);
 		add(pipe);

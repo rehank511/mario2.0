@@ -26,7 +26,11 @@ public class Mario extends GraphicsProgram {
 	private Enemies[] Goomba;
 	private GImage plat;
 	private GImage pipe;
-	private GRect gap = new GRect(1000, 600, 200, 200);
+
+	private GRect gap = new GRect(2800, 599, 200, 200);
+	private GRect gap1 = new GRect(3800, 599, 200, 200);
+	private GRect gap2 = new GRect(8350, 599, 600, 200);
+	
 	private GRect mortApple = new GRect(2000,550,100,100);
 //	String picture = "hello";
 //	private GImage imageIn = new GImage(picture,0,0);
@@ -93,9 +97,6 @@ public class Mario extends GraphicsProgram {
 		System.exit(0);
 	}
 	
-	
-
-
 
 	public void marioGraphics(){
 		GImage background = new GImage("bg.png", 0, 0);
@@ -139,6 +140,13 @@ public class Mario extends GraphicsProgram {
 		gap.setFillColor(Color.BLACK);
 		gap.setFilled(true);
 		
+		gap1.setColor(Color.BLACK);
+		gap1.setFillColor(Color.BLACK);
+		gap1.setFilled(true);
+		
+		gap2.setColor(Color.BLACK);
+		gap2.setFillColor(Color.BLACK);
+		gap2.setFilled(true);
 		//immortality apple graphics (not done)
 		mortApple.setColor(Color.RED);
 		mortApple.setFillColor(Color.red);
@@ -150,6 +158,8 @@ public class Mario extends GraphicsProgram {
 		add(level.castleImage);
 				
 		add(gap);
+		add(gap1);
+		add(gap2);
 		
 		add(mortApple);
 		marioFalls();
@@ -199,7 +209,7 @@ public class Mario extends GraphicsProgram {
 
 		collision(level.Ground);
 		////
-		if(Mario.getX()>=level.levelPlatform[0][49].getTop().getX())  {
+		if(Mario.getX()>=level.levelPlatform[0][51].getTop().getX())  {
 
 
 			moveMario(0,2);
@@ -233,6 +243,9 @@ public class Mario extends GraphicsProgram {
 							level.levelPlatform[a][i].movePlatform(-global.horizVelocity, 0);
 						}
 					}
+					gap.move(-global.horizVelocity, 0);
+					gap1.move(-global.horizVelocity, 0);
+					gap2.move(-global.horizVelocity, 0);
 					for(int i = 0; i < Platimg.size(); i++)
 					{
 						Platimg.get(i).move(-global.horizVelocity, 0);
@@ -528,7 +541,7 @@ public class Mario extends GraphicsProgram {
 			}
 		}
 
-		for(int i = 0; i < 49; i++)
+		for(int i = 0; i < 51; i++)
 		{
 			plat = new GImage("Plat1.png", level.levelPlatform[0][i].getGround().getX(), level.levelPlatform[0][i].getGround().getY());
 			plat.setSize(50, 50);

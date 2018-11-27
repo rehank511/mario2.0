@@ -37,15 +37,15 @@ public class Level extends GraphicsProgram{
 				flagImage = new GImage("flag.png",0,0);
 				flagImage.setImage("flag.png");
 				flagImage.setSize(25,80);
-				flagImage.setBounds(8570, 100, 50, 500);
+				flagImage.setBounds(9000, 100, 50, 500);
+				
 				castleImage = new GImage("castle.png",0,0);
-			
 				castleImage.setSize(30,30);
-				castleImage.setBounds(8725, 350, 250, 250);
+				castleImage.setBounds(9250, 350, 250, 250);
 
 
 
-		levelPlatform = new Platform[1][50];
+		levelPlatform = new Platform[1][55];
 		for (int a = 0; a < levelPlatform.length; a++)
 			for (int i = 0; i < levelPlatform[0].length; i++) {
 				levelPlatform[a][i] = new Platform();
@@ -120,6 +120,8 @@ public class Level extends GraphicsProgram{
 		levelPlatform[0][46].InitilizePlatform(8250,300,50,50,3);
 		levelPlatform[0][47].InitilizePlatform(8300,250,50,50,3);
 		levelPlatform[0][48].InitilizePlatform(8350,250,50,50,3);
+		levelPlatform[0][49].InitilizePlatform(8620,250,50,50,3);
+		levelPlatform[0][50].InitilizePlatform(8670,250,50,50,3);
 
 		
 		
@@ -144,7 +146,9 @@ public class Level extends GraphicsProgram{
 		
 		Ground[0].InitilizePlatform(0, 600,2800, 200, 3);
 		Ground[1].InitilizePlatform(3000, 600,800, 200, 3);
-		Ground[2].InitilizePlatform(4000, 600,7000, 200, 3);
+		Ground[2].InitilizePlatform(4000, 600,4350, 200, 3);
+		Ground[3].InitilizePlatform(8950, 600,1000, 200, 3);
+		
 
 		Pipe[0][0].InitilizePlatform(1000, 540, 60, 60, 3);
 		Pipe[0][1].InitilizePlatform(1400, 520, 60, 80, 3);
@@ -153,7 +157,7 @@ public class Level extends GraphicsProgram{
 		Pipe[0][4].InitilizePlatform(7100, 540, 60, 60, 3);
 		Pipe[0][5].InitilizePlatform(7900, 540, 60, 60, 3);
 
-		levelPlatform[0][49].InitilizePlatform(8550, 590,5, 5, 3);
+		levelPlatform[0][51].InitilizePlatform(8980, 590,5, 5, 3);
 	}
 
 

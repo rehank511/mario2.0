@@ -19,29 +19,26 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 public class Mario extends GraphicsProgram {
-	//	private Platform[][] platform;
-	//	private Platform[] Ground;
 	public Level level = new Level();
-	//	private Platform[][] Pipe;
+	public static final String MUSIC_FOLDER = "sounds";
+
 	private Enemies[] Goomba;
 	private GImage plat;
 	private GImage pipe;
 	private GLabel message = new GLabel("Press N");
-
-	//Timer
-	
-	private GLabel score = new GLabel("score");
-	
-
 	private GRect gap = new GRect(2800, 599, 200, 200);
 	private GRect gap1 = new GRect(3800, 599, 200, 200);
 	private GRect gap2 = new GRect(8350, 599, 600, 200);
 	private GRect mortApple = new GRect(2000,550,100,100);
-	public static final String MUSIC_FOLDER = "sounds";
 	private static final String JUMP_SOUND ="jump.mp3";
 	private static final String GAME_SOUND ="mario-game.mp3";
 	private static final String IMMORTALITY_SOUND ="mario-immortality.mp3";
 	private static final String GAME_OVER_SOUND ="mario-gameover.mp3";
+	private int gamescore = 0;
+	private int gametime = 0;
+	private GLabel GameScore;
+	private GLabel GameTime;
+	
 	//	String picture = "hello";
 	//	private GImage imageIn = new GImage(picture,0,0);
 	//	private GImage imageDel = new GImage(picture,0,0);
@@ -142,7 +139,7 @@ public class Mario extends GraphicsProgram {
 
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
 
-
+		System.out.print(global.horizVelocity);
 
 		marioGraphics();
 
@@ -177,7 +174,14 @@ public class Mario extends GraphicsProgram {
 		add(gap);
 		add(gap1);
 		add(gap2);
-
+		GLabel score = new GLabel("Score");
+		score.setLocation(50, 50);
+		add(score);
+		GLabel time = new GLabel("Time(ms)");
+		time.setLocation(740, 50);
+		add(time);
+		gameTime();
+		gameScore();
 		t.start();
 		
 		addKeyListeners();
@@ -202,18 +206,23 @@ public class Mario extends GraphicsProgram {
 		remove(imageDel);
 		t.start();
 	}
+	
+	
 	//	
 	//	public void setPic(String setPicture)
 	//	{
 	//		picture = setPicture;
 	//	}
-
+	
 
 
 	// is called after every milisecond and moves the mario and the platform
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		remove(GameTime);
+		gametime = gametime + 10;		
+		gameTime();
 		if(Mario.getY()>650)
 		{
 			marioDied();
@@ -266,6 +275,9 @@ public class Mario extends GraphicsProgram {
 					gap1.move(-global.horizVelocity, 0);
 					gap2.move(-global.horizVelocity, 0);
 					message.move(-global.horizVelocity, 0);
+					remove(GameScore);
+					gamescore = gamescore + 1;
+					gameScore();
 					for(int i = 0; i < Platimg.size(); i++)
 					{
 						Platimg.get(i).move(-global.horizVelocity, 0);
@@ -359,6 +371,21 @@ public class Mario extends GraphicsProgram {
 		System.out.print(global.vertVelocity);
 	}
 
+		
+	public void gameTime()
+	{
+		GameTime = new GLabel(Integer.toString(gametime));
+		GameTime.setLocation(750, 63);
+		add(GameTime);
+	}
+	
+	public void gameScore()
+	{
+		GameScore = new GLabel(Integer.toString(gamescore));
+		GameScore.setLocation(60, 63);
+		add(GameScore);
+	}
+	
 	// Makes the Mario to not be able to move when it touches a platform
 	public void collision(Platform[] p) {
 		for (int i = 0; i < p.length; i++) {

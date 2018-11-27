@@ -26,7 +26,9 @@ public class Mario extends GraphicsProgram {
 	private Enemies[] Goomba;
 	private GImage plat;
 	private GImage pipe;
-	private GRect gap;
+	private GRect gap = new GRect(2800, 600, 200, 200);
+	private GRect mortApple = new GRect(2000,550,100,100);
+	powerUps power = new powerUps();
 	ArrayList<GImage> Platimg = new ArrayList<GImage>();
 	ArrayList<GImage> Pipeimg = new ArrayList<GImage>();
 
@@ -97,9 +99,8 @@ public class Mario extends GraphicsProgram {
 		ground.setSize(850, 100);
 		add(ground);
 		
-		gap = new GRect(2800, 600, 200, 200);
-		gap.setColor(Color.BLACK);
-		gap.setFilled(true);
+//		gap = new GRect(2800, 600, 200, 200);
+		
 
 		
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
@@ -107,6 +108,11 @@ public class Mario extends GraphicsProgram {
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgLeft.setSize(50, 57);
 		add(MarioImgRight);
+		
+		if(power.immortal==true)
+		{
+			//Rehan put like green picture of mario, because mario is immortal here
+		}
 
 	}
 	public void run() {
@@ -120,16 +126,25 @@ public class Mario extends GraphicsProgram {
 		levelSpawn();
 
 		gumbaSpawn();
+		
+		gap.setColor(Color.BLACK);
+		gap.setFillColor(Color.BLACK);
+		gap.setFilled(true);
+		
+		//immortality apple graphics (not done)
+		mortApple.setColor(Color.RED);
+		mortApple.setFillColor(Color.red);
+		mortApple.setFilled(true);
+		
 		add(gap);
+		
+		add(mortApple);
 
-				add(level.flagImage);
-				add(level.castleImage);
+		add(level.flagImage);
+		add(level.castleImage);
 				
-				if(Mario.getY()>620)
-				{
-					marioDied();
-				}
-//		marioFalls();
+
+		marioFalls();
 		Timer t = new Timer(10, this);
 		t.start();
 		addKeyListeners();
@@ -137,7 +152,10 @@ public class Mario extends GraphicsProgram {
 	
 	public void marioFalls()
 	{
-		
+		if(Mario.getY()>620)
+		{
+			marioDied();
+		}
 	}  
 
 
@@ -348,14 +366,28 @@ public class Mario extends GraphicsProgram {
 					if (global.horizVelocity > 0)
 						global.horizVelocity = 0;
 					moveMario(p[i].getGoombaImg().getX() - Mario.getX() - Mario.getWidth(), 0);
-					marioDied();
+					if(power.immortal==false)
+					{
+						marioDied();
+					}
+					else
+					{
+						p[i].DeleteGoomba();
+					}
 				}
 				if ((Marioleft.getBounds()).intersects(p[i].getRight().getBounds())) {
 					collideRight = true;
 					if (global.horizVelocity < 0)
 						global.horizVelocity = 0;
 					moveMario(p[i].getGoombaImg().getX() + p[i].getGoombaImg().getWidth() - Mario.getX(), 0);
-					marioDied();
+					if(power.immortal==false)
+					{
+						marioDied();
+					}
+					else
+					{
+						p[i].DeleteGoomba();
+					}
 				}
 			}
 		}
@@ -426,6 +458,14 @@ public class Mario extends GraphicsProgram {
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_SPACE) {
 			onground = 0;
 		}
+		if (e.getKeyCode() == KeyEvent.VK_N)
+		{
+			power.mortOn();
+		}
+		if (e.getKeyCode() == KeyEvent.VK_F)
+		{
+			power.mortOff();
+		}
 
 
 	}
@@ -441,7 +481,7 @@ public class Mario extends GraphicsProgram {
 
 	public void gumbaSpawn()
 	{
-		Goomba = new Enemies[30];
+		Goomba = new Enemies[29];
 		for (int i = 0; i < Goomba.length; i++) {
 			Goomba[i] = new Enemies();
 		}

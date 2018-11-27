@@ -177,7 +177,7 @@ public class Mario extends GraphicsProgram {
 		add(gap1);
 		add(gap2);
 
-		add(mortApple);
+		
 
 		t.start();
 		
@@ -209,7 +209,7 @@ public class Mario extends GraphicsProgram {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if(Mario.getY()>620)
+		if(Mario.getY()>650)
 		{
 			marioDied();
 		}

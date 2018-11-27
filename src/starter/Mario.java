@@ -178,21 +178,14 @@ public class Mario extends GraphicsProgram {
 		add(gap2);
 
 		add(mortApple);
-		marioFalls();
+		
 
 		t.start();
 		
 		addKeyListeners();
 	}
 
-
-	public void marioFalls()
-	{
-		if(Mario.getY()>620)
-		{
-			marioDied();
-		}
-	}  
+ 
 
 	public void imageIn(GImage imageIn)
 	{
@@ -218,6 +211,12 @@ public class Mario extends GraphicsProgram {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		
+		if(Mario.getY()>650)
+		{
+			marioDied();
+		}
+		
 		for (int a = 0; a < level.levelPlatform.length; a++) {
 			collision(level.levelPlatform[a]);	
 		}

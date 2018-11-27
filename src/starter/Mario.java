@@ -31,6 +31,8 @@ public class Mario extends GraphicsProgram {
 	powerUps power = new powerUps();
 	ArrayList<GImage> Platimg = new ArrayList<GImage>();
 	ArrayList<GImage> Pipeimg = new ArrayList<GImage>();
+	
+	//To start immortal mode inside of the game press shift + N and to turn off press shift + F
 
 
 	public static int  WIDTH = 50, HEIGHT = 50;

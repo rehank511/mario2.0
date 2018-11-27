@@ -26,7 +26,7 @@ public class Mario extends GraphicsProgram {
 	private Enemies[] Goomba;
 	private GImage plat;
 	private GImage pipe;
-	private GRect gap = new GRect(2800, 600, 200, 200);
+	private GRect gap = new GRect(1000, 600, 200, 200);
 	private GRect mortApple = new GRect(2000,550,100,100);
 //	String picture = "hello";
 //	private GImage imageIn = new GImage(picture,0,0);

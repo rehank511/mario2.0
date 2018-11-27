@@ -178,19 +178,13 @@ public class Mario extends GraphicsProgram {
 		add(gap2);
 
 		add(mortApple);
-<<<<<<< HEAD
-		
-=======
->>>>>>> branch 'master' of https://github.com/comp55-fall18/group-project-cloud9.git
+
 
 		t.start();
 		
 		addKeyListeners();
 	}
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'master' of https://github.com/comp55-fall18/group-project-cloud9.git
  
 
 	public void imageIn(GImage imageIn)
@@ -217,12 +211,9 @@ public class Mario extends GraphicsProgram {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-<<<<<<< HEAD
+
 		
 		if(Mario.getY()>650)
-=======
-		if(Mario.getY()>620)
->>>>>>> branch 'master' of https://github.com/comp55-fall18/group-project-cloud9.git
 		{
 			marioDied();
 		}

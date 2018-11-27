@@ -26,6 +26,7 @@ public class Mario extends GraphicsProgram {
 	private Enemies[] Goomba;
 	private GImage plat;
 	private GImage pipe;
+	private GLabel message = new GLabel("Press N");
 
 	//Timer
 	
@@ -183,6 +184,11 @@ public class Mario extends GraphicsProgram {
 		t.start();
 		
 		addKeyListeners();
+		
+
+			message.setLocation(3700, 235);
+			message.setColor(Color.BLACK);
+			add(message);
 	}
 
  
@@ -212,7 +218,6 @@ public class Mario extends GraphicsProgram {
 	public void actionPerformed(ActionEvent e) {
 
 
-		
 		if(Mario.getY()>650)
 		{
 			marioDied();
@@ -264,6 +269,7 @@ public class Mario extends GraphicsProgram {
 					gap.move(-global.horizVelocity, 0);
 					gap1.move(-global.horizVelocity, 0);
 					gap2.move(-global.horizVelocity, 0);
+					message.move(-global.horizVelocity, 0);
 					for(int i = 0; i < Platimg.size(); i++)
 					{
 						Platimg.get(i).move(-global.horizVelocity, 0);

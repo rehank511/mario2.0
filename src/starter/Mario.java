@@ -28,9 +28,13 @@ public class Mario extends GraphicsProgram {
 	private GImage pipe;
 	private GRect gap = new GRect(2800, 600, 200, 200);
 	private GRect mortApple = new GRect(2000,550,100,100);
+//	String picture = "hello";
+//	private GImage imageIn = new GImage(picture,0,0);
+//	private GImage imageDel = new GImage(picture,0,0);
 	powerUps power = new powerUps();
 	ArrayList<GImage> Platimg = new ArrayList<GImage>();
 	ArrayList<GImage> Pipeimg = new ArrayList<GImage>();
+	Timer t = new Timer(10, this);
 	
 	//To start immortal mode inside of the game press shift + N and to turn off press shift + F
 
@@ -119,6 +123,8 @@ public class Mario extends GraphicsProgram {
 	}
 	public void run() {
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
+		
+		
 
 		marioGraphics();
 
@@ -138,16 +144,16 @@ public class Mario extends GraphicsProgram {
 		mortApple.setFillColor(Color.red);
 		mortApple.setFilled(true);
 		
-		add(gap);
 		
-		add(mortApple);
 
 		add(level.flagImage);
 		add(level.castleImage);
 				
-
+		add(gap);
+		
+		add(mortApple);
 		marioFalls();
-		Timer t = new Timer(10, this);
+		
 		t.start();
 		addKeyListeners();
 	}
@@ -159,6 +165,24 @@ public class Mario extends GraphicsProgram {
 			marioDied();
 		}
 	}  
+	
+	public void imageIn(GImage imageIn)
+	{
+		t.stop();
+		imageIn.setSize(850, 650);
+		add(imageIn);
+	}
+	
+	public void imageDel(GImage imageDel)
+	{
+		remove(imageDel);
+		t.start();
+	}
+//	
+//	public void setPic(String setPicture)
+//	{
+//		picture = setPicture;
+//	}
 
 
 
@@ -179,10 +203,10 @@ public class Mario extends GraphicsProgram {
 
 
 			moveMario(0,2);
-//			if(Mario.getY()==551 && Mario.getX()<= level.levelPlatform[8][0].getTop().getX()+250) {
-//				moveMario(2,0);
-//
-//			}
+			if(Mario.getY()==551 && Mario.getX()<= level.levelPlatform[8][0].getTop().getX()+250) {
+				moveMario(2,0);
+
+			}
 
 			return;
 		}

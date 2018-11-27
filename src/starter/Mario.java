@@ -30,6 +30,11 @@ public class Mario extends GraphicsProgram {
 	private GRect gap = new GRect(2800, 599, 200, 200);
 	private GRect gap1 = new GRect(3800, 599, 200, 200);
 	private GRect gap2 = new GRect(8350, 599, 600, 200);
+	public static final String lABEL_FONT = "Arial-Bold-22";
+	
+	//Timer
+	
+	private GLabel score = new GLabel("score");
 	
 	private GRect mortApple = new GRect(2000,550,100,100);
 //	String picture = "hello";
@@ -39,6 +44,7 @@ public class Mario extends GraphicsProgram {
 	ArrayList<GImage> Platimg = new ArrayList<GImage>();
 	ArrayList<GImage> Pipeimg = new ArrayList<GImage>();
 	Timer t = new Timer(10, this);
+	
 	
 	//To start immortal mode inside of the game press shift + N and to turn off press shift + F
 
@@ -165,6 +171,7 @@ public class Mario extends GraphicsProgram {
 		marioFalls();
 		
 		t.start();
+		
 		addKeyListeners();
 	}
 	

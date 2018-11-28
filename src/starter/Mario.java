@@ -29,12 +29,12 @@ public class Mario extends GraphicsProgram {
 	private GRect gap = new GRect(2800, 599, 200, 200);
 	private GRect gap1 = new GRect(3800, 599, 200, 200);
 	private GRect gap2 = new GRect(8350, 599, 600, 200);
-	
+
 	private GImage waterR = new GImage("water.gif",2800,479);
 	private GImage waterR1 = new GImage("water.gif",3800,479);
 	private GImage waterR2 = new GImage("flames.gif",8350,479);
-//	private GImage waterL = new GImage("movingWater.gif",2800,);
-	
+	//	private GImage waterL = new GImage("movingWater.gif",2800,);
+
 	private GRect mortApple = new GRect(2000,550,100,100);
 	private static final String JUMP_SOUND ="jump.mp3";
 	private static final String GAME_SOUND ="mario-game.mp3";
@@ -45,8 +45,8 @@ public class Mario extends GraphicsProgram {
 	private int gametime = 0;
 	private GLabel GameScore;
 	private GLabel GameTime;
-	
-	
+
+
 
 	//	String picture = "hello";
 	//	private GImage imageIn = new GImage(picture,0,0);
@@ -128,7 +128,7 @@ public class Mario extends GraphicsProgram {
 		GImage background = new GImage("bg.png", 0, 0);
 		background.setSize(850, 600);
 		add(background);
-		
+
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgRight.setSize(50, 57);
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
@@ -155,12 +155,13 @@ public class Mario extends GraphicsProgram {
 		Menu = new GImage("menu.png", 0, 0);
 		Menu.setSize(850, 600);
 		add(Menu);
-		
+
 	}
-	
+
 	public void maingame()
 	{
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
+
 		marioGraphics();
 		level.level1();
 		levelSpawn();
@@ -192,8 +193,8 @@ public class Mario extends GraphicsProgram {
 		message.setColor(Color.BLACK);
 		add(message);
 	}
-	
-	
+
+
 
 
 
@@ -307,70 +308,68 @@ public class Mario extends GraphicsProgram {
 				} else
 					moveMario(global.horizVelocity, global.vertVelocity);
 			}
-		 else
-			moveMario(global.horizVelocity, global.vertVelocity);
+			else
+				moveMario(global.horizVelocity, global.vertVelocity);
 
-		for (int i = 0; i < Goomba.length; i++) {
-			if (Goomba[i].getGoombaImg().getX() < 850) {
-				Goomba[i].setMoving();
-			}
-			if (Goomba[i].getGoombaImg().getX() < -50) {
-				Goomba[i].DeleteGoomba();
-			}
-			if (Goomba[i].getMoving() > 0)
-				if (!Goomba[i].getGoombaDead()) {
-					Goomba[i].moveGoomba(0, global.Vert_MAX_Velocity);
-					if (Goomba[i].getGoombaDirection() % 2 == 0) {
-						Goomba[i].moveGoomba(1, 0);
-					} else {
-						Goomba[i].moveGoomba(-1, 0);
-					}
-					for (int a = 0; a < level.levelPlatform.length; a++) {
-						Goomba[i].collisionGoomba(level.levelPlatform[a]);
-					}
-					Goomba[i].collisionGoomba(level.levelGround);
-					Goomba[i].collisionGoomba(Goomba, i);
-					for (int a = 0; a < level.levelPipe.length; a++) {
-						Goomba[i].collisionGoomba(level.levelPipe[a]);
-					}
-					if (TimerCount % 500 == 0)
-						Goomba[i].changeGoombaDirection();
-					if (Goomba[i].getGoombaCollideSide() > 0)
-						Goomba[i].changeGoombaDirection();
-					Goomba[i].animateGoomba(TimerCount / 20);
-					Goomba[i].resetCollision();
+			for (int i = 0; i < Goomba.length; i++) {
+				if (Goomba[i].getGoombaImg().getX() < 850) {
+					Goomba[i].setMoving();
 				}
-		}
+				if (Goomba[i].getGoombaImg().getX() < -50) {
+					Goomba[i].DeleteGoomba();
+				}
+				if (Goomba[i].getMoving() > 0)
+					if (!Goomba[i].getGoombaDead()) {
+						Goomba[i].moveGoomba(0, global.Vert_MAX_Velocity);
+						if (Goomba[i].getGoombaDirection() % 2 == 0) {
+							Goomba[i].moveGoomba(1, 0);
+						} else {
+							Goomba[i].moveGoomba(-1, 0);
+						}
+						for (int a = 0; a < level.levelPlatform.length; a++) {
+							Goomba[i].collisionGoomba(level.levelPlatform[a]);
+						}
+						Goomba[i].collisionGoomba(level.levelGround);
+						Goomba[i].collisionGoomba(Goomba, i);
+						for (int a = 0; a < level.levelPipe.length; a++) {
+							Goomba[i].collisionGoomba(level.levelPipe[a]);
+						}
+						if (TimerCount % 500 == 0)
+							Goomba[i].changeGoombaDirection();
+						if (Goomba[i].getGoombaCollideSide() > 0)
+							Goomba[i].changeGoombaDirection();
+						Goomba[i].animateGoomba(TimerCount / 20);
+						Goomba[i].resetCollision();
+					}
+			}
 
-		TimerCount++;
-		if (TimerCount % 10 == 0) {
-			if (Moving == false) {
-				if (global.horizVelocity > 0)
-					global.horizVelocity -= global.Friction;
-				if (global.horizVelocity < 0)
-					global.horizVelocity += global.Friction;
+			TimerCount++;
+			if (TimerCount % 10 == 0) {
+				if (Moving == false) {
+					if (global.horizVelocity > 0)
+						global.horizVelocity -= global.Friction;
+					if (global.horizVelocity < 0)
+						global.horizVelocity += global.Friction;
+				}
+				if (movingLeft == true) {
+					if (global.horizVelocity > -global.Horiz_MAX_Velocity)
+						global.horizVelocity -= global.walkSpeed;
+					if (global.horizVelocity >= 0)
+						global.horizVelocity -= global.walkSpeed;
+				}
+				if (movingRight == true) {
+					if (global.horizVelocity < global.Horiz_MAX_Velocity) 
+						global.horizVelocity += global.walkSpeed;
+					if (global.horizVelocity <= 0) 
+						global.horizVelocity += global.walkSpeed;
+				}
+				if (TimerCount % 2 == 0)
+					if (global.vertVelocity < global.Vert_MAX_Velocity) 
+						global.vertVelocity += global.Gravity;
 			}
-			if (movingLeft == true) {
-				if (global.horizVelocity > -global.Horiz_MAX_Velocity)
-					global.horizVelocity -= global.walkSpeed;
-				if (global.horizVelocity >= 0)
-					global.horizVelocity -= global.walkSpeed;
-			}
-			if (movingRight == true) {
-				if (global.horizVelocity < global.Horiz_MAX_Velocity)
-					global.horizVelocity += global.walkSpeed;
-				if (global.horizVelocity <= 0)
-					global.horizVelocity += global.walkSpeed;
-			}
-		}
 
-		if (TimerCount % 2 == 0)
-			if (global.vertVelocity < global.Vert_MAX_Velocity) {
-				global.vertVelocity += global.Gravity;
-			}
+		}
 	}
-
-
 	public void gameTime()
 	{
 		GameTime = new GLabel(Integer.toString(gametime));

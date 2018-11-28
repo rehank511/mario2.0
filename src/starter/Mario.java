@@ -7,6 +7,7 @@ package starter;
 //Bugs to fix:
 //Bullet should be moving only to the left and in the air, bullet should be moving constantly, immortal mario should kill pillet, normal mario can not kill bullet,
 //bullet should not touch any thingand bullet should be of size 70,50
+//Bug - make the timer restart when we restart the game so that the values are reset to the defaut values.
 import acm.graphics.*;
 import acm.program.*;
 import acm.util.*;
@@ -17,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
@@ -35,9 +38,10 @@ public class Mario extends GraphicsProgram {
 	private GRect gap1 = new GRect(3800, 599, 200, 200);
 	private GRect gap2 = new GRect(8350, 599, 600, 200);
 	
-//	private GImage waterR = new GImage("water.gif",2800,479);
-//	private GImage waterR1 = new GImage("water.gif",3800,479);
-//	private GImage waterR2 = new GImage("flames.gif",8350,479);
+
+//	private GImage waterR = new GImage("water1.png",2800,479);
+//	private GImage waterR1 = new GImage("water1.png",3800,479);
+//	private GImage waterR2 = new GImage("water1.png",8350,479);
 //	private GImage waterL = new GImage("movingWater.gif",2800,);
 	
 	private GRect mortApple = new GRect(2000,550,100,100);
@@ -47,8 +51,8 @@ public class Mario extends GraphicsProgram {
 	private static final String GAME_OVER_SOUND ="mario-gameover.mp3";
 	private int gamescore = 0;
 	private int gametime = 0;
-	private GLabel GameScore;
-	private GLabel GameTime;
+	private GLabel GameScore, GameTime;
+	private GButton restart = new GButton("RESTART", 100, 100, 200, 50), exit = new GButton("EXIT", 500, 100, 200, 50);
 	
 	//	String picture = "hello";
 	//	private GImage imageIn = new GImage(picture,0,0);
@@ -75,7 +79,7 @@ public class Mario extends GraphicsProgram {
 	public boolean collision, Right, Left, Top, Bottom;
 
 	private GRect Mario;
-	private GImage MarioImgRight, MarioImgLeft;
+	private GImage MarioImgRight, MarioImgLeft, Menu;
 
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -113,7 +117,15 @@ public class Mario extends GraphicsProgram {
 
 	public void marioDied()
 	{
-		System.exit(0);
+//		System.exit(0);
+		t.stop();
+		remove(MarioImgRight);
+		remove(MarioImgLeft);
+		GImage Gameover = new GImage("gameover.png", 0, 0);
+		Gameover.setSize(850, 650);
+		add(Gameover);
+		add(exit);
+		add(restart);
 	}
 
 
@@ -155,10 +167,72 @@ public class Mario extends GraphicsProgram {
 
 	public void run() {
 
+		Menu = new GImage("menu.png", 0, 0);
+		Menu.setSize(850, 650);
+		add(Menu);
+//		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
+//
+//
+//
+//		marioGraphics();
+//
+//
+//		level.level1();
+//
+//		levelSpawn();
+//
+//		gumbaSpawn();
+//		playGameSound();
+//		
+//		//immortality apple graphics (not done)
+//		mortApple.setColor(Color.RED);
+//		mortApple.setFillColor(Color.red);
+//		mortApple.setFilled(true);
+//		
+//		
+//		
+//		gap.setColor(Color.BLACK);
+//		gap1.setColor(Color.BLACK);
+//		gap2.setColor(Color.BLACK);
+//		gap.setFilled(true);
+//		gap1.setFilled(true);
+//		gap2.setFilled(true);
+//
+//		add(level.flagImage);
+//		add(level.castleImage);
+//		
+//
+//		
+//		
+//		add(mortApple);
+//		add(gap);
+//		add(gap1);
+//		add(gap2);
+//
+//		GLabel score = new GLabel("Score");
+//		score.setLocation(50, 50);
+//		add(score);
+//		GLabel time = new GLabel("Time(ms)");
+//		time.setLocation(740, 50);
+//		add(time);
+//		gameTime();
+//		gameScore();
+		
+//		
+		addKeyListeners();
+		addMouseListeners();
+//		
+//
+//			message.setLocation(3700, 235);
+//			message.setColor(Color.BLACK);
+//			add(message);
+	}
+	
+	public void MainGame()
+	{
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
 
 
-		System.out.print(global.horizVelocity);
 
 		marioGraphics();
 
@@ -178,10 +252,12 @@ public class Mario extends GraphicsProgram {
 		
 		
 		
-		
-		
-
-
+		gap.setColor(Color.BLACK);
+		gap1.setColor(Color.BLACK);
+		gap2.setColor(Color.BLACK);
+		gap.setFilled(true);
+		gap1.setFilled(true);
+		gap2.setFilled(true);
 
 		add(level.flagImage);
 		add(level.castleImage);
@@ -190,8 +266,9 @@ public class Mario extends GraphicsProgram {
 		
 		
 		add(mortApple);
-
-
+		add(gap);
+		add(gap1);
+		add(gap2);
 
 		GLabel score = new GLabel("Score");
 		score.setLocation(50, 50);
@@ -203,15 +280,13 @@ public class Mario extends GraphicsProgram {
 		gameScore();
 		t.start();
 		
-		addKeyListeners();
+//		addKeyListeners();
 		
 
 			message.setLocation(3700, 235);
 			message.setColor(Color.BLACK);
 			add(message);
 	}
-	
-	
 
  
 
@@ -240,10 +315,28 @@ public class Mario extends GraphicsProgram {
 	// is called after every milisecond and moves the mario and the platform
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		remove(GameTime);
+//		int count = 1;
+//		if(count == 5)
+//		{
+//			waterR.setImage("water1.png");
+//			waterR1.setImage("water1.png");
+//			waterR2.setImage("water1.png");
+//		}
+//		count++;
+//		if (count == 50)
+//		{
+//			waterR.setImage("water2.png");
+//			waterR1.setImage("water2.png");
+//			waterR2.setImage("water2.png");
+//		}
+//		if(count == 100)
+//		{
+//			waterR.setImage("water3.png");
+//			waterR1.setImage("water3.png");
+//			waterR2.setImage("water3.png");
+//		}
 		gametime = gametime + 10;		
-		gameTime();
+		GameTime.setLabel(Integer.toString(gametime));
 		if(Mario.getY()>650)
 		{
 			marioDied();
@@ -263,9 +356,16 @@ public class Mario extends GraphicsProgram {
 
 
 			moveMario(0,2);
-			if(Mario.getY()==551 && Mario.getX()<= level.levelPlatform[8][0].getTop().getX()+250) {
+			System.out.println(Mario.getY());
+			if(Mario.getY()==552 && Mario.getX()<= level.levelPlatform[0][51].getTop().getX()+250) {
 				moveMario(2,0);
-
+				if(Mario.getX() == level.levelPlatform[0][51].getTop().getX()+250)
+				{
+					remove(MarioImgRight);
+					remove(MarioImgLeft);
+					marioDied();
+				}
+				
 			}
 
 			return;
@@ -293,17 +393,16 @@ public class Mario extends GraphicsProgram {
 							level.levelPlatform[a][i].movePlatform(-global.horizVelocity, 0);
 						}
 					}
-//					gap.move(-global.horizVelocity, 0);
-//					gap1.move(-global.horizVelocity, 0);
-//					gap2.move(-global.horizVelocity, 0);
+					gap.move(-global.horizVelocity, 0);
+					gap1.move(-global.horizVelocity, 0);
+					gap2.move(-global.horizVelocity, 0);
 					message.move(-global.horizVelocity, 0);
-					
+
 //					waterR.move(-global.horizVelocity,0);
 //					waterR1.move(-global.horizVelocity,0);
 //					waterR2.move(-global.horizVelocity,0);
-					remove(GameScore);
 					gamescore = gamescore + 1;
-					gameScore();
+					GameScore.setLabel(Integer.toString(gamescore));
 					for(int i = 0; i < Platimg.size(); i++)
 					{
 						Platimg.get(i).move(-global.horizVelocity, 0);
@@ -637,6 +736,9 @@ public class Mario extends GraphicsProgram {
 					global.vertVelocity -= global.jumpSpeed;
 				}
 			}
+		} else if(e.getKeyCode() == KeyEvent.VK_S) {
+			remove(Menu);
+			MainGame();
 		}
 
 	}
@@ -682,8 +784,22 @@ public class Mario extends GraphicsProgram {
 			MarioImgLeft.setSize(50, 57);
 			add(MarioImgRight);
 		}
-
-
+	}
+	
+	
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		GObject obj = getElementAt(e.getX(), e.getY());
+		if(obj == exit)
+		{
+			System.exit(0);
+		}
+		if(obj == restart)
+		{
+			run();
+		}
+		
 	}
 
 	public GRect getMariobottom() {

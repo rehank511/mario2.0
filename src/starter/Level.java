@@ -46,7 +46,7 @@ public class Level extends GraphicsProgram{
 				
 				castleImage = new GImage("castle.png",0,0);
 				castleImage.setSize(30,30);
-				castleImage.setBounds(9250, 350, 250, 250);
+				castleImage.setBounds(9145, 350, 250, 250);
 
 
 

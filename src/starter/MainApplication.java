@@ -20,7 +20,7 @@ public class MainApplication extends GraphicsApplication {
 
 	public void run() {
 		somePane = new SomePane(this);
-		menu = new MenuPane(this);
+//		menu = new MenuPane(this);
 		switchToMenu();
 		
 	}

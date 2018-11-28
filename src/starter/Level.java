@@ -15,8 +15,13 @@ import javax.swing.Timer;
 
 public class Level extends GraphicsProgram{
 	public Platform[][] levelPlatform;
-	public Platform[] Ground;
-	public Platform[][] Pipe;
+	public Platform[] levelGround;
+	public Platform[][] levelPipe;
+	private GImage plat;
+	private GImage pipe;
+//	private Mario mario = new Mario();
+	private ArrayList<GImage> Platimg = new ArrayList<GImage>();
+	private ArrayList<GImage> Pipeimg = new ArrayList<GImage>();
 
 	public GImage flagImage;
 	public GImage castleImage;
@@ -50,16 +55,16 @@ public class Level extends GraphicsProgram{
 			for (int i = 0; i < levelPlatform[0].length; i++) {
 				levelPlatform[a][i] = new Platform();
 			}
-		Ground = new Platform[10];
-		for (int i = 0; i < Ground.length; i++) {
-			Ground[i] = new Platform();
+		levelGround = new Platform[10];
+		for (int i = 0; i < levelGround.length; i++) {
+			levelGround[i] = new Platform();
 
 		}
 
-		Pipe = new Platform[50][10];
-		for (int a = 0; a < Pipe.length; a++)
-			for (int i = 0; i < Pipe[0].length; i++) {
-				Pipe[a][i] = new Platform();
+		levelPipe = new Platform[50][10];
+		for (int a = 0; a < levelPipe.length; a++)
+			for (int i = 0; i < levelPipe[0].length; i++) {
+				levelPipe[a][i] = new Platform();
 			}
 
 
@@ -144,29 +149,83 @@ public class Level extends GraphicsProgram{
 //		ground[0].setBounds(0,600 ,850, 100);
 		
 		
-		Ground[0].InitilizePlatform(0, 600,2800, 200, 3);
-		Ground[1].InitilizePlatform(3000, 600,800, 200, 3);
-		Ground[2].InitilizePlatform(4000, 600,4350, 200, 3);
-		Ground[3].InitilizePlatform(8950, 600,1000, 200, 3);
+		levelGround[0].InitilizePlatform(0, 600,2800, 200, 3);
+		levelGround[1].InitilizePlatform(3000, 600,800, 200, 3);
+		levelGround[2].InitilizePlatform(4000, 600,4350, 200, 3);
+		levelGround[3].InitilizePlatform(8950, 600,1000, 200, 3);
 		
 
-		Pipe[0][0].InitilizePlatform(1000, 540, 60, 60, 3);
-		Pipe[0][1].InitilizePlatform(1400, 520, 60, 80, 3);
-		Pipe[0][2].InitilizePlatform(1800, 500, 60, 100, 3);
-		Pipe[0][3].InitilizePlatform(2200, 480, 60, 120, 3);
-		Pipe[0][4].InitilizePlatform(7100, 540, 60, 60, 3);
-		Pipe[0][5].InitilizePlatform(7900, 540, 60, 60, 3);
+		levelPipe[0][0].InitilizePlatform(1000, 540, 60, 60, 3);
+		levelPipe[0][1].InitilizePlatform(1400, 520, 60, 80, 3);
+		levelPipe[0][2].InitilizePlatform(1800, 500, 60, 100, 3);
+		levelPipe[0][3].InitilizePlatform(2200, 480, 60, 120, 3);
+		levelPipe[0][4].InitilizePlatform(7100, 540, 60, 60, 3);
+		levelPipe[0][5].InitilizePlatform(7900, 540, 60, 60, 3);
 
 		levelPlatform[0][51].InitilizePlatform(8980, 590,5, 5, 3);
 	}
 
+	public void levelSpawn()
+	{
+		for (int a = 0; a < levelPlatform.length; a++) {
+			for (int i = 0; i < levelPlatform[0].length; i++) {
+				levelPlatform[a][i].getGround().setColor(new Color(212, 212, 212));
+				add(levelPlatform[a][i].getGround());
+			}
+		}
 
+		for(int i = 0; i < 51; i++)
+		{
+			plat = new GImage("Plat1.png", levelPlatform[0][i].getGround().getX(), levelPlatform[0][i].getGround().getY());
+			plat.setSize(50, 50);
+			add(plat);
+			Platimg.add(plat);
+		}
+
+		for (int i = 0; i < levelGround.length; i++) {
+			levelGround[i].getGround().setColor(new Color(212, 212, 212));
+			add(levelGround[i].getGround());
+		}
+
+		for (int a = 0; a < levelPipe.length; a++) {
+			for (int i = 0; i < levelPipe[0].length; i++) {
+
+				levelPipe[a][i].getGround().setColor(new Color(212, 212, 212));
+				add(levelPipe[a][i].getGround());
+			}
+		}
+		pipe = new GImage("pipe.png", levelPipe[0][0].getGround().getX(), levelPipe[0][0].getGround().getY());
+		pipe.setSize(60, 60);
+		add(pipe);
+		Pipeimg.add(pipe);
+
+		pipe = new GImage("pipe.png", levelPipe[0][1].getGround().getX(), levelPipe[0][1].getGround().getY());
+		pipe.setSize(60, 80);
+		add(pipe);
+		Pipeimg.add(pipe);
+
+		pipe = new GImage("pipe.png", levelPipe[0][2].getGround().getX(), levelPipe[0][2].getGround().getY());
+		pipe.setSize(60, 100);
+		add(pipe);
+		Pipeimg.add(pipe);
+
+		pipe = new GImage("pipe.png", levelPipe[0][3].getGround().getX(), levelPipe[0][3].getGround().getY());
+		pipe.setSize(60, 120);
+		add(pipe);
+		Pipeimg.add(pipe);
+
+		pipe = new GImage("pipe.png", levelPipe[0][4].getGround().getX(), levelPipe[0][4].getGround().getY());
+		pipe.setSize(60, 60);
+		add(pipe);
+		Pipeimg.add(pipe);
+
+		pipe = new GImage("pipe.png", levelPipe[0][5].getGround().getX(), levelPipe[0][5].getGround().getY());
+		pipe.setSize(60, 60);
+		add(pipe);
+		Pipeimg.add(pipe);
+
+	}
 	
-	 public void run()
-	 {
-		 level1();
-//		 platpic();
-	 }
 
 
 

@@ -1,8 +1,12 @@
 package starter;
 
 //Fixed Movement
+
 //GitHub Check 2
 // Added mario image
+//Bugs to fix:
+//Bullet should be moving only to the left and in the air, bullet should be moving constantly, immortal mario should kill pillet, normal mario can not kill bullet,
+//bullet should not touch any thingand bullet should be of size 70,50
 import acm.graphics.*;
 import acm.program.*;
 import acm.util.*;
@@ -23,6 +27,7 @@ public class Mario extends GraphicsProgram {
 	public static final String MUSIC_FOLDER = "sounds";
 
 	private Enemies[] Goomba;
+	private Enemies[] BB;
 	private GImage plat;
 	private GImage pipe;
 	private GLabel message = new GLabel("Press N");
@@ -30,9 +35,9 @@ public class Mario extends GraphicsProgram {
 	private GRect gap1 = new GRect(3800, 599, 200, 200);
 	private GRect gap2 = new GRect(8350, 599, 600, 200);
 	
-	private GImage waterR = new GImage("water.gif",2800,479);
-	private GImage waterR1 = new GImage("water.gif",3800,479);
-	private GImage waterR2 = new GImage("flames.gif",8350,479);
+//	private GImage waterR = new GImage("water.gif",2800,479);
+//	private GImage waterR1 = new GImage("water.gif",3800,479);
+//	private GImage waterR2 = new GImage("flames.gif",8350,479);
 //	private GImage waterL = new GImage("movingWater.gif",2800,);
 	
 	private GRect mortApple = new GRect(2000,550,100,100);
@@ -116,12 +121,12 @@ public class Mario extends GraphicsProgram {
 		GImage ground = new GImage("ground.png", 0, 600);
 		ground.setSize(850, 100);
 		add(ground);
-		waterR.setSize(200,200);
-		waterR1.setSize(200,200);
-		waterR2.setSize(200,600);
-		add(waterR);
-		add(waterR1);
-		add(waterR2);
+//		waterR.setSize(200,200);
+//		waterR1.setSize(200,200);
+//		waterR2.setSize(200,600);
+//		add(waterR);
+//		add(waterR1);
+//		add(waterR2);
 		GImage background = new GImage("bg.png", 0, 0);
 		background.setSize(850, 600);
 		add(background);
@@ -163,6 +168,7 @@ public class Mario extends GraphicsProgram {
 		levelSpawn();
 
 		gumbaSpawn();
+		BBSpawn();
 		playGameSound();
 		
 		//immortality apple graphics (not done)
@@ -249,6 +255,7 @@ public class Mario extends GraphicsProgram {
 
 
 		collision(Goomba);
+		collisionBB(BB);
 
 		collision(level.levelGround);
 		////
@@ -290,9 +297,10 @@ public class Mario extends GraphicsProgram {
 //					gap1.move(-global.horizVelocity, 0);
 //					gap2.move(-global.horizVelocity, 0);
 					message.move(-global.horizVelocity, 0);
-					waterR.move(-global.horizVelocity,0);
-					waterR1.move(-global.horizVelocity,0);
-					waterR2.move(-global.horizVelocity,0);
+					
+//					waterR.move(-global.horizVelocity,0);
+//					waterR1.move(-global.horizVelocity,0);
+//					waterR2.move(-global.horizVelocity,0);
 					remove(GameScore);
 					gamescore = gamescore + 1;
 					gameScore();
@@ -314,6 +322,10 @@ public class Mario extends GraphicsProgram {
 					}
 					for (int i = 0; i < Goomba.length; i++) {
 						Goomba[i].moveGoomba(-global.horizVelocity, 0);
+					}
+					
+					for (int i = 0; i < BB.length; i++) {
+						BB[i].moveBB(-1.5*global.horizVelocity, 0);
 					}
 
 					level.flagImage.move(-(global.horizVelocity), 0);
@@ -357,6 +369,34 @@ public class Mario extends GraphicsProgram {
 						Goomba[i].changeGoombaDirection();
 					Goomba[i].animateGoomba(TimerCount / 20);
 					Goomba[i].resetCollision();
+				}
+		}
+		
+		for (int i = 0; i < BB.length; i++) {
+			if (BB[i].getBBImg().getX() < 850) {
+				BB[i].setMoving();
+			}
+			if (BB[i].getBBImg().getX() < -50) {
+				BB[i].DeleteBB();
+			}
+			if (BB[i].getMoving() > 0)
+				if (!BB[i].getBBDead()) {
+					BB[i].moveBB(0, global.Vert_MAX_Velocity);
+					if (BB[i].getBBDirection() % 2 == 0) {
+						BB[i].moveBB(-2, 0);
+					} else {
+						BB[i].moveBB(-2, 0);
+					}
+					for (int a = 0; a < level.levelPlatform.length; a++) {
+						BB[i].collisionBB(level.levelPlatform[a]);
+					}
+					BB[i].collisionBB(level.levelGround);
+					BB[i].collisionBB(BB, i);
+					for (int a = 0; a < level.levelPipe.length; a++) {
+						BB[i].collisionBB(level.levelPipe[a]);
+					}
+					BB[i].animateBB(TimerCount / 20);
+					BB[i].resetCollision();
 				}
 		}
 
@@ -496,6 +536,62 @@ public class Mario extends GraphicsProgram {
 			}
 		}
 	}
+		
+	public void collisionBB(Enemies[] p1) {
+		for (int i = 0; i < p1.length; i++) {		
+			if (p1 != null) {
+				collideTop = false;
+				collideBottom = false;
+				collideLeft = false;
+				collideRight = false;
+				if ((getMariobottom().getBounds()).intersects(p1[i].getTop().getBounds())) {
+					onground++;
+
+					collideTop = true;
+					if (global.vertVelocity > 0)
+						global.vertVelocity = 0;
+					moveMario(0, p1[i].getBBImg().getY() - Mario.getY() - HEIGHT);
+					global.vertVelocity -= global.jumpSpeed / 2;
+					p1[i].DeleteBB();
+				}
+				if ((Mariotop.getBounds()).intersects(p1[i].getBottom().getBounds())) {
+					collideBottom = true;
+					if (global.vertVelocity < 0)
+						global.vertVelocity = 0;
+					moveMario(0, p1[i].getTop().getY() - Mario.getY() + p1[i].getBBImg().getHeight());
+
+				}
+				if ((Marioright.getBounds()).intersects(p1[i].getLeft().getBounds())) {
+					collideLeft = true;
+					if (global.horizVelocity > 0)
+						global.horizVelocity = 0;
+					moveMario(p1[i].getBBImg().getX() - Mario.getX() - Mario.getWidth(), 0);
+					if(power.immortal==false)
+					{
+						marioDied();
+					}
+					else
+					{
+						p1[i].DeleteBB();
+					}
+				}
+				if ((Marioleft.getBounds()).intersects(p1[i].getRight().getBounds())) {
+					collideRight = true;
+					if (global.horizVelocity < 0)
+						global.horizVelocity = 0;
+					moveMario(p1[i].getBBImg().getX() + p1[i].getBBImg().getWidth() - Mario.getX(), 0);
+					if(power.immortal==false)
+					{
+						marioDied();
+					}
+					else
+					{
+						p1[i].DeleteBB();
+					}
+				}
+			}
+		}
+	}
 
 	// Makes the Mario to not be able to move when it touches a pipe
 	public void collisionPipe(Platform[] pipe) {
@@ -609,6 +705,20 @@ public class Mario extends GraphicsProgram {
 		for (int i = 0; i < Goomba.length; i++) {
 			Goomba[i].InitilizeGoomba(i * 400, 600, 50, 50, 3);
 			add(Goomba[i].getGoombaImg());
+		}
+
+	}
+	
+	public void BBSpawn()
+	{
+		BB = new Enemies[15];
+		for (int i = 0; i < BB.length; i++) {
+			BB[i] = new Enemies();
+		}
+
+		for (int i = 0; i < BB.length; i++) {
+			BB[i].InitilizeBB(i * 500, 600, 80, 50, 3);
+			add(BB[i].getBBImg());
 		}
 
 	}

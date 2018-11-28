@@ -36,6 +36,12 @@ public class Mario extends GraphicsProgram {
 	private GRect gap = new GRect(2800, 599, 200, 200);
 	private GRect gap1 = new GRect(3800, 599, 200, 200);
 	private GRect gap2 = new GRect(8350, 599, 600, 200);
+	
+	private GImage waterR = new GImage("water.gif",2800,479);
+	private GImage waterR1 = new GImage("water.gif",3800,479);
+	private GImage waterR2 = new GImage("flames.gif",8350,479);
+//	private GImage waterL = new GImage("movingWater.gif",2800,);
+	
 	private GRect mortApple = new GRect(2000,550,100,100);
 	public static final String MUSIC_FOLDER = "sounds";
 	private static final String JUMP_SOUND ="jump.mp3";
@@ -110,12 +116,19 @@ public class Mario extends GraphicsProgram {
 
 
 	public void marioGraphics(){
-		GImage background = new GImage("bg.png", 0, 0);
-		background.setSize(850, 600);
-		add(background);
 		GImage ground = new GImage("ground.png", 0, 600);
 		ground.setSize(850, 100);
 		add(ground);
+		waterR.setSize(200,200);
+		waterR1.setSize(200,200);
+		waterR2.setSize(200,600);
+		add(waterR);
+		add(waterR1);
+		add(waterR2);
+		GImage background = new GImage("bg.png", 0, 0);
+		background.setSize(850, 600);
+		add(background);
+		
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgRight.setSize(50, 57);
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
@@ -141,9 +154,22 @@ public class Mario extends GraphicsProgram {
 	public void run() {
 
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
-
-
-
+//		gap.setColor(Color.WHITE);
+//		gap.setFillColor(Color.WHITE);
+//		gap.setFilled(true);
+//
+//		gap1.setColor(Color.WHITE);
+//		gap1.setFillColor(Color.WHITE);
+//		gap1.setFilled(true);
+//
+//		gap2.setColor(Color.WHITE);
+//		gap2.setFillColor(Color.WHITE);
+//		gap2.setFilled(true);
+//
+//		add(gap);
+//		
+//		add(gap1);
+//		add(gap2);
 		marioGraphics();
 
 
@@ -153,31 +179,26 @@ public class Mario extends GraphicsProgram {
 
 		gumbaSpawn();
 		playGameSound();
-		gap.setColor(Color.BLACK);
-		gap.setFillColor(Color.BLACK);
-		gap.setFilled(true);
-
-		gap1.setColor(Color.BLACK);
-		gap1.setFillColor(Color.BLACK);
-		gap1.setFilled(true);
-
-		gap2.setColor(Color.BLACK);
-		gap2.setFillColor(Color.BLACK);
-		gap2.setFilled(true);
+		
 		//immortality apple graphics (not done)
 		mortApple.setColor(Color.RED);
 		mortApple.setFillColor(Color.red);
 		mortApple.setFilled(true);
+		
+		
+		
+		
+		
 
 
 
 		add(level.flagImage);
 		add(level.castleImage);
 
-		add(gap);
-		add(gap1);
-		add(gap2);
+		
 
+		
+		
 		add(mortApple);
 
 
@@ -190,6 +211,8 @@ public class Mario extends GraphicsProgram {
 			message.setColor(Color.BLACK);
 			add(message);
 	}
+	
+	
 
  
 
@@ -230,7 +253,7 @@ public class Mario extends GraphicsProgram {
 
 		collision(Goomba);
 
-		collision(level.Ground);
+		collision(level.levelGround);
 		////
 		if(Mario.getX()>=level.levelPlatform[0][51].getTop().getX())  {
 
@@ -243,8 +266,8 @@ public class Mario extends GraphicsProgram {
 
 			return;
 		}
-		for (int a = 0; a < level.Pipe.length; a++) {
-			collision(level.Pipe[a]);
+		for (int a = 0; a < level.levelPipe.length; a++) {
+			collision(level.levelPipe[a]);
 
 		}
 
@@ -266,20 +289,23 @@ public class Mario extends GraphicsProgram {
 							level.levelPlatform[a][i].movePlatform(-global.horizVelocity, 0);
 						}
 					}
-					gap.move(-global.horizVelocity, 0);
-					gap1.move(-global.horizVelocity, 0);
-					gap2.move(-global.horizVelocity, 0);
+//					gap.move(-global.horizVelocity, 0);
+//					gap1.move(-global.horizVelocity, 0);
+//					gap2.move(-global.horizVelocity, 0);
 					message.move(-global.horizVelocity, 0);
+					waterR.move(-global.horizVelocity,0);
+					waterR1.move(-global.horizVelocity,0);
+					waterR2.move(-global.horizVelocity,0);
 					for(int i = 0; i < Platimg.size(); i++)
 					{
 						Platimg.get(i).move(-global.horizVelocity, 0);
 					}
-					for (int i = 0; i < level.Ground.length; i++) {
-						level.Ground[i].movePlatform(-global.horizVelocity, 0);
+					for (int i = 0; i < level.levelGround.length; i++) {
+						level.levelGround[i].movePlatform(-global.horizVelocity, 0);
 					}
-					for (int a = 0; a < level.Pipe.length; a++) {
-						for (int i = 0; i < level.Pipe[0].length; i++) {
-							level.Pipe[a][i].movePlatform(-global.horizVelocity, 0);
+					for (int a = 0; a < level.levelPipe.length; a++) {
+						for (int i = 0; i < level.levelPipe[0].length; i++) {
+							level.levelPipe[a][i].movePlatform(-global.horizVelocity, 0);
 						}
 					}
 					for(int i = 0; i < Pipeimg.size(); i++)
@@ -320,10 +346,10 @@ public class Mario extends GraphicsProgram {
 					for (int a = 0; a < level.levelPlatform.length; a++) {
 						Goomba[i].collisionGoomba(level.levelPlatform[a]);
 					}
-					Goomba[i].collisionGoomba(level.Ground);
+					Goomba[i].collisionGoomba(level.levelGround);
 					Goomba[i].collisionGoomba(Goomba, i);
-					for (int a = 0; a < level.Pipe.length; a++) {
-						Goomba[i].collisionGoomba(level.Pipe[a]);
+					for (int a = 0; a < level.levelPipe.length; a++) {
+						Goomba[i].collisionGoomba(level.levelPipe[a]);
 					}
 					if (TimerCount % 500 == 0)
 						Goomba[i].changeGoombaDirection();
@@ -589,44 +615,44 @@ public class Mario extends GraphicsProgram {
 			Platimg.add(plat);
 		}
 
-		for (int i = 0; i < level.Ground.length; i++) {
-			level.Ground[i].getGround().setColor(new Color(212, 212, 212));
-			add(level.Ground[i].getGround());
+		for (int i = 0; i < level.levelGround.length; i++) {
+			level.levelGround[i].getGround().setColor(new Color(212, 212, 212));
+			add(level.levelGround[i].getGround());
 		}
 
-		for (int a = 0; a < level.Pipe.length; a++) {
-			for (int i = 0; i < level.Pipe[0].length; i++) {
+		for (int a = 0; a < level.levelPipe.length; a++) {
+			for (int i = 0; i < level.levelPipe[0].length; i++) {
 
-				level.Pipe[a][i].getGround().setColor(new Color(212, 212, 212));
-				add(level.Pipe[a][i].getGround());
+				level.levelPipe[a][i].getGround().setColor(new Color(212, 212, 212));
+				add(level.levelPipe[a][i].getGround());
 			}
 		}
-		pipe = new GImage("pipe.png", level.Pipe[0][0].getGround().getX(), level.Pipe[0][0].getGround().getY());
+		pipe = new GImage("pipe.png", level.levelPipe[0][0].getGround().getX(), level.levelPipe[0][0].getGround().getY());
 		pipe.setSize(60, 60);
 		add(pipe);
 		Pipeimg.add(pipe);
 
-		pipe = new GImage("pipe.png", level.Pipe[0][1].getGround().getX(), level.Pipe[0][1].getGround().getY());
+		pipe = new GImage("pipe.png", level.levelPipe[0][1].getGround().getX(), level.levelPipe[0][1].getGround().getY());
 		pipe.setSize(60, 80);
 		add(pipe);
 		Pipeimg.add(pipe);
 
-		pipe = new GImage("pipe.png", level.Pipe[0][2].getGround().getX(), level.Pipe[0][2].getGround().getY());
+		pipe = new GImage("pipe.png", level.levelPipe[0][2].getGround().getX(), level.levelPipe[0][2].getGround().getY());
 		pipe.setSize(60, 100);
 		add(pipe);
 		Pipeimg.add(pipe);
 
-		pipe = new GImage("pipe.png", level.Pipe[0][3].getGround().getX(), level.Pipe[0][3].getGround().getY());
+		pipe = new GImage("pipe.png", level.levelPipe[0][3].getGround().getX(), level.levelPipe[0][3].getGround().getY());
 		pipe.setSize(60, 120);
 		add(pipe);
 		Pipeimg.add(pipe);
 
-		pipe = new GImage("pipe.png", level.Pipe[0][4].getGround().getX(), level.Pipe[0][4].getGround().getY());
+		pipe = new GImage("pipe.png", level.levelPipe[0][4].getGround().getX(), level.levelPipe[0][4].getGround().getY());
 		pipe.setSize(60, 60);
 		add(pipe);
 		Pipeimg.add(pipe);
 
-		pipe = new GImage("pipe.png", level.Pipe[0][5].getGround().getX(), level.Pipe[0][5].getGround().getY());
+		pipe = new GImage("pipe.png", level.levelPipe[0][5].getGround().getX(), level.levelPipe[0][5].getGround().getY());
 		pipe.setSize(60, 60);
 		add(pipe);
 		Pipeimg.add(pipe);

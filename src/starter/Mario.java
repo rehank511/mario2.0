@@ -32,13 +32,16 @@ public class Mario extends GraphicsProgram {
 	private GRect mortApple = new GRect(2000,550,100,100);
 	private static final String JUMP_SOUND ="jump.mp3";
 	private static final String GAME_SOUND ="mario-game.mp3";
-	private static final String IMMORTALITY_SOUND ="mario-immortality.mp3";
+	private static final String IMMORTALITY_SOUND ="r2d2.mp3";
 	private static final String GAME_OVER_SOUND ="mario-gameover.mp3";
+	public static final String lABEL_FONT = "Arial-Bold-22";
 	private int gamescore = 0;
 	private int gametime = 0;
 	private GLabel GameScore;
 	private GLabel GameTime;
 	
+	
+
 	//	String picture = "hello";
 	//	private GImage imageIn = new GImage(picture,0,0);
 	//	private GImage imageDel = new GImage(picture,0,0);
@@ -64,7 +67,7 @@ public class Mario extends GraphicsProgram {
 	public boolean collision, Right, Left, Top, Bottom;
 
 	private GRect Mario;
-	private GImage MarioImgRight, MarioImgLeft;
+	private GImage MarioImgRight, MarioImgLeft, Menu;
 
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -136,63 +139,46 @@ public class Mario extends GraphicsProgram {
 	}
 
 	public void run() {
-
+		Menu = new GImage("menu.png", 0, 0);
+		Menu.setSize(850, 600);
+		add(Menu);
+		
+	}
+	
+	public void maingame()
+	{
 		InitilizeMario(global.XAXIS, global.YAXIS, WIDTH, HEIGHT, global.THICKNESS);
-
-		System.out.print(global.horizVelocity);
-
 		marioGraphics();
-
-
 		level.level1();
-
 		levelSpawn();
-
 		gumbaSpawn();
 		playGameSound();
-		gap.setColor(Color.BLACK);
-		gap.setFillColor(Color.BLACK);
-		gap.setFilled(true);
-
-		gap1.setColor(Color.BLACK);
-		gap1.setFillColor(Color.BLACK);
-		gap1.setFilled(true);
-
-		gap2.setColor(Color.BLACK);
-		gap2.setFillColor(Color.BLACK);
-		gap2.setFilled(true);
 		//immortality apple graphics (not done)
 		mortApple.setColor(Color.RED);
 		mortApple.setFillColor(Color.red);
 		mortApple.setFilled(true);
-
-
-
 		add(level.flagImage);
 		add(level.castleImage);
-
-		add(gap);
-		add(gap1);
-		add(gap2);
 		GLabel score = new GLabel("Score");
 		score.setLocation(50, 50);
+		score.setFont(lABEL_FONT);
+		score.setColor(Color.WHITE);
 		add(score);
 		GLabel time = new GLabel("Time(ms)");
 		time.setLocation(740, 50);
+		time.setColor(Color.WHITE);
+		time.setFont(lABEL_FONT);
 		add(time);
 		gameTime();
 		gameScore();
 		t.start();
-		
 		addKeyListeners();
-		
-
-			message.setLocation(3700, 235);
-			message.setColor(Color.BLACK);
-			add(message);
+		message.setLocation(3700, 235);
+		message.setColor(Color.BLACK);
+		add(message);
 	}
 
- 
+
 
 	public void imageIn(GImage imageIn)
 	{
@@ -206,28 +192,26 @@ public class Mario extends GraphicsProgram {
 		remove(imageDel);
 		t.start();
 	}
-	
-	
+
+
 	//	
 	//	public void setPic(String setPicture)
 	//	{
 	//		picture = setPicture;
 	//	}
-	
+
 
 
 	// is called after every milisecond and moves the mario and the platform
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		remove(GameTime);
 		gametime = gametime + 10;		
-		gameTime();
+		GameTime.setLabel(Integer.toString(gametime));
 		if(Mario.getY()>650)
 		{
 			marioDied();
 		}
-		
+
 		for (int a = 0; a < level.levelPlatform.length; a++) {
 			collision(level.levelPlatform[a]);	
 		}
@@ -275,9 +259,8 @@ public class Mario extends GraphicsProgram {
 					gap1.move(-global.horizVelocity, 0);
 					gap2.move(-global.horizVelocity, 0);
 					message.move(-global.horizVelocity, 0);
-					remove(GameScore);
 					gamescore = gamescore + 1;
-					gameScore();
+					GameScore.setLabel(Integer.toString(gamescore));
 					for(int i = 0; i < Platimg.size(); i++)
 					{
 						Platimg.get(i).move(-global.horizVelocity, 0);
@@ -371,21 +354,25 @@ public class Mario extends GraphicsProgram {
 		System.out.print(global.vertVelocity);
 	}
 
-		
+
 	public void gameTime()
 	{
 		GameTime = new GLabel(Integer.toString(gametime));
-		GameTime.setLocation(750, 63);
+		GameTime.setLocation(750, 67);
+		GameTime.setFont(lABEL_FONT);
+		GameTime.setColor(Color.WHITE);
 		add(GameTime);
 	}
-	
+
 	public void gameScore()
 	{
 		GameScore = new GLabel(Integer.toString(gamescore));
-		GameScore.setLocation(60, 63);
+		GameScore.setLocation(60, 67);
+		GameScore.setFont(lABEL_FONT);
+		GameScore.setColor(Color.WHITE);
 		add(GameScore);
 	}
-	
+
 	// Makes the Mario to not be able to move when it touches a platform
 	public void collision(Platform[] p) {
 		for (int i = 0; i < p.length; i++) {
@@ -523,6 +510,9 @@ public class Mario extends GraphicsProgram {
 					global.vertVelocity -= global.jumpSpeed;
 				}
 			}
+		} else if(e.getKeyCode() == KeyEvent.VK_S) {
+			remove(Menu);
+			maingame();
 		}
 
 	}

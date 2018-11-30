@@ -12,7 +12,7 @@ public class MainApplication extends GraphicsApplication {
 	private SomePane somePane;
 	private MenuPane menu;
 	private int count;
-	private Mario mario = new Mario();
+//	private Mario mario = new Mario();
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);

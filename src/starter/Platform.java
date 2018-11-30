@@ -12,7 +12,7 @@ public class Platform extends GraphicsProgram{
 	private GRect Top, Bottom, Left, Right;
 	private GRect Platform;
 //	private Level level = new Level();
-	private Mario levelPic = new Mario();
+//	private Mario levelPic = new Mario();
 
 	
 	private GImage platImg;

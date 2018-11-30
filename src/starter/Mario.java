@@ -17,11 +17,14 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 public class Mario extends GraphicsProgram {
-	Platform[][] platform;
-	Platform[] Ground;
 
-	Platform[][] Pipe;
-	Enemies[] Goomba;
+	private Enemies[] Goomba;
+
+	private Platform[][] platform;
+	private Platform[] Ground;
+	private Level level;
+	private Platform[][] Pipe;
+
 
 	private static final double Vert_MAX_Velocity = 15, Horiz_MAX_Velocity = 5, walkSpeed = 1, Friction = 1,
 			jumpSpeed = 15, Gravity = 1;
@@ -87,7 +90,7 @@ public class Mario extends GraphicsProgram {
 		MarioImgLeft.setSize(50, 57);
 		add(MarioImgRight);
 		platform = new Platform[50][10];
-
+		
 		for (int a = 0; a < platform.length; a++)
 			for (int i = 0; i < platform[0].length; i++) {
 				platform[a][i] = new Platform();
@@ -334,7 +337,7 @@ public class Mario extends GraphicsProgram {
 						Goomba[i].changeGoombaDirection();
 					if (Goomba[i].getGoombaCollideSide() > 0)
 						Goomba[i].changeGoombaDirection();
-					Goomba[i].animateGoomba(TimerCount / 20);
+//					Goomba[i].animateGoomba(TimerCount / 20);
 					Goomba[i].resetCollision();
 				}
 		}

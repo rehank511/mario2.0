@@ -242,7 +242,7 @@ public class Mario extends GraphicsProgram {
 		levelSpawn();
 
 		gumbaSpawn();
-		BBSpawn();
+//		BBSpawn();
 		playGameSound();
 		
 		//immortality apple graphics (not done)
@@ -466,38 +466,38 @@ public class Mario extends GraphicsProgram {
 						Goomba[i].changeGoombaDirection();
 					if (Goomba[i].getGoombaCollideSide() > 0)
 						Goomba[i].changeGoombaDirection();
-					Goomba[i].animateGoomba(TimerCount / 20);
+//					Goomba[i].animateGoomba(TimerCount / 20);
 					Goomba[i].resetCollision();
 				}
 		}
 		
-		for (int i = 0; i < BB.length; i++) {
-			if (BB[i].getBBImg().getX() < 850) {
-				BB[i].setMoving();
-			}
-			if (BB[i].getBBImg().getX() < -50) {
-				BB[i].DeleteBB();
-			}
-			if (BB[i].getMoving() > 0)
-				if (!BB[i].getBBDead()) {
-					BB[i].moveBB(0, global.Vert_MAX_Velocity);
-					if (BB[i].getBBDirection() % 2 == 0) {
-						BB[i].moveBB(-2, 0);
-					} else {
-						BB[i].moveBB(-2, 0);
-					}
-					for (int a = 0; a < level.levelPlatform.length; a++) {
-						BB[i].collisionBB(level.levelPlatform[a]);
-					}
-					BB[i].collisionBB(level.levelGround);
-					BB[i].collisionBB(BB, i);
-					for (int a = 0; a < level.levelPipe.length; a++) {
-						BB[i].collisionBB(level.levelPipe[a]);
-					}
-					BB[i].animateBB(TimerCount / 20);
-					BB[i].resetCollision();
-				}
-		}
+//		for (int i = 0; i < BB.length; i++) {
+//			if (BB[i].getBBImg().getX() < 850) {
+//				BB[i].setMoving();
+//			}
+//			if (BB[i].getBBImg().getX() < -50) {
+//				BB[i].DeleteBB();
+//			}
+//			if (BB[i].getMoving() > 0)
+//				if (!BB[i].getBBDead()) {
+//					BB[i].moveBB(0, global.Vert_MAX_Velocity);
+//					if (BB[i].getBBDirection() % 2 == 0) {
+//						BB[i].moveBB(-2, 0);
+//					} else {
+//						BB[i].moveBB(-2, 0);
+//					}
+//					for (int a = 0; a < level.levelPlatform.length; a++) {
+//						BB[i].collisionBB(level.levelPlatform[a]);
+//					}
+//					BB[i].collisionBB(level.levelGround);
+//					BB[i].collisionBB(BB, i);
+//					for (int a = 0; a < level.levelPipe.length; a++) {
+//						BB[i].collisionBB(level.levelPipe[a]);
+//					}
+//					BB[i].animateBB(TimerCount / 20);
+//					BB[i].resetCollision();
+//				}
+//		}
 
 		TimerCount++;
 		if (TimerCount % 10 == 0) {
@@ -649,7 +649,7 @@ public class Mario extends GraphicsProgram {
 					collideTop = true;
 					if (global.vertVelocity > 0)
 						global.vertVelocity = 0;
-					moveMario(0, p1[i].getBBImg().getY() - Mario.getY() - HEIGHT);
+//					moveMario(0, p1[i].getBBImg().getY() - Mario.getY() - HEIGHT);
 					global.vertVelocity -= global.jumpSpeed / 2;
 					p1[i].DeleteBB();
 				}
@@ -657,14 +657,14 @@ public class Mario extends GraphicsProgram {
 					collideBottom = true;
 					if (global.vertVelocity < 0)
 						global.vertVelocity = 0;
-					moveMario(0, p1[i].getTop().getY() - Mario.getY() + p1[i].getBBImg().getHeight());
+//					moveMario(0, p1[i].getTop().getY() - Mario.getY() + p1[i].getBBImg().getHeight());
 
 				}
 				if ((Marioright.getBounds()).intersects(p1[i].getLeft().getBounds())) {
 					collideLeft = true;
 					if (global.horizVelocity > 0)
 						global.horizVelocity = 0;
-					moveMario(p1[i].getBBImg().getX() - Mario.getX() - Mario.getWidth(), 0);
+//					moveMario(p1[i].getBBImg().getX() - Mario.getX() - Mario.getWidth(), 0);
 					if(power.immortal==false)
 					{
 						marioDied();
@@ -678,7 +678,7 @@ public class Mario extends GraphicsProgram {
 					collideRight = true;
 					if (global.horizVelocity < 0)
 						global.horizVelocity = 0;
-					moveMario(p1[i].getBBImg().getX() + p1[i].getBBImg().getWidth() - Mario.getX(), 0);
+//					moveMario(p1[i].getBBImg().getX() + p1[i].getBBImg().getWidth() - Mario.getX(), 0);
 					if(power.immortal==false)
 					{
 						marioDied();
@@ -825,19 +825,19 @@ public class Mario extends GraphicsProgram {
 
 	}
 	
-	public void BBSpawn()
-	{
-		BB = new Enemies[15];
-		for (int i = 0; i < BB.length; i++) {
-			BB[i] = new Enemies();
-		}
-
-		for (int i = 0; i < BB.length; i++) {
-			BB[i].InitilizeBB(i * 500, 600, 80, 50, 3);
-			add(BB[i].getBBImg());
-		}
-
-	}
+//	public void BBSpawn()
+//	{
+//		BB = new Enemies[15];
+//		for (int i = 0; i < BB.length; i++) {
+//			BB[i] = new Enemies();
+//		}
+//
+//		for (int i = 0; i < BB.length; i++) {
+//			BB[i].InitilizeBB(i * 500, 600, 80, 50, 3);
+//			add(BB[i].getBBImg());
+//		}
+//
+//	}
 
 	public void levelSpawn()
 	{

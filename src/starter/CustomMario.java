@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
@@ -55,6 +56,7 @@ public class CustomMario extends GraphicsProgram {
 
 	private GRect Mario;
 	private GImage MarioImgRight, MarioImgLeft;
+	private GButton start = new GButton("START GAME", 150, 380, 200, 50), control = new GButton("CONTROLS", 490, 380, 200, 50);
 
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -100,10 +102,11 @@ public class CustomMario extends GraphicsProgram {
 			Menu = new GImage("menu.png", 0, 0);
 			Menu.setSize(850, 650);
 			add(Menu);
+			add(start);
+			add(control);
 			addKeyListeners();
-			ground = new GImage("ground.png", 0, 600);
-			ground.setSize(850, 100);
-			add(ground);
+			addMouseListeners();
+			
 		}
 		
 		
@@ -169,13 +172,8 @@ public class CustomMario extends GraphicsProgram {
 		gameScore();
 		
 		t.start();
-		}
-		
-		
-		
-		
+		}	
 	}
-	
 	
 	public void gameTime()
 	{
@@ -489,13 +487,13 @@ public class CustomMario extends GraphicsProgram {
 			add(MarioImgLeft);
 			movingLeft = true;
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_S) 
-		{
-			remove(Menu);
-			menuOn = false;
-			run();
-		}
-		
+//		else if(e.getKeyCode() == KeyEvent.VK_S) 
+//		{
+//			remove(Menu);
+//			menuOn = false;
+//			run();
+//		}
+//		
 		else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
 		{
 			gameStop.setSize(850, 650);
@@ -551,7 +549,23 @@ public class CustomMario extends GraphicsProgram {
 		}
 		
 	}
-
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+		GObject obj = getElementAt(e.getX(), e.getY());
+		if(obj == start)
+		{
+			remove(Menu);
+			menuOn = false;
+			run();
+		}
+		if(obj == control)
+		{
+			remove(Menu);
+			menuOn = false;
+			
+		}
+	}
 	// activates when any key is released
 	@Override
 	public void keyReleased(KeyEvent e) {

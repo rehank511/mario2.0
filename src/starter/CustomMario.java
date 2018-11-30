@@ -30,11 +30,24 @@ public class CustomMario extends GraphicsProgram {
 			jumpSpeed = 13, Gravity = 1;
 	private int XAXIS = 100, YAXIS = -600, WIDTH = 50, HEIGHT = 50, THICKNESS = 3;
 	private int vertVelocity = 0, horizVelocity = 0;
+	//immortality
+	private PowerUps power = new PowerUps();
 
 	int TimerCount = 0, onground = 0;
-	boolean Moving = false, movingLeft = false, movingRight = false;
+	boolean Moving = false, movingLeft = false, movingRight = false, menuOn = true,gameStopOn = false;
 	private static final int PROGRAM_WIDTH = 850;
 	private static final int PROGRAM_HEIGHT = 650;
+	
+	//menu
+	private GImage Menu, background,ground,gameStop = new GImage("gamestop.png");
+	private Timer t = new Timer(10, this);
+	
+	//sound
+//	private static final String IMMORTALITY_SOUND ="mario-immortality.mp3";
+	//score and time
+	private int gamescore = 0;
+	private int gametime = 0;
+	private GLabel GameScore, GameTime;
 
 	private GRect Mario;
 	private GImage MarioImgRight, MarioImgLeft;
@@ -76,14 +89,28 @@ public class CustomMario extends GraphicsProgram {
 	public boolean collision, Right, Left, Top, Bottom;
 
 	public void run() {
-
+//menu
+		
+		if(menuOn == true)
+		{
+			Menu = new GImage("menu.png", 0, 0);
+			Menu.setSize(850, 650);
+			add(Menu);
+			addKeyListeners();
+			ground = new GImage("ground.png", 0, 600);
+			ground.setSize(850, 100);
+			add(ground);
+		}
+		
+		
+		else
+		{
+		
 		InitilizeMario(XAXIS, YAXIS, WIDTH, HEIGHT, THICKNESS);
-		GImage background = new GImage("bg.png", 0, 0);
+		background = new GImage("bg.png", 0, 0);
 		background.setSize(850, 700);
 		add(background);
-		GImage ground = new GImage("ground.png", 0, 600);
-		ground.setSize(850, 100);
-		// add(ground);
+		
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgRight.setSize(50, 57);
 		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() + 1);
@@ -122,11 +149,18 @@ public class CustomMario extends GraphicsProgram {
 			add(Goomba[i].getGoombaImgRight());
 			add(Goomba[i].getGoombaImgLeft());
 		}
-
-		Timer t = new Timer(10, this);
+		
 		t.start();
-		addKeyListeners();
+		}
+		
+		
+		
+		
 	}
+	
+	
+	
+	
 
 	int level = 1;
 
@@ -189,6 +223,8 @@ public class CustomMario extends GraphicsProgram {
 				if (horizVelocity < 0)
 					horizVelocity = 0;
 				moveMario(1, 0);
+				
+				
 				// if Mario is on the right corner on the screen
 			} else if (Mario.getX() > 500) {
 				if (horizVelocity > 0) {
@@ -321,6 +357,10 @@ public class CustomMario extends GraphicsProgram {
 				if ((Mariobottom.getBounds()).intersects(p[i].getTop().getBounds())) {
 
 					collideTop = true;
+					if(collideTop == true && power.immortal == true)
+					{
+						p[i].DeleteGoomba();
+					}
 					if (vertVelocity > 0)
 						vertVelocity = 0;
 					moveMario(0, p[i].getGoombaImg().getY() - Mario.getY() - HEIGHT);
@@ -329,6 +369,10 @@ public class CustomMario extends GraphicsProgram {
 				}
 				if ((Mariotop.getBounds()).intersects(p[i].getBottom().getBounds())) {
 					collideBottom = true;
+					if(collideBottom == true && power.immortal == true)
+					{
+						p[i].DeleteGoomba();
+					}
 					if (vertVelocity < 0)
 						vertVelocity = 0;
 					moveMario(0, p[i].getTop().getY() - Mario.getY() + p[i].getGoombaImg().getHeight());
@@ -336,12 +380,20 @@ public class CustomMario extends GraphicsProgram {
 				}
 				if ((Marioright.getBounds()).intersects(p[i].getLeft().getBounds())) {
 					collideLeft = true;
+					if(collideLeft == true && power.immortal == true)
+					{
+						p[i].DeleteGoomba();
+					}
 					if (horizVelocity > 0)
 						horizVelocity = 0;
 					moveMario(-Mario.getX() + 100, -Mario.getY() - 75);
 				}
 				if ((Marioleft.getBounds()).intersects(p[i].getRight().getBounds())) {
 					collideRight = true;
+					if(collideRight == true && power.immortal == true)
+					{
+						p[i].DeleteGoomba();
+					}
 					if (horizVelocity < 0)
 						horizVelocity = 0;
 					moveMario(-Mario.getX() + 100, -Mario.getY() - 75);
@@ -376,25 +428,76 @@ public class CustomMario extends GraphicsProgram {
 
 	// activates when the mentioned key are pressed and moves the mario
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) 
+	{
 		Moving = true;
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) 
+		{
 			remove(MarioImgRight);
 			add(MarioImgLeft);
 			movingLeft = true;
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_S) 
+		{
+			remove(Menu);
+			menuOn = false;
+			run();
+		}
+		
+		else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+		{
+			gameStop.setSize(850, 650);
+			add(gameStop);
+			gameStopOn = true;
+			t.stop();
+			
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_Y)
+		{
+			remove(gameStop);
+			gameStopOn = false;
+			t.start();
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_N)
+		{
+			if(gameStopOn)
+			System.exit(0);
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_P)
+		{
+//			if(power.immortal==false)
+//			{
+				power.mortOn();
+				remove(MarioImgRight);
+				remove(MarioImgLeft);
+				MarioImgRight = new GImage("LuigiRight.png", Mario.getX(), Mario.getY() - 1);
+				MarioImgRight.setSize(50, 57);
+				MarioImgLeft = new GImage("LuigiLeft.png", Mario.getX(), Mario.getY() - 1);
+				MarioImgLeft.setSize(50, 57);
+				add(MarioImgRight);
+//			}
+			
+		}
+		
+		
+		
+		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
+		{
 			remove(MarioImgLeft);
 			add(MarioImgRight);
 			movingRight = true;
 
-		} else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
-			if (collideTop) {
-
+		} 
+		else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) 
+		{
+			if (collideTop) 
+			{
 				vertVelocity -= jumpSpeed;
 				onground = 0;
 
 			}
 		}
+		
 	}
 
 	// activates when any key is released

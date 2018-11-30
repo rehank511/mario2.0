@@ -17,7 +17,6 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 public class Mario extends GraphicsProgram {
-
 	private Enemies[] Goomba;
 
 	private Platform[][] platform;

@@ -55,8 +55,7 @@ public class CustomMario extends GraphicsProgram {
 	private static final String JUMP_SOUND ="jump.mp3";
 	private static final String GAME_SOUND ="mario-game.mp3";
 	private static final String LUIGI_SOUND ="Luigi.mp3";
-	private static final String GAME_OVER_SOUND ="mario-gameover.mp3";
-	//	private static final String IMMORTALITY_SOUND ="mario-immortality.mp3";
+
 	//score and time
 	private int gamescore = 0;
 	private int gametime = 0;
@@ -136,7 +135,7 @@ public class CustomMario extends GraphicsProgram {
 
 		else
 		{
-			playGameSound();
+			
 			InitilizeMario(XAXIS, YAXIS, WIDTH, HEIGHT, THICKNESS);
 			background = new GImage("bg.png", 0, 0);
 			background.setSize(850, 700);
@@ -565,7 +564,6 @@ public class CustomMario extends GraphicsProgram {
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_L)
 		{
-			playLuigiSound();
 			power.mortOn();
 			remove(MarioImgRight);
 			remove(MarioImgLeft);
@@ -640,6 +638,7 @@ public class CustomMario extends GraphicsProgram {
 		}
 		if(obj == start)
 		{
+			playGameSound();
 			remove(Menu);
 			menuOn = false;
 			remove(start);

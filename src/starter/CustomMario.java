@@ -32,6 +32,9 @@ public class CustomMario extends GraphicsProgram {
 	private int vertVelocity = 0, horizVelocity = 0;
 	//immortality
 	private PowerUps power = new PowerUps();
+	
+//immortality apple
+	private GRect apple = new GRect(100,600,20,20);
 
 	int TimerCount = 0, onground = 0;
 	boolean Moving = false, movingLeft = false, movingRight = false, menuOn = true,gameStopOn = false;
@@ -39,7 +42,7 @@ public class CustomMario extends GraphicsProgram {
 	private static final int PROGRAM_HEIGHT = 650;
 	
 	//menu
-	private GImage Menu, background,ground,gameStop = new GImage("gamestop.png");
+	private GImage Menu, background,ground,gameStop = new GImage("gamestop.png"), appleImg;
 	private Timer t = new Timer(10, this);
 	
 	//sound
@@ -110,6 +113,7 @@ public class CustomMario extends GraphicsProgram {
 		background = new GImage("bg.png", 0, 0);
 		background.setSize(850, 700);
 		add(background);
+		add(apple);
 		
 		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
 		MarioImgRight.setSize(50, 57);
@@ -309,7 +313,14 @@ public class CustomMario extends GraphicsProgram {
 				vertVelocity += Gravity;
 			}
 	}
-
+//apple collision
+	public void appleCollision()
+	{
+		if(Mario.getX()==apple.getX()&&Mario.getY()==apple.getY())
+		{
+			power.mortOn();
+		}
+	}
 	// Makes the Mario to not be able to move when it touches a platform
 	public void collision(Platform[] p) {
 		for (int i = 0; i < p.length; i++) {
@@ -359,7 +370,7 @@ public class CustomMario extends GraphicsProgram {
 					collideTop = true;
 					if(collideTop == true && power.immortal == true)
 					{
-						p[i].DeleteGoomba();
+//						p[i].DeleteGoomba();
 					}
 					if (vertVelocity > 0)
 						vertVelocity = 0;
@@ -382,19 +393,26 @@ public class CustomMario extends GraphicsProgram {
 					collideLeft = true;
 					if(collideLeft == true && power.immortal == true)
 					{
+						if(horizVelocity > 0)
+							horizVelocity = 0;
+						moveMario(p[i].getGoombaImg().getX() - Mario.getX() - Mario.getWidth(), 0);
 						p[i].DeleteGoomba();
 					}
-					if (horizVelocity > 0)
+					else if(horizVelocity > 0)
+					{
 						horizVelocity = 0;
-					moveMario(-Mario.getX() + 100, -Mario.getY() - 75);
+						moveMario(-Mario.getX() + 100, -Mario.getY() - 75);
+					}
 				}
 				if ((Marioleft.getBounds()).intersects(p[i].getRight().getBounds())) {
 					collideRight = true;
 					if(collideRight == true && power.immortal == true)
 					{
+						
+						moveMario(p[i].getGoombaImg().getX() + p[i].getGoombaImg().getWidth() - Mario.getX(), 0);
 						p[i].DeleteGoomba();
 					}
-					if (horizVelocity < 0)
+					else if (horizVelocity < 0)
 						horizVelocity = 0;
 					moveMario(-Mario.getX() + 100, -Mario.getY() - 75);
 				}
@@ -463,7 +481,7 @@ public class CustomMario extends GraphicsProgram {
 			if(gameStopOn)
 			System.exit(0);
 		}
-		else if (e.getKeyCode() == KeyEvent.VK_P)
+		else if (e.getKeyCode() == KeyEvent.VK_L)
 		{
 //			if(power.immortal==false)
 //			{
@@ -478,6 +496,21 @@ public class CustomMario extends GraphicsProgram {
 //			}
 			
 		}
+		else if (e.getKeyCode() == KeyEvent.VK_M)
+		{
+//			if(power.immortal==false)
+//			{
+				power.mortOff();
+				remove(MarioImgRight);
+				remove(MarioImgLeft);
+				MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
+				MarioImgRight.setSize(50, 57);
+				MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() - 1);
+				MarioImgLeft.setSize(50, 57);
+				add(MarioImgRight);
+//			}
+			
+		} 
 		
 		
 		

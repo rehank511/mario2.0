@@ -33,21 +33,26 @@ public class CustomMario extends GraphicsProgram {
 	private int vertVelocity = 0, horizVelocity = 0;
 	//immortality
 	private powerUps power = new powerUps();
-	
-//immortality apple
+
+	//immortality apple
 	private GRect apple = new GRect(100,600,20,20);
 
 	int TimerCount = 0, onground = 0;
 	boolean Moving = false, movingLeft = false, movingRight = false, menuOn = true,gameStopOn = false;
 	private static final int PROGRAM_WIDTH = 850;
 	private static final int PROGRAM_HEIGHT = 650;
-	
+
 	//menu
 	private GImage Menu, background,ground,gameStop = new GImage("gamestop.png");
 	private Timer t = new Timer(10, this);
-	
+
 	//sound
-//	private static final String IMMORTALITY_SOUND ="mario-immortality.mp3";
+	public static final String MUSIC_FOLDER = "sounds";
+	private static final String JUMP_SOUND ="jump.mp3";
+	private static final String GAME_SOUND ="mario-game.mp3";
+	private static final String LUIGI_SOUND ="Luigi.mp3";
+	private static final String GAME_OVER_SOUND ="mario-gameover.mp3";
+	//	private static final String IMMORTALITY_SOUND ="mario-immortality.mp3";
 	//score and time
 	private int gamescore = 0;
 	private int gametime = 0;
@@ -94,9 +99,24 @@ public class CustomMario extends GraphicsProgram {
 	public boolean collideRight, collideLeft, collideTop, collideBottom;
 	public boolean collision, Right, Left, Top, Bottom;
 
+	private void playJumpSound() {
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, JUMP_SOUND);
+	}
+
+	private void playGameSound() {
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, GAME_SOUND);
+	}
+
+	private void playLuigiSound() {
+		AudioPlayer audio = AudioPlayer.getInstance();
+		audio.playSound(MUSIC_FOLDER, LUIGI_SOUND);
+	}
+
 	public void run() {
-//menu
-		
+		//menu
+
 		if(menuOn == true)
 		{
 			Menu = new GImage("menu.png", 0, 0);
@@ -106,79 +126,80 @@ public class CustomMario extends GraphicsProgram {
 			add(control);
 			addKeyListeners();
 			addMouseListeners();
-			
+
 		}
-		
-		
+
+
 		else
 		{
-		
-		InitilizeMario(XAXIS, YAXIS, WIDTH, HEIGHT, THICKNESS);
-		background = new GImage("bg.png", 0, 0);
-		background.setSize(850, 700);
-		add(background);
-		add(apple);
-		
-		MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
-		MarioImgRight.setSize(50, 57);
-		MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() + 1);
-		MarioImgLeft.setSize(47, 52);
-		add(MarioImgRight);
-		
-		Map = L.getLevels();
-		L.openFile();
-		L.readFile(Map);
-		L.closeFile();
+			playGameSound();
 
-		Platform[] p = L.LoadLevel(0);
-		platform = new Platform[p.length][1];
+			InitilizeMario(XAXIS, YAXIS, WIDTH, HEIGHT, THICKNESS);
+			background = new GImage("bg.png", 0, 0);
+			background.setSize(850, 700);
+			add(background);
+			add(apple);
 
-		for (int a = 0; a < platform.length; a++)
-			for (int i = 0; i < platform[0].length; i++) {
-				platform[a][i] = p[a];
+			MarioImgRight = new GImage("MarioRight.png", Mario.getX(), Mario.getY() - 1);
+			MarioImgRight.setSize(50, 57);
+			MarioImgLeft = new GImage("MarioLeft.png", Mario.getX(), Mario.getY() + 1);
+			MarioImgLeft.setSize(47, 52);
+			add(MarioImgRight);
+
+			Map = L.getLevels();
+			L.openFile();
+			L.readFile(Map);
+			L.closeFile();
+
+			Platform[] p = L.LoadLevel(0);
+			platform = new Platform[p.length][1];
+
+			for (int a = 0; a < platform.length; a++)
+				for (int i = 0; i < platform[0].length; i++) {
+					platform[a][i] = p[a];
+				}
+
+			for (int a = 0; a < platform.length; a++) {
+				for (int i = 0; i < platform[0].length; i++) {
+					add(platform[a][i].getPlatImg());
+				}
 			}
 
-		for (int a = 0; a < platform.length; a++) {
-			for (int i = 0; i < platform[0].length; i++) {
-				add(platform[a][i].getPlatImg());
+			Ground = L.LoadLevelGround(0);
+
+			for (int i = 0; i < Ground.length; i++) {
+				add(Ground[i].getPlatImg());
 			}
-		}
 
-		Ground = L.LoadLevelGround(0);
+			Goomba = L.LoadLevelGoomba(0);
 
-		for (int i = 0; i < Ground.length; i++) {
-			add(Ground[i].getPlatImg());
-		}
+			for (int i = 0; i < Goomba.length; i++) {
+				add(Goomba[i].getGoombaImg());
+				add(Goomba[i].getGoombaImgRight());
+				add(Goomba[i].getGoombaImgLeft());
+			}
 
-		Goomba = L.LoadLevelGoomba(0);
+			GLabel score = new GLabel("Score");
+			score.setLocation(50, 10);
+			score.setFont(lABEL_FONT);
+			score.setColor(Color.WHITE);
+			add(score);
+			GLabel time = new GLabel("Time");
+			time.setLocation(740, 10);
+			time.setFont(lABEL_FONT);
+			time.setColor(Color.WHITE);
+			add(time);
+			gameTime();
+			gameScore();
 
-		for (int i = 0; i < Goomba.length; i++) {
-			add(Goomba[i].getGoombaImg());
-			add(Goomba[i].getGoombaImgRight());
-			add(Goomba[i].getGoombaImgLeft());
-		}
-		
-		GLabel score = new GLabel("Score");
-		score.setLocation(50, 50);
-		score.setFont(lABEL_FONT);
-		score.setColor(Color.WHITE);
-		add(score);
-		GLabel time = new GLabel("Time");
-		time.setLocation(740, 50);
-		time.setFont(lABEL_FONT);
-		time.setColor(Color.WHITE);
-		add(time);
-		gameTime();
-		gameScore();
-		
-		t.start();
+			t.start();
 		}	
 	}
-	
+
 	public void gameTime()
 	{
 		GameTime = new GLabel(Integer.toString(gametime));
-		GameTime.setLocation(750, 70);
+		GameTime.setLocation(750, 30);
 		GameTime.setFont(lABEL_FONT);
 		GameTime.setColor(Color.WHITE);
 		add(GameTime);
@@ -187,12 +208,12 @@ public class CustomMario extends GraphicsProgram {
 	public void gameScore()
 	{
 		GameScore = new GLabel(Integer.toString(gamescore));
-		GameScore.setLocation(60, 70);
+		GameScore.setLocation(60, 30);
 		GameScore.setFont(lABEL_FONT);
 		GameScore.setColor(Color.WHITE);
 		add(GameScore);
 	}
-	
+
 
 	int level = 1;
 	int count = 0;
@@ -261,8 +282,8 @@ public class CustomMario extends GraphicsProgram {
 				if (horizVelocity < 0)
 					horizVelocity = 0;
 				moveMario(1, 0);
-				
-				
+
+
 				// if Mario is on the right corner on the screen
 			} else if (Mario.getX() > 500) {
 				if (horizVelocity > 0) {
@@ -276,10 +297,10 @@ public class CustomMario extends GraphicsProgram {
 					for (int i = 0; i < Ground.length; i++) {
 						Ground[i].movePlatform(-horizVelocity, 0);
 						if(count % 50 == 1)
-							{
-								gamescore = gamescore + 1;
-							}
-							GameScore.setLabel(Integer.toString(gamescore));
+						{
+							gamescore = gamescore + 1;
+						}
+						GameScore.setLabel(Integer.toString(gamescore));
 					}
 					for (int i = 0; i < Goomba.length; i++) {
 						Goomba[i].moveGoomba(-horizVelocity, 0);
@@ -352,7 +373,7 @@ public class CustomMario extends GraphicsProgram {
 				vertVelocity += Gravity;
 			}
 	}
-//apple collision
+	//apple collision
 	public void appleCollision()
 	{
 		if(Mario.getX()==apple.getX()&&Mario.getY()==apple.getY())
@@ -487,20 +508,20 @@ public class CustomMario extends GraphicsProgram {
 			add(MarioImgLeft);
 			movingLeft = true;
 		}
-//		else if(e.getKeyCode() == KeyEvent.VK_S) 
-//		{
-//			remove(Menu);
-//			menuOn = false;
-//			run();
-//		}
-//		
+		//		else if(e.getKeyCode() == KeyEvent.VK_S) 
+		//		{
+		//			remove(Menu);
+		//			menuOn = false;
+		//			run();
+		//		}
+		//		
 		else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
 		{
 			gameStop.setSize(850, 650);
 			add(gameStop);
 			gameStopOn = true;
 			t.stop();
-			
+
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_Y)
 		{
@@ -511,26 +532,23 @@ public class CustomMario extends GraphicsProgram {
 		else if (e.getKeyCode() == KeyEvent.VK_N)
 		{
 			if(gameStopOn)
-			System.exit(0);
+				System.exit(0);
 		}
-		else if (e.getKeyCode() == KeyEvent.VK_P)
+		else if (e.getKeyCode() == KeyEvent.VK_L)
 		{
-//			if(power.immortal==false)
-//			{
-				power.mortOn();
-				remove(MarioImgRight);
-				remove(MarioImgLeft);
-				MarioImgRight = new GImage("LuigiRight.png", Mario.getX(), Mario.getY() - 1);
-				MarioImgRight.setSize(50, 57);
-				MarioImgLeft = new GImage("LuigiLeft.png", Mario.getX(), Mario.getY() - 1);
-				MarioImgLeft.setSize(50, 57);
-				add(MarioImgRight);
-//			}
-			
+			playLuigiSound();
+			power.mortOn();
+			remove(MarioImgRight);
+			remove(MarioImgLeft);
+			MarioImgRight = new GImage("LuigiRight.png", Mario.getX(), Mario.getY() - 1);
+			MarioImgRight.setSize(50, 57);
+			MarioImgLeft = new GImage("LuigiLeft.png", Mario.getX(), Mario.getY() - 1);
+			MarioImgLeft.setSize(50, 57);
+			add(MarioImgRight);			
 		}
-		
-		
-		
+
+
+
 		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
 		{
 			remove(MarioImgLeft);
@@ -542,14 +560,15 @@ public class CustomMario extends GraphicsProgram {
 		{
 			if (collideTop) 
 			{
+				playJumpSound();
 				vertVelocity -= jumpSpeed;
 				onground = 0;
 
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = getElementAt(e.getX(), e.getY());
@@ -563,7 +582,7 @@ public class CustomMario extends GraphicsProgram {
 		{
 			remove(Menu);
 			menuOn = false;
-			
+
 		}
 	}
 	// activates when any key is released

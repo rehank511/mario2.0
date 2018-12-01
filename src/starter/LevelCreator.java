@@ -12,6 +12,7 @@ import java.util.*;
 public class LevelCreator extends GraphicsProgram {
 	static String[][][] Levels = new String[5][13][210];
 	private Scanner x;
+	private int temp;
 
 	public int levelCount() {
 		return Levels.length;
@@ -65,6 +66,10 @@ public class LevelCreator extends GraphicsProgram {
 			for (col = 0; col < Levels[Level][row].length; col++) {
 				if (Levels[Level][row][col].charAt(0) == 'P') {
 					arrSize++;
+					if(Level == 4)
+					{
+						temp = 1;
+					}
 				}
 			}
 		}
@@ -161,5 +166,13 @@ public class LevelCreator extends GraphicsProgram {
 		for (int i = 0; i < goomba.length; i++) {
 			add(goomba[i].getGoombaImg());
 		}
+	}
+
+	public int getTemp() {
+		return temp;
+	}
+
+	public void setTemp(int temp) {
+		this.temp = temp;
 	}
 }

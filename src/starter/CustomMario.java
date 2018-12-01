@@ -47,7 +47,7 @@ public class CustomMario extends GraphicsProgram {
 	private static final int PROGRAM_HEIGHT = 650;
 
 	//menu
-	private GImage Menu, background,ground,gameStop = new GImage("gamestop.png"), appleImg,controls;
+	private GImage Menu, background,ground,gameStop = new GImage("gamestop.png"), appleImg,controls, gameover;
 	private Timer t = new Timer(10, this);
 
 	//sound
@@ -65,7 +65,8 @@ public class CustomMario extends GraphicsProgram {
 
 	private GRect Mario;
 	private GImage MarioImgRight, MarioImgLeft;
-	private GButton start = new GButton("START GAME", 150, 380, 200, 50), control = new GButton("CONTROLS", 490, 380, 200, 50);
+	private GButton start = new GButton("START GAME", 150, 380, 200, 50), control = new GButton("CONTROLS", 490, 380, 200, 50), back = new GButton("BACK", 200, 150, 200, 50);
+	private GButton restart = new GButton("RESTART", 100, 100, 200, 50), exit = new GButton("EXIT", 500, 100, 200, 50);
 
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -130,16 +131,12 @@ public class CustomMario extends GraphicsProgram {
 			add(control);
 			addKeyListeners();
 			addMouseListeners();
-
 		}
 
 
 		else
 		{
-
 			playGameSound();
-
-
 			InitilizeMario(XAXIS, YAXIS, WIDTH, HEIGHT, THICKNESS);
 			background = new GImage("bg.png", 0, 0);
 			background.setSize(850, 700);
@@ -226,6 +223,18 @@ public class CustomMario extends GraphicsProgram {
 	// is called after every milisecond and moves the mario and the platform
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(L.getTemp() == 1)
+		{	
+			gameover = new GImage("gameover.png", 0, 0);
+			gameover.setSize(850, 650);
+			add(gameover);
+			t.stop();
+			add(exit);
+			add(restart);
+			L.setTemp(0);
+			add(GameTime);
+			add(GameScore);	
+		}
 		count++;
 		if(count % 100 == 1)
 		{
@@ -443,6 +452,9 @@ public class CustomMario extends GraphicsProgram {
 					moveMario(0, p[i].getGoombaImg().getY() - Mario.getY() - HEIGHT);
 					vertVelocity -= jumpSpeed / 2;
 					p[i].DeleteGoomba();
+					gamescore = gamescore + 100;
+					GameScore.setLabel(Integer.toString(gamescore));
+
 				}
 				if ((Mariotop.getBounds()).intersects(p[i].getBottom().getBounds())) {
 					collideBottom = true;
@@ -468,6 +480,8 @@ public class CustomMario extends GraphicsProgram {
 					{
 						horizVelocity = 0;
 						moveMario(-Mario.getX() + 100, -Mario.getY() - 75);
+						gamescore = gamescore - 200;
+						GameScore.setLabel(Integer.toString(gamescore));
 					}
 				}
 				if ((Marioleft.getBounds()).intersects(p[i].getRight().getBounds())) {
@@ -480,6 +494,8 @@ public class CustomMario extends GraphicsProgram {
 					}
 					else if (horizVelocity < 0)
 						horizVelocity = 0;
+					gamescore = gamescore - 200;
+					GameScore.setLabel(Integer.toString(gamescore));
 					moveMario(-Mario.getX() + 100, -Mario.getY() - 75);
 				}
 			}
@@ -601,30 +617,44 @@ public class CustomMario extends GraphicsProgram {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		GObject obj = getElementAt(e.getX(), e.getY());
+		if(obj == control)
+		{
+			remove(Menu);
+			menuOn=false;
+			GRect blank = new GRect(0, 0, 850, 650);
+			blank.setColor(Color.GRAY);
+			blank.setFilled(true);
+			add(blank);
+			controls = new GImage("keys.png");
+			controls.setSize(400, 250);
+			controls.setLocation(250, 200);
+			add(controls);
+			add(back);
+		}
+		if(obj == back)
+		{
+			remove(controls);
+			add(Menu);
+			add(control);
+			add(start);
+		}
 		if(obj == start)
 		{
 			remove(Menu);
 			menuOn = false;
 			remove(start);
-			
-			controls = new GImage("keys.png");
-			controls.setSize(300, 200);
-			controls.setLocation(300, 550);
-			add(controls);
+			remove(control);
 			run();
 		}
-		if(obj == control)
+		if(obj == restart)
 		{
-			remove(Menu);
 			menuOn=false;
-			controls = new GImage("keys.png");
-			controls.setSize(300, 200);
-			controls.setLocation(300, 550);
-			add(controls);
 			run();
-			
-			
-
+//			t.restart();
+		}
+		if(obj == exit)
+		{
+			System.exit(0);
 		}
 	}
 	// activates when any key is released
